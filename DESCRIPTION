@@ -1,0 +1,12 @@
+Package: simpleTaxonomy
+Title: Create Interactive Visualisation of Taxonomic Hierarchy
+Version: 0.0.0.9000
+Authors@R: 
+    person("Stefan", "Lanz", , "slanz1137@gmail.com", role = c("aut", "cre"))
+Description: Create interactive visualisations of a taxonomy hierarchy that is
+  specified in a csv file using a simple format. The visualisation uses
+  the javascript library D3.js via the R package collapsibleTree.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
