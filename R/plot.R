@@ -13,7 +13,10 @@
 #'
 #' @export
 
-plot_taxonomy <- function(data, show = c(), font_size = 12) {
+plot_taxonomy <- function(data,
+                          show = c(),
+                          expand_rank = c(),
+                          font_size = 12) {
 
   # add columns for colour
   colours <- c(
@@ -40,7 +43,7 @@ plot_taxonomy <- function(data, show = c(), font_size = 12) {
     "(", data$scientific, ")"
   )
 
-  data$collapsed <- get_collapsed(data, show)
+  data$collapsed <- get_collapsed(data, show, expand_rank)
 
   collapsibleTree::collapsibleTreeNetwork(
     data,
@@ -54,7 +57,7 @@ plot_taxonomy <- function(data, show = c(), font_size = 12) {
 
 
 
-get_collapsed <- function(data, show) {
+get_collapsed <- function(data, show, expand_rank) {
 
   # check that all the names in show actually exist in the data. Remove those
   # that don't.
@@ -70,17 +73,22 @@ get_collapsed <- function(data, show) {
   # if show is empty, everything must be collapsed
   # this is checked only after removing invalid taxons, since show may only
   # be empty after that step.
-  if (length(show)  == 0) return(rep(TRUE, nrow(data)))
+  collapsed_show <- if (length(show) == 0) {
+    return(rep(TRUE, nrow(data)))
+  } else {
 
-  # create a graph and find the path from all the required taxons to the root.
-  # all nodes on the path must be uncollapsed (except for the starting points)
-  data$parent[is.na(data$parent)] <- "_ROOT"
-  graph <- igraph::graph_from_data_frame(data)
-  paths <- igraph::shortest_paths(graph, from = "_ROOT", to = show)
-  not_collapsed <- paths$vpath %>%
-    lapply(\(x) utils::head(names(x), -1)) %>%
-    unlist()
+    # create a graph and find the path from all the required taxons to the root.
+    # all nodes on the path must be uncollapsed (except for the starting points)
+    data$parent[is.na(data$parent)] <- "_ROOT"
+    graph <- igraph::graph_from_data_frame(data)
+    paths <- igraph::shortest_paths(graph, from = "_ROOT", to = show)
+    not_collapsed <- paths$vpath %>%
+      lapply(\(x) utils::head(names(x), -1)) %>%
+      unlist()
 
-  !data$name %in% not_collapsed
+    !data$name %in% not_collapsed
+  }
+
+  collapsed_show & (!data$rank %in% expand_rank)
 
 }
