@@ -4,6 +4,8 @@
 #'
 #' @param data tibble defining the taxonomic hierarchy, typically created with
 #' [`read_taxonomy()`].
+#' @param show character giving the names of taxons that should be visible.
+#' The tree will be shown uncollapsed up to those taxons.
 #' @param font_size integer giving the font size of the labels in pixels.
 #'
 #' @return
@@ -11,7 +13,7 @@
 #'
 #' @export
 
-plot_taxonomy <- function(data, font_size = 12) {
+plot_taxonomy <- function(data, show = c(), font_size = 12) {
 
   # add columns for colour
   colours <- c(
@@ -38,11 +40,47 @@ plot_taxonomy <- function(data, font_size = 12) {
     "(", data$scientific, ")"
   )
 
+  data$collapsed <- get_collapsed(data, show)
+
   collapsibleTree::collapsibleTreeNetwork(
     data,
     fill = "colour",
     tooltipHtml = "tooltip",
+    collapsed = "collapsed",
     fontSize = font_size
   )
+
+}
+
+
+
+get_collapsed <- function(data, show) {
+
+  # check that all the names in show actually exist in the data. Remove those
+  # that don't.
+  bad_names <- setdiff(show, data$name)
+  if (length(bad_names) > 0) {
+    cli::cli_alert_danger(
+      paste("The following taxons do not exist and will be ignored:",
+            "\"{paste(bad_names, collapse = '\", \"')}\"")
+    )
+    show <- setdiff(show, bad_names)
+  }
+
+  # if show is empty, everything must be collapsed
+  # this is checked only after removing invalid taxons, since show may only
+  # be empty after that step.
+  if (length(show)  == 0) return(rep(TRUE, nrow(data)))
+
+  # create a graph and find the path from all the required taxons to the root.
+  # all nodes on the path must be uncollapsed (except for the starting points)
+  data$parent[is.na(data$parent)] <- "_ROOT"
+  graph <- igraph::graph_from_data_frame(data)
+  paths <- igraph::shortest_paths(graph, from = "_ROOT", to = show)
+  not_collapsed <- paths$vpath %>%
+    lapply(\(x) utils::head(names(x), -1)) %>%
+    unlist()
+
+  !data$name %in% not_collapsed
 
 }
