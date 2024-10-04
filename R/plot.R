@@ -6,6 +6,8 @@
 #' [`read_taxonomy()`].
 #' @param show character giving the names of taxons that should be visible.
 #' The tree will be shown uncollapsed up to those taxons.
+#' @param expand_rank character giving the names of ranks that should always
+#' be expanded.
 #' @param font_size integer giving the font size of the labels in pixels.
 #'
 #' @return

@@ -4,14 +4,17 @@
 \alias{plot_taxonomy}
 \title{Plot a Taxonomic Hierarchy}
 \usage{
-plot_taxonomy(data, find = c(), font_size = 12)
+plot_taxonomy(data, show = c(), expand_rank = c(), font_size = 12)
 }
 \arguments{
 \item{data}{tibble defining the taxonomic hierarchy, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
-\item{find}{character giving the names of taxons that should be visible.
+\item{show}{character giving the names of taxons that should be visible.
 The tree will be shown uncollapsed up to those taxons.}
+
+\item{expand_rank}{character giving the names of ranks that should always
+be expanded.}
 
 \item{font_size}{integer giving the font size of the labels in pixels.}
 }
