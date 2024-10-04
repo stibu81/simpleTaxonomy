@@ -32,7 +32,8 @@ plot_taxonomy <- function(data,
     "Unterfamilie" = "#FFC600",
     "Tribus" = "#FFA500",
     "Gattung" = "#CD8500",
-    "Art"= "#A52A2A"
+    "Art"= "#A52A2A",
+    "Unterart" = "#7c2020"
   )
   data$colour <- unname(colours[data$rank])
 
