@@ -49,7 +49,7 @@ plot_taxonomy <- function(data,
     "(", data$scientific, ")"
   )
 
-  data$collapsed <- get_collapsed(data, show, expand_rank)
+  data$collapsed <- !get_expanded(data, show, expand_rank)
 
   collapsibleTree::collapsibleTreeNetwork(
     data,
@@ -63,7 +63,7 @@ plot_taxonomy <- function(data,
 
 
 
-get_collapsed <- function(data, show, expand_rank) {
+get_expanded <- function(data, show, expand_rank) {
 
   # check that all the names in show actually exist in the data. Remove those
   # that don't.
@@ -79,8 +79,8 @@ get_collapsed <- function(data, show, expand_rank) {
   # if show is empty, everything must be collapsed
   # this is checked only after removing invalid taxons, since show may only
   # be empty after that step.
-  collapsed_show <- if (length(show) == 0) {
-    return(rep(TRUE, nrow(data)))
+  expanded_show <- if (length(show) == 0) {
+    rep(FALSE, nrow(data))
   } else {
 
     # create a graph and find the path from all the required taxons to the root.
@@ -88,13 +88,13 @@ get_collapsed <- function(data, show, expand_rank) {
     data$parent[is.na(data$parent)] <- "_ROOT"
     graph <- igraph::graph_from_data_frame(data)
     paths <- igraph::shortest_paths(graph, from = "_ROOT", to = show)
-    not_collapsed <- paths$vpath %>%
+    expanded <- paths$vpath %>%
       lapply(\(x) utils::head(names(x), -1)) %>%
       unlist()
 
-    !data$name %in% not_collapsed
+    data$name %in% expanded
   }
 
-  collapsed_show & (!data$rank %in% expand_rank)
+  expanded_show | data$rank %in% expand_rank
 
 }
