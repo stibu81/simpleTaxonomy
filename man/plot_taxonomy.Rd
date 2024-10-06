@@ -4,7 +4,13 @@
 \alias{plot_taxonomy}
 \title{Plot a Taxonomic Hierarchy}
 \usage{
-plot_taxonomy(data, show = c(), expand_rank = c(), font_size = 12)
+plot_taxonomy(
+  data,
+  show = c(),
+  expand_rank = c(),
+  full_expand = c(),
+  font_size = 12
+)
 }
 \arguments{
 \item{data}{tibble defining the taxonomic hierarchy, typically created with
@@ -15,6 +21,12 @@ The tree will be shown uncollapsed up to those taxons.}
 
 \item{expand_rank}{character giving the names of ranks that should always
 be expanded.}
+
+\item{full_expand}{character giving the names of taxons that should be fully
+expanded, i.e., all taxons below the given taxon should be visible. Note
+that this does not expand the graph above the given taxon, such that the
+expanded part may be invisible. Use \code{show} to expand the graph up to a
+given taxon.}
 
 \item{font_size}{integer giving the font size of the labels in pixels.}
 }

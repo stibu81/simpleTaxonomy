@@ -8,6 +8,11 @@
 #' The tree will be shown uncollapsed up to those taxons.
 #' @param expand_rank character giving the names of ranks that should always
 #' be expanded.
+#' @param full_expand character giving the names of taxons that should be fully
+#' expanded, i.e., all taxons below the given taxon should be visible. Note
+#' that this does not expand the graph above the given taxon, such that the
+#' expanded part may be invisible. Use `show` to expand the graph up to a
+#' given taxon.
 #' @param font_size integer giving the font size of the labels in pixels.
 #'
 #' @return
@@ -18,6 +23,7 @@
 plot_taxonomy <- function(data,
                           show = c(),
                           expand_rank = c(),
+                          full_expand = c(),
                           font_size = 12) {
 
   # add columns for colour
@@ -49,7 +55,7 @@ plot_taxonomy <- function(data,
     "(", data$scientific, ")"
   )
 
-  data$collapsed <- !get_expanded(data, show, expand_rank)
+  data$collapsed <- !get_expanded(data, show, expand_rank, full_expand)
 
   collapsibleTree::collapsibleTreeNetwork(
     data,
@@ -64,23 +70,28 @@ plot_taxonomy <- function(data,
 
 # helper function to determine which nodes should be expanded
 # (i.e., not collapsed)
-get_expanded <- function(data, show, expand_rank) {
+get_expanded <- function(data, show, expand_rank, full_expand) {
 
-  # check that all the names in show actually exist in the data.
+  # check that all the taxons in show and full_expand actually exist in the data.
   # Remove those that don't.
   show <- rm_invalid_taxons(show, data)
+  full_expand <- rm_invalid_taxons(full_expand, data)
 
-  # if show is empty, everything must be collapsed
-  # this is checked only after removing invalid taxons, since show may only
-  # be empty after that step.
+  # prepare the graph in case it is needed. This is the case, if one of the
+  # following arguments has been used: show, full_expand
+  # this is checked only after removing invalid taxons, since the arguments
+  # may only be empty after that step.
+  graph <- if (length(c(show, full_expand)) > 0) {
+    data$parent[is.na(data$parent)] <- "_ROOT"
+    igraph::graph_from_data_frame(data)
+  }
+
+  # evaluate show: if it is not empty, find the path from all the required
+  # taxons to the root. All nodes on the path must be expanded
+  # (except for the starting taxons themselves)
   expanded_show <- if (length(show) == 0) {
     rep(FALSE, nrow(data))
   } else {
-
-    # create a graph and find the path from all the required taxons to the root.
-    # all nodes on the path must be uncollapsed (except for the starting points)
-    data$parent[is.na(data$parent)] <- "_ROOT"
-    graph <- igraph::graph_from_data_frame(data)
     paths <- igraph::shortest_paths(graph, from = "_ROOT", to = show)
     expanded <- paths$vpath %>%
       lapply(\(x) utils::head(names(x), -1)) %>%
@@ -89,7 +100,21 @@ get_expanded <- function(data, show, expand_rank) {
     data$name %in% expanded
   }
 
-  expanded_show | data$rank %in% expand_rank
+  # evaluate expand_full: if it is not empty, find the trees below the given
+  # taxons and expand every taxon inside them.
+  expanded_full <- if (length(full_expand) == 0) {
+    rep(FALSE, nrow(data))
+  } else {
+    subcomps <- lapply(
+      full_expand,
+      \(x) names(igraph::subcomponent(graph, x, mode = "out"))
+    )
+    expanded <- unlist(subcomps)
+
+    data$name %in% expanded
+  }
+
+  expanded_show | expanded_full | data$rank %in% expand_rank
 
 }
 
