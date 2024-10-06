@@ -18,7 +18,9 @@
 #' subtree below that taxon. It is equivalent to putting the same taxons in
 #' `show` and `full_expand`. If `focus` is used, those other two arguments will
 #' be ignored.
-#' @param font_size integer giving the font size of the labels in pixels.
+#' @param link_length length of the horizontal links that connect nodes
+#' in pixels.
+#' @param font_size font size of the labels in pixels.
 #'
 #' @return
 #' a htmlwidget with the interactive tree visualisation.
@@ -30,6 +32,7 @@ plot_taxonomy <- function(data,
                           expand_rank = c(),
                           full_expand = c(),
                           focus = c(),
+                          link_length = 150,
                           font_size = 12) {
 
   # add columns for colour
@@ -78,6 +81,7 @@ plot_taxonomy <- function(data,
 
   collapsibleTree::collapsibleTreeNetwork(
     data,
+    linkLength = link_length,
     fill = "colour",
     tooltipHtml = "tooltip",
     collapsed = "collapsed",

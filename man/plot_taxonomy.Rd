@@ -10,6 +10,7 @@ plot_taxonomy(
   expand_rank = c(),
   full_expand = c(),
   focus = c(),
+  link_length = 150,
   font_size = 12
 )
 }
@@ -35,7 +36,10 @@ subtree below that taxon. It is equivalent to putting the same taxons in
 \code{show} and \code{full_expand}. If \code{focus} is used, those other two arguments will
 be ignored.}
 
-\item{font_size}{integer giving the font size of the labels in pixels.}
+\item{link_length}{length of the horizontal links that connect nodes
+in pixels.}
+
+\item{font_size}{font size of the labels in pixels.}
 }
 \value{
 a htmlwidget with the interactive tree visualisation.
