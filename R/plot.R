@@ -62,19 +62,13 @@ plot_taxonomy <- function(data,
 }
 
 
-
+# helper function to determine which nodes should be expanded
+# (i.e., not collapsed)
 get_expanded <- function(data, show, expand_rank) {
 
-  # check that all the names in show actually exist in the data. Remove those
-  # that don't.
-  bad_names <- setdiff(show, data$name)
-  if (length(bad_names) > 0) {
-    cli::cli_alert_danger(
-      paste("The following taxons do not exist and will be ignored:",
-            "\"{paste(bad_names, collapse = '\", \"')}\"")
-    )
-    show <- setdiff(show, bad_names)
-  }
+  # check that all the names in show actually exist in the data.
+  # Remove those that don't.
+  show <- rm_invalid_taxons(show, data)
 
   # if show is empty, everything must be collapsed
   # this is checked only after removing invalid taxons, since show may only
@@ -97,4 +91,20 @@ get_expanded <- function(data, show, expand_rank) {
 
   expanded_show | data$rank %in% expand_rank
 
+}
+
+
+# remove invalid taxons from character vector
+rm_invalid_taxons <- function(x, data) {
+
+  bad_names <- setdiff(x, data$name)
+  if (length(bad_names) > 0) {
+    cli::cli_alert_danger(
+      paste("The following taxons in \"{deparse(substitute(x))}\" do not exist",
+            "and will be ignored:",
+            "\"{paste(bad_names, collapse = '\", \"')}\"")
+    )
+  }
+
+  setdiff(x, bad_names)
 }
