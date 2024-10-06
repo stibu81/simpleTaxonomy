@@ -9,6 +9,7 @@ plot_taxonomy(
   show = c(),
   expand_rank = c(),
   full_expand = c(),
+  focus = c(),
   font_size = 12
 )
 }
@@ -27,6 +28,12 @@ expanded, i.e., all taxons below the given taxon should be visible. Note
 that this does not expand the graph above the given taxon, such that the
 expanded part may be invisible. Use \code{show} to expand the graph up to a
 given taxon.}
+
+\item{focus}{character giving one or several taxons to focus on. This means
+that the tree up to this taxon will be expanded as well as the full
+subtree below that taxon. It is equivalent to putting the same taxons in
+\code{show} and \code{full_expand}. If \code{focus} is used, those other two arguments will
+be ignored.}
 
 \item{font_size}{integer giving the font size of the labels in pixels.}
 }

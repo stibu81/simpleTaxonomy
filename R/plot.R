@@ -13,6 +13,11 @@
 #' that this does not expand the graph above the given taxon, such that the
 #' expanded part may be invisible. Use `show` to expand the graph up to a
 #' given taxon.
+#' @param focus character giving one or several taxons to focus on. This means
+#' that the tree up to this taxon will be expanded as well as the full
+#' subtree below that taxon. It is equivalent to putting the same taxons in
+#' `show` and `full_expand`. If `focus` is used, those other two arguments will
+#' be ignored.
 #' @param font_size integer giving the font size of the labels in pixels.
 #'
 #' @return
@@ -24,6 +29,7 @@ plot_taxonomy <- function(data,
                           show = c(),
                           expand_rank = c(),
                           full_expand = c(),
+                          focus = c(),
                           font_size = 12) {
 
   # add columns for colour
@@ -54,6 +60,19 @@ plot_taxonomy <- function(data,
     "<strong>", data$name, "</strong></br>",
     "(", data$scientific, ")"
   )
+
+  # process argument focus: put the taxons in there into both, show and
+  # full_expand. Also warn, if show or full_expand have been used together
+  # with focus.
+  if (length(focus) > 0) {
+    if (length(c(show, full_expand)) > 0) {
+      cli::cli_alert_warning(
+        paste("focus has been used togehter with show and/or full_expand.",
+              "show and full_expand will be ignored.")
+      )
+    }
+    show <- full_expand <- focus
+  }
 
   data$collapsed <- !get_expanded(data, show, expand_rank, full_expand)
 
