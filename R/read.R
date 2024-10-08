@@ -36,15 +36,26 @@
 
 read_taxonomy <- function(file, delim = ",") {
 
-  data <- readr::read_delim(file, delim = delim, col_types = "c")
+  data <- readr::read_delim(file, delim = delim, col_types = "c") %>%
+    check_taxonomy_df()
+
+  data
+
+}
+
+
+# Check validity of the data read from the csv file and produce
+# helpful messages
+check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
 
   # check columns and select the required columns
   expected_names <- c("parent", "name", "scientific", "rank")
   missing_names <- setdiff(expected_names, names(data))
   if (length(missing_names) > 0) {
     cli::cli_abort(
-      paste("The following required columns are missing from {file}:",
-            "\"{paste(missing_names, collapse = '\", \"')}\"")
+      paste("The following required columns are missing:",
+            "\"{paste(missing_names, collapse = '\", \"')}\""),
+      call = error_call
     )
   }
   data <- data %>%
@@ -53,12 +64,13 @@ read_taxonomy <- function(file, delim = ",") {
   # check unique root taxon
   root <- data$name[is.na(data$parent)]
   if (length(root)  == 0) {
-    cli::cli_abort("{file} does not define a root taxon.")
+    cli::cli_abort("There is no root taxon.", call = error_call)
   }
   if (length(root) > 1) {
     cli::cli_abort(
-      paste("{file} contains multiple root taxons:",
-            "\"{paste(root, collapse = '\", \"')}\"")
+      paste("There are multiple root taxons:",
+            "\"{paste(root, collapse = '\", \"')}\""),
+      call = error_call
     )
   }
 
@@ -66,15 +78,17 @@ read_taxonomy <- function(file, delim = ",") {
   i_missing_name <- which(is.na(data$name))
   if (length(i_missing_name) > 0) {
     cli::cli_abort(
-      paste("{file} has missing name in row(s)",
-            paste(i_missing_name + 1, collapse = ", "))
+      paste("There are missing names in row(s):",
+            paste(i_missing_name + 1, collapse = ", ")),
+      call = error_call
     )
   }
   dup_names <- unique(data$name[duplicated(data$name)])
   if (length(dup_names) > 0) {
     cli::cli_abort(
-      paste("{file} has duplicate names:",
-            "\"{paste(dup_names, collapse = '\", \"')}\"")
+      paste("There are duplicate names:",
+            "\"{paste(dup_names, collapse = '\", \"')}\""),
+      call = error_call
     )
   }
 
@@ -82,19 +96,22 @@ read_taxonomy <- function(file, delim = ",") {
   missing_parents <- setdiff(data$parent, c(data$name, NA_character_))
   if (length(missing_parents) > 0) {
     cli::cli_abort(
-      paste("{file} has undefined parent taxons:",
-            "\"{paste(missing_parents, collapse = '\", \"')}\"")
+      paste("There are undefined parent taxons:",
+            "\"{paste(missing_parents, collapse = '\", \"')}\""),
+      call = error_call
     )
   }
 
   # rank must not be missing
-  i_missing_rank <- which(is.na(data$rank))
-  if (length(i_missing_rank) > 0) {
+  missing_rank <- data$name[is.na(data$rank)]
+  if (length(missing_rank) > 0) {
     cli::cli_abort(
-      paste("{file} has missing rank in row(s)",
-            paste(i_missing_rank + 1, collapse = ", "))
+      paste("Some taxons have no rank:",
+            "\"{paste(missing_rank, collapse = '\", \"')}\""),
+      call = error_call
     )
   }
 
   data
+
 }
