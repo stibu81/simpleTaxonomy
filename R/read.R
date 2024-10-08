@@ -37,7 +37,8 @@
 read_taxonomy <- function(file, delim = ",") {
 
   data <- readr::read_delim(file, delim = delim, col_types = "c") %>%
-    check_taxonomy_df()
+    check_taxonomy_df() %>%
+    prepare_taxonomy_df()
 
   data
 
@@ -113,5 +114,68 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
   }
 
   data
+
+}
+
+
+# Prepare taxonomy df with additional columns that are needed for
+# the visualisation
+prepare_taxonomy_df <- function(data) {
+
+  data <- data %>%
+    dplyr::left_join(get_rank_colours(), by = "rank")
+
+  # warn if there are invalid ranks
+  invalid_ranks <- unique(data$rank[is.na(data$colour)])
+  if (length(invalid_ranks) > 0) {
+    cli::cli_alert_warning(
+      paste("There are invalid ranks: ",
+            "\"{paste(invalid_ranks, collapse = '\", \"')}\".",
+            "The corresponding nodes will not be coloured.")
+    )
+  }
+
+  # add tooltip
+  data$tooltip <- paste0(
+    data$rank, "</br>",
+    "<strong>", data$name, "</strong></br>",
+    dplyr::if_else(is.na(data$scientific),
+                   "",
+                   paste0("(", data$scientific, ")"))
+  )
+
+  # by default, collapse everything
+  data$collapsed <- TRUE
+
+  data
+
+}
+
+
+# get a data frame with the colours by rank
+get_rank_colours <- function() {
+
+  dplyr::tribble(
+    ~"rank",              ~"colour",
+    "Lebewesen",          "#104E8B",
+    "Dom\u00e4ne",        "#1C86EE",
+    "Reich",              "#00FFFF",
+    "Stamm",              "#76EEC6",
+    "Unterstamm",         "#66CDAA",
+    "Klasse",             "#008000",
+    "Unterklasse",        "#0FA601",
+    "\u00dcberordnung",   "#24D902",
+    "Ordnung",            "#33FF33",
+    "Unterordnung",       "#9EFB18",
+    "Teilordnung",        "#B3FA13",
+    "\u00dcberfamilie",   "#EBF805",
+    "Familie",            "#FFF700",
+    "Unterfamilie",       "#FFC600",
+    "Tribus",             "#FFA500",
+    "Gattung",            "#CD8500",
+    "Art",                "#A52A2A",
+    "Unterart",           "#7C2020",
+    "ohne Rang",          "#FFFFFF"
+  )
 
 }

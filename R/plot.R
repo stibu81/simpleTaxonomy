@@ -35,37 +35,6 @@ plot_taxonomy <- function(data,
                           link_length = 150,
                           font_size = 12) {
 
-  # add columns for colour
-  colours <- c(
-    "Lebewesen" = "#104E8B",
-    "Dom\u00e4ne" = "#1C86EE",
-    "Reich" = "#00FFFF",
-    "Stamm" = "#76EEC6",
-    "Unterstamm" = "#66CDAA",
-    "Klasse" = "#008000",
-    "Unterklasse" = "#0FA601",
-    "\u00dcberordnung" = "#24D902",
-    "Ordnung" = "#33FF33",
-    "Unterordnung" = "#9EFB18",
-    "Teilordnung" = "#B3FA13",
-    "\u00dcberfamilie" = "#EBF805",
-    "Familie" = "#FFF700",
-    "Unterfamilie" = "#FFC600",
-    "Tribus" = "#FFA500",
-    "Gattung" = "#CD8500",
-    "Art"= "#A52A2A",
-    "Unterart" = "#7C2020",
-    "ohne Rang" = "#FFFFFF"
-  )
-  data$colour <- unname(colours[data$rank])
-
-  # add tooltip
-  data$tooltip <- paste0(
-    data$rank, "</br>",
-    "<strong>", data$name, "</strong></br>",
-    "(", data$scientific, ")"
-  )
-
   # process argument focus: put the taxons in there into both, show and
   # full_expand. Also warn, if show or full_expand have been used together
   # with focus.
