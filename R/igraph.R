@@ -1,3 +1,17 @@
+#' Get the Root Node of a Taxonomy Graph
+#'
+#' @param graph a `taxonomy_graph` object
+#'
+#' @return
+#' a `igraph.vs` object corresponding to the root node of the graph.
+#'
+#' @export
+
+get_root_node <- function(graph) {
+  igraph::V(graph)[igraph::degree(graph, mode = "in") == 0]
+}
+
+
 # Create a taxonomy_graph from the data read from csv
 create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
 
