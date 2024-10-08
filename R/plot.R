@@ -35,6 +35,9 @@ plot_taxonomy <- function(data,
                           link_length = 150,
                           font_size = 12) {
 
+  # for now, we must convert the graph back to a data frame for this to work
+  data <- as_tibble(data)
+
   # process argument focus: put the taxons in there into both, show and
   # full_expand. Also warn, if show or full_expand have been used together
   # with focus.

@@ -36,3 +36,27 @@ create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
   graph
 }
 
+
+#' @importFrom dplyr as_tibble
+#' @export
+dplyr::as_tibble
+
+#' @export
+as_tibble.taxonomy_graph <- function(x, ...) {
+
+  edges <- igraph::as_data_frame(x, "edges") %>%
+    dplyr::as_tibble() %>%
+    dplyr::rename("parent" = "from", "name" = "to") %>%
+    # add a fake edge for the root node at the top of the table to get
+    # the original format that was used to create the graph
+    dplyr::add_row(
+      parent = NA_character_,
+      name = names(get_root_node(x)),
+      .before = 1
+    )
+
+  vertices <- igraph::as_data_frame(x, "vertices") %>%
+    dplyr::as_tibble()
+
+  dplyr::full_join(edges, vertices, by = "name", relationship = "one-to-one")
+}
