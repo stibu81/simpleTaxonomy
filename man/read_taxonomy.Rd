@@ -12,12 +12,11 @@ read_taxonomy(file, delim = ",")
 \item{delim}{the delimiter used in the file}
 }
 \value{
-a tibble that can be used to create a visualisation of a
-taxonomic hierarchy.
+a \code{taxonomy_graph} object which inherits from \code{igraph}
 }
 \description{
 Read a csv file that contains the data that defines a taxonomic
-hierarchy.
+hierarchy and return it as a graph.
 }
 \details{
 The file must contain column names in the first row. Each row defines a
@@ -42,4 +41,8 @@ The function checks that the file satisfies the following conditions:
 \item Each parent taxon is defined by its own row in the table.
 \item The rank is always defined.
 }
+
+In addition, the function also warns if an unknown rank is used. This will
+still lead to a graph that can be plotted, but the nodes with unknown rank
+will not be coloured.
 }

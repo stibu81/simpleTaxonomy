@@ -1,7 +1,7 @@
 #' Read Taxonomic Hierarchy From File
 #'
 #' Read a csv file that contains the data that defines a taxonomic
-#' hierarchy.
+#' hierarchy and return it as a graph.
 #'
 #' @param file path to the csv file
 #' @param delim the delimiter used in the file
@@ -28,9 +28,12 @@
 #' * Each parent taxon is defined by its own row in the table.
 #' * The rank is always defined.
 #'
+#' In addition, the function also warns if an unknown rank is used. This will
+#' still lead to a graph that can be plotted, but the nodes with unknown rank
+#' will not be coloured.
+#'
 #' @return
-#' a tibble that can be used to create a visualisation of a
-#' taxonomic hierarchy.
+#' a `taxonomy_graph` object which inherits from `igraph`
 #'
 #' @export
 
@@ -40,7 +43,7 @@ read_taxonomy <- function(file, delim = ",") {
     check_taxonomy_df() %>%
     prepare_taxonomy_df()
 
-  data
+  create_taxonomy_graph(data)
 
 }
 
