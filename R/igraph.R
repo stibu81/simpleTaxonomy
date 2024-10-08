@@ -60,3 +60,27 @@ as_tibble.taxonomy_graph <- function(x, ...) {
 
   dplyr::full_join(edges, vertices, by = "name", relationship = "one-to-one")
 }
+
+
+# convert a graph to a nested list in the format required by the htmlwidget
+# from callapsibleTree
+graph_as_nested_list <- function(graph, root = get_root_node(graph)) {
+
+  root_attr <- igraph::vertex_attr(graph, index = root)
+  node_list <- list(
+    name = root_attr$name,
+    collapsed = root_attr$collapsed,
+    fill = root_attr$colour,
+    tooltip = root_attr$tooltip
+  )
+
+  # if there are children, they must be adde to the list
+  children <- igraph::neighbors(graph, root)
+  if (length(children) == 0) return(node_list)
+
+  c(node_list,
+    list(
+      children = unname(lapply(children, graph_as_nested_list, graph = graph))
+    )
+  )
+}
