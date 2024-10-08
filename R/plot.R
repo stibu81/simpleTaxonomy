@@ -2,7 +2,7 @@
 #'
 #' Create an interactive visualisation of a taxonomic hierarchy.
 #'
-#' @param data tibble defining the taxonomic hierarchy, typically created with
+#' @param graph a `taxonomy_graph` object, typically created with
 #' [`read_taxonomy()`].
 #' @param show character giving the names of taxons that should be visible.
 #' The tree will be shown uncollapsed up to those taxons.
@@ -27,16 +27,13 @@
 #'
 #' @export
 
-plot_taxonomy <- function(data,
+plot_taxonomy <- function(graph,
                           show = c(),
                           expand_rank = c(),
                           full_expand = c(),
                           focus = c(),
                           link_length = 150,
                           font_size = 12) {
-
-  # for now, we must convert the graph back to a data frame for this to work
-  data <- as_tibble(data)
 
   # process argument focus: put the taxons in there into both, show and
   # full_expand. Also warn, if show or full_expand have been used together
@@ -51,7 +48,11 @@ plot_taxonomy <- function(data,
     show <- full_expand <- focus
   }
 
-  data$collapsed <- !get_expanded(data, show, expand_rank, full_expand)
+  expanded <- get_expanded(graph, show, expand_rank, full_expand)
+  igraph::vertex_attr(graph, "collapsed") <- !expanded
+
+  # for now, we must convert the graph back to a data frame for this to work
+  data <- as_tibble(graph)
 
   collapsibleTree::collapsibleTreeNetwork(
     data,
@@ -67,59 +68,52 @@ plot_taxonomy <- function(data,
 
 # helper function to determine which nodes should be expanded
 # (i.e., not collapsed)
-get_expanded <- function(data, show, expand_rank, full_expand) {
+get_expanded <- function(graph, show, expand_rank, full_expand) {
 
   # check that all the taxons in show and full_expand actually exist in the data.
   # Remove those that don't.
-  show <- rm_invalid_taxons(show, data)
-  full_expand <- rm_invalid_taxons(full_expand, data)
-
-  # prepare the graph in case it is needed. This is the case, if one of the
-  # following arguments has been used: show, full_expand
-  # this is checked only after removing invalid taxons, since the arguments
-  # may only be empty after that step.
-  graph <- if (length(c(show, full_expand)) > 0) {
-    data$parent[is.na(data$parent)] <- "_ROOT"
-    igraph::graph_from_data_frame(data)
-  }
+  show <- rm_invalid_taxons(show, graph)
+  full_expand <- rm_invalid_taxons(full_expand, graph)
 
   # evaluate show: if it is not empty, find the path from all the required
   # taxons to the root. All nodes on the path must be expanded
   # (except for the starting taxons themselves)
   expanded_show <- if (length(show) == 0) {
-    rep(FALSE, nrow(data))
+    rep(FALSE, igraph::vcount(graph))
   } else {
-    paths <- igraph::shortest_paths(graph, from = "_ROOT", to = show)
+    paths <- igraph::shortest_paths(graph, from = get_root_node(graph), to = show)
     expanded <- paths$vpath %>%
-      lapply(\(x) utils::head(names(x), -1)) %>%
-      unlist()
-
-    data$name %in% expanded
+      lapply(\(x) utils::head(x, -1)) %>%
+      # unlist() does not preserve the class, so we use do.call() instead
+      do.call(what = c)
+    igraph::V(graph) %in% expanded
   }
 
   # evaluate expand_full: if it is not empty, find the trees below the given
   # taxons and expand every taxon inside them.
   expanded_full <- if (length(full_expand) == 0) {
-    rep(FALSE, nrow(data))
+    rep(FALSE, igraph::vcount(graph))
   } else {
     subcomps <- lapply(
       full_expand,
-      \(x) names(igraph::subcomponent(graph, x, mode = "out"))
+      \(x) igraph::subcomponent(graph, x, mode = "out")
     )
-    expanded <- unlist(subcomps)
-
-    data$name %in% expanded
+    # unlist() does not preserve the class, so we use do.call() instead
+    expanded <- do.call(c, subcomps)
+    igraph::V(graph) %in% expanded
   }
 
-  expanded_show | expanded_full | data$rank %in% expand_rank
+  expanded_rank <- igraph::vertex_attr(graph, "rank") %in% expand_rank
+
+  expanded_show | expanded_full | expanded_rank
 
 }
 
 
 # remove invalid taxons from character vector
-rm_invalid_taxons <- function(x, data) {
+rm_invalid_taxons <- function(x, graph) {
 
-  bad_names <- setdiff(x, data$name)
+  bad_names <- setdiff(x, names(igraph::V(graph)))
   if (length(bad_names) > 0) {
     cli::cli_alert_danger(
       paste("The following taxons in \"{deparse(substitute(x))}\" do not exist",

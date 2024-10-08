@@ -5,7 +5,7 @@
 \title{Plot a Taxonomic Hierarchy}
 \usage{
 plot_taxonomy(
-  data,
+  graph,
   show = c(),
   expand_rank = c(),
   full_expand = c(),
@@ -15,7 +15,7 @@ plot_taxonomy(
 )
 }
 \arguments{
-\item{data}{tibble defining the taxonomic hierarchy, typically created with
+\item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
 \item{show}{character giving the names of taxons that should be visible.
