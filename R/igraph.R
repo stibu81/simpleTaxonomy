@@ -29,6 +29,14 @@ get_tree_depth <- function(graph) {
   as.integer(max(igraph::dfs(graph, root, dist = TRUE)$dist) + 1)
 }
 
+
+# get the deepest nodes in the tree
+get_deepest_nodes <- function(graph) {
+  root <- get_root_node(graph)
+  distances <- igraph::dfs(graph, root, dist = TRUE)$dist
+  igraph::V(graph)[distances == max(distances)]
+}
+
 # Create a taxonomy_graph from the data read from csv
 create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
 

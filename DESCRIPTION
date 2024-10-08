@@ -17,6 +17,7 @@ Imports:
     stringr,
     rlang,
     cli,
-    igraph
+    igraph,
+    htmlwidgets
 Suggests: 
     roxygen2

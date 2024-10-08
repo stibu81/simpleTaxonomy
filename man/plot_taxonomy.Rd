@@ -47,3 +47,10 @@ a htmlwidget with the interactive tree visualisation.
 \description{
 Create an interactive visualisation of a taxonomic hierarchy.
 }
+\details{
+The function makes use of the html widget defined in \code{\link{collapsibleTree}},
+but not of the function \code{\link[=collapsibleTreeNetwork]{collapsibleTreeNetwork()}}
+from that package that can produce the same plot from the same input data.
+\code{plot_taxonomy()} is less flexible than the function from
+\code{collapsibleTree} but also much faster.
+}

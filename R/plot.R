@@ -3,7 +3,7 @@
 #' Create an interactive visualisation of a taxonomic hierarchy.
 #'
 #' @param graph a `taxonomy_graph` object, typically created with
-#' [`read_taxonomy()`].
+#' [read_taxonomy()].
 #' @param show character giving the names of taxons that should be visible.
 #' The tree will be shown uncollapsed up to those taxons.
 #' @param expand_rank character giving the names of ranks that should always
@@ -21,6 +21,13 @@
 #' @param link_length length of the horizontal links that connect nodes
 #' in pixels.
 #' @param font_size font size of the labels in pixels.
+#'
+#' @details
+#' The function makes use of the html widget defined in [`collapsibleTree`],
+#' but not of the function [collapsibleTreeNetwork()]
+#' from that package that can produce the same plot from the same input data.
+#' `plot_taxonomy()` is less flexible than the function from
+#' `collapsibleTree` but also much faster.
 #'
 #' @return
 #' a htmlwidget with the interactive tree visualisation.
@@ -51,17 +58,11 @@ plot_taxonomy <- function(graph,
   expanded <- get_expanded(graph, show, expand_rank, full_expand)
   igraph::vertex_attr(graph, "collapsed") <- !expanded
 
-  # for now, we must convert the graph back to a data frame for this to work
-  data <- as_tibble(graph)
-
-  collapsibleTree::collapsibleTreeNetwork(
-    data,
-    linkLength = link_length,
-    fill = "colour",
-    tooltipHtml = "tooltip",
-    collapsed = "collapsed",
-    fontSize = font_size
+  widget_input = list(
+    data = graph_as_nested_list(graph),
+    options = get_widget_options(graph, link_length, font_size)
   )
+  htmlwidgets::createWidget("collapsibleTree", widget_input)
 
 }
 
@@ -123,4 +124,29 @@ rm_invalid_taxons <- function(x, graph) {
   }
 
   setdiff(x, bad_names)
+}
+
+
+get_widget_options <- function(graph, link_length, font_size) {
+
+  # compute the margins as the number of characters of the label of the
+  # root node (which is the left-most of all labels) and the maximal number of
+  # characters of the labels at the deepest level (which are the right-most of
+  # all labels).
+  # This is inspired by the code in collapsibleTree::collapsibleTreeNetwork()
+  # by Adeel Khan (https://github.com/AdeelK93).
+  left_margin <- nchar(names(get_root_node(graph)))
+  right_margin <- max(nchar(names(get_deepest_nodes(graph))))
+
+  list(
+    hierarchy = 1:get_tree_depth(graph),
+    linkLength = link_length, fontSize = font_size,
+    tooltip = TRUE, collapsed = "collapsed", zoomable = TRUE,
+    margin = list(
+      top = 20,
+      bottom = 20,
+      left = (left_margin * 0.6 * font_size) + 25,
+      right = (right_margin * 0.6 * font_size) + 25
+    )
+  )
 }
