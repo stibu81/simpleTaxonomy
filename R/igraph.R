@@ -12,6 +12,23 @@ get_root_node <- function(graph) {
 }
 
 
+#' Get Depth of a Taxonomy Tree Graph
+#'
+#' Get the depth of a taxonomy tree graph, i.e., the number of nodes from the root
+#' to the most distant leaf.
+#'
+#' @param graph a `taxonomy_graph` object
+#'
+#' @return
+#' integer giving the depth of the graph
+#'
+#' @export
+
+get_tree_depth <- function(graph) {
+  root <- get_root_node(graph)
+  as.integer(max(igraph::dfs(graph, root, dist = TRUE)$dist) + 1)
+}
+
 # Create a taxonomy_graph from the data read from csv
 create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
 
