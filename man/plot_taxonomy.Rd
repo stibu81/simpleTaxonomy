@@ -5,7 +5,7 @@
 \title{Plot a Taxonomic Hierarchy}
 \usage{
 plot_taxonomy(
-  data,
+  graph,
   show = c(),
   expand_rank = c(),
   full_expand = c(),
@@ -15,7 +15,7 @@ plot_taxonomy(
 )
 }
 \arguments{
-\item{data}{tibble defining the taxonomic hierarchy, typically created with
+\item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
 \item{show}{character giving the names of taxons that should be visible.
@@ -46,4 +46,11 @@ a htmlwidget with the interactive tree visualisation.
 }
 \description{
 Create an interactive visualisation of a taxonomic hierarchy.
+}
+\details{
+The function makes use of the html widget defined in \code{\link{collapsibleTree}},
+but not of the function \code{\link[=collapsibleTreeNetwork]{collapsibleTreeNetwork()}}
+from that package that can produce the same plot from the same input data.
+\code{plot_taxonomy()} is less flexible than the function from
+\code{collapsibleTree} but also much faster.
 }
