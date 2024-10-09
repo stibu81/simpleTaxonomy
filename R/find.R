@@ -5,12 +5,18 @@
 #'
 #' @param graph a `taxonomy_graph` object, typically created with
 #' [`read_taxonomy()`].
-#' @param pattern a regex pattern
+#' @param pattern a regex pattern, matching is case insensitive.
 #' @param target character giving the column to search in
 #' ("name" or "scientific"). The default is "all" which searches in all columns.
 #'
 #' @return
 #' a character vector giving the taxon names that match the pattern
+#'
+#' @examples
+#' file <- get_example_taxonomy_file()
+#' taxonomy <- read_taxonomy(file)
+#' find_taxon(taxonomy, "katze")
+#' find_taxon(taxonomy, "felis")
 #'
 #' @export
 

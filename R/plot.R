@@ -32,6 +32,21 @@
 #' @return
 #' a htmlwidget with the interactive tree visualisation.
 #'
+#' @examples
+#' file <- get_example_taxonomy_file()
+#' taxonomy <- read_taxonomy(file)
+#' plot_taxonomy(taxonomy)
+#'
+#' # expand the full path to the Grizzly bear
+#' plot_taxonomy(taxonomy, show = "Grizzlybär")
+#'
+#' # fully expand the cat family (Felidae)
+#' # The cats are not visible, because the nodes above are not expanded.
+#' plot_taxonomy(taxonomy, full_expand = "Katzen")
+#'
+#' # expand the path up to the family of the cats and everything below
+#' plot_taxonomy(taxonomy, focus = "Katzen")
+#'
 #' @export
 
 plot_taxonomy <- function(graph,

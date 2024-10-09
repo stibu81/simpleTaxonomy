@@ -35,6 +35,12 @@
 #' @return
 #' a `taxonomy_graph` object which inherits from `igraph`
 #'
+#' @examples
+#' file <- get_example_taxonomy_file()
+#' taxonomy <- read_taxonomy(file)
+#' class(taxonomy)
+#' as_tibble(taxonomy)
+#'
 #' @export
 
 read_taxonomy <- function(file, delim = ",") {
@@ -181,4 +187,17 @@ get_rank_colours <- function() {
     "ohne Rang",          "#FFFFFF"
   )
 
+}
+
+
+#' Get Example Taxonomy File
+#'
+#' Return the path to an example file containing a partial taxonomic hierarchy
+#' of the order Carnivora.
+#' It can be read with [read_taxonomy()] and plotted with [plot_taxonomy()].
+#'
+#' @export
+
+get_example_taxonomy_file <- function() {
+  system.file("example", "carnivora.csv", package = "simpleTaxonomy")
 }

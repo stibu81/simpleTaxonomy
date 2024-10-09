@@ -10,7 +10,7 @@ find_taxon(graph, pattern, target = c("all", "name", "scientific"))
 \item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
-\item{pattern}{a regex pattern}
+\item{pattern}{a regex pattern which will be applied case-insensitively.}
 
 \item{target}{character giving the column to search in
 ("name" or "scientific"). The default is "all" which searches in all columns.}
@@ -21,4 +21,11 @@ a character vector giving the taxon names that match the pattern
 \description{
 Find taxony by pattern and return their names. The output can be passed
 to the arguments \code{show}, \code{full_expand} or \code{focus} in \code{\link[=plot_taxonomy]{plot_taxonomy()}}.
+}
+\examples{
+file <- get_example_taxonomy_file()
+taxonomy <- read_taxonomy(file)
+find_taxon(taxonomy, "katze")
+find_taxon(taxonomy, "felis")
+
 }

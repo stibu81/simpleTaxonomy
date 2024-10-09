@@ -46,3 +46,10 @@ In addition, the function also warns if an unknown rank is used. This will
 still lead to a graph that can be plotted, but the nodes with unknown rank
 will not be coloured.
 }
+\examples{
+file <- get_example_taxonomy_file()
+taxonomy <- read_taxonomy(file)
+class(taxonomy)
+as_tibble(taxonomy)
+
+}

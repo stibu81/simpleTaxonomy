@@ -15,3 +15,9 @@ a \code{igraph.vs} object corresponding to the root node of the graph.
 \description{
 Get the Root Node of a Taxonomy Graph
 }
+\examples{
+file <- get_example_taxonomy_file()
+taxonomy <- read_taxonomy(file)
+get_root_node(taxonomy)
+
+}

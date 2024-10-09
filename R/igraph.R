@@ -5,6 +5,11 @@
 #' @return
 #' a `igraph.vs` object corresponding to the root node of the graph.
 #'
+#' @examples
+#' file <- get_example_taxonomy_file()
+#' taxonomy <- read_taxonomy(file)
+#' get_root_node(taxonomy)
+#'
 #' @export
 
 get_root_node <- function(graph) {
@@ -22,6 +27,11 @@ get_root_node <- function(graph) {
 #' @return
 #' integer giving the depth of the graph
 #'
+#' @examples
+#' file <- get_example_taxonomy_file()
+#' taxonomy <- read_taxonomy(file)
+#' get_tree_depth(taxonomy)
+#'
 #' @export
 
 get_tree_depth <- function(graph) {
@@ -36,6 +46,7 @@ get_deepest_nodes <- function(graph) {
   distances <- igraph::dfs(graph, root, dist = TRUE)$dist
   igraph::V(graph)[distances == max(distances)]
 }
+
 
 # Create a taxonomy_graph from the data read from csv
 create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
