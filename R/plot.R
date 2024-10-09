@@ -42,6 +42,13 @@ plot_taxonomy <- function(graph,
                           link_length = 150,
                           font_size = 12) {
 
+  # this only works for taxonomy_graph objects
+  if (!inherits(graph, "taxonomy_graph")) {
+    cli::cli_abort(
+      "{deparse(substitute(graph))} is not a taxonomy_graph object."
+    )
+  }
+
   # process argument focus: put the taxons in there into both, show and
   # full_expand. Also warn, if show or full_expand have been used together
   # with focus.
