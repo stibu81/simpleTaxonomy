@@ -4,10 +4,10 @@
 \alias{find_taxon}
 \title{Find Taxons By Pattern}
 \usage{
-find_taxon(data, pattern, target = c("all", "name", "scientific"))
+find_taxon(graph, pattern, target = c("all", "name", "scientific"))
 }
 \arguments{
-\item{data}{tibble defining the taxonomic hierarchy, typically created with
+\item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
 \item{pattern}{a regex pattern}
