@@ -10,7 +10,7 @@ find_taxon(graph, pattern, target = c("all", "name", "scientific"))
 \item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
-\item{pattern}{a regex pattern which will be applied case-insensitively.}
+\item{pattern}{a regex pattern, matching is case insensitive.}
 
 \item{target}{character giving the column to search in
 ("name" or "scientific"). The default is "all" which searches in all columns.}
