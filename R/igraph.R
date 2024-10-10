@@ -48,6 +48,48 @@ get_deepest_nodes <- function(graph) {
 }
 
 
+#' Extract a Subgraph
+#'
+#' Extract a subgraph from a `taxonomy_graph` below a given taxon.
+#'
+#' @param graph a `taxonomy_graph` object
+#' @param taxon character giving a single taxon. The subgraph will contain
+#' this taxon as the root and all the taxons that are in the tree below it.
+#'
+#' @return
+#' a `taxonomy_graph` object
+#'
+#' @examples
+#' file <- get_example_taxonomy_file()
+#' taxonomy <- read_taxonomy(file)
+#' cats <- get_subgraph(taxonomy, "Katzen")
+#'
+#' @export
+
+get_subgraph <- function(graph, taxon) {
+
+  # this only works for taxonomy_graph objects
+  if (!inherits(graph, "taxonomy_graph")) {
+    cli::cli_abort(
+      "{deparse(substitute(graph))} is not a taxonomy_graph object."
+    )
+  }
+
+  # check taxon: there must be only one and it must be valid
+  if (length(taxon) != 1) {
+    cli::cli_abort("taxon must have length 1.")
+  }
+  if (!taxon %in% names(igraph::V(graph))) {
+    cli::cli_abort("taxon \"{taxon}\" does not exist in the graph.")
+  }
+
+  subcomponent <- igraph::subcomponent(graph, taxon, mode = "out")
+  subgraph <- igraph::subgraph(graph, subcomponent)
+  class(subgraph) <- c("taxonomy_graph", class(subgraph))
+
+  subgraph
+}
+
 # Create a taxonomy_graph from the data read from csv
 create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
 
