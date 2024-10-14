@@ -23,7 +23,7 @@ Braunbär,Grizzlybär,Ursus arctos horribilis,Unterart
 Braunbär,Kodiakbär,Ursus arctos middendorffi,Unterart
 Eigentliche Bären,Eisbär,Ursus maritimus,Art
 Eigentliche Bären,Kragenbär,Ursus thibetanus,Art
-Bären,Großer Panda ,Ailuropoda melanoleuca,Art
+Bären,Grosser Panda,Ailuropoda melanoleuca,Art
 Bären,Brillenbär,Tremarctos ornatus,Art
 Bären,Malaienbär,Helarctos malayanus,Art
 Bären,Lippenbär,Melursus ursinus,Art
@@ -57,8 +57,8 @@ Altweltotter,Eurasischer Fischotter,Lutra lutra,Art
 Marder,Honigdachs,Mellivora capensis,Art
 Marderverwandte,Skunks,Mephitidae,Familie
 Skunks,Streifenskunk,Mephitis mephitis,Art
-Marderverwandte,Ailuridae ,Ailuridae ,Familie
-Ailuridae ,Kleine Pandas,Ailurus,Gattung
+Marderverwandte,Ailuridae,Ailuridae,Familie
+Ailuridae,Kleine Pandas,Ailurus,Gattung
 Marderverwandte,Kleinbären,Procyonidae,Familie
 Kleinbären,Waschbär,Procyon lotor,Art
 Kleinbären,Nasenbären,Nasua,Gattung

@@ -46,10 +46,27 @@
 read_taxonomy <- function(file, delim = ",") {
 
   data <- readr::read_delim(file, delim = delim, col_types = "c") %>%
+    clean_taxonomy_df() %>%
     check_taxonomy_df() %>%
     prepare_taxonomy_df()
 
   create_taxonomy_graph(data)
+
+}
+
+
+# Perform a few cleaning steps on the taxonomy data
+clean_taxonomy_df <- function(data) {
+
+  data %>%
+    # trim white space, fix repeated white space
+    dplyr::mutate(
+      dplyr::across(dplyr::everything(), stringr::str_squish)
+    ) %>%
+    # remove empty rows
+    dplyr::filter(
+      dplyr::if_any(dplyr::everything(), ~!is.na(.x))
+    )
 
 }
 
@@ -184,7 +201,7 @@ get_rank_colours <- function() {
     "Gattung",            "#CD8500",
     "Art",                "#A52A2A",
     "Unterart",           "#7C2020",
-    "ohne Rang",          "#FFFFFF"
+    "Ohne Rang",          "#FFFFFF"
   )
 
 }
