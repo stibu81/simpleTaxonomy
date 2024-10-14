@@ -201,7 +201,7 @@ get_rank_colours <- function() {
     "Gattung",            "#CD8500",
     "Art",                "#A52A2A",
     "Unterart",           "#7C2020",
-    "Ohne Rang",          "#FFFFFF"
+    "ohne Rang",          "#FFFFFF"
   )
 
 }
