@@ -32,6 +32,14 @@
 #' still lead to a graph that can be plotted, but the nodes with unknown rank
 #' will not be coloured.
 #'
+#' The common names (column "name") of the taxons must be unique, because they
+#' are used to create the graph. Sometimes, there are taxons that have identical
+#' common names, e.g. the family Equidae and the genus Equus are both called
+#' "Pferde" in German. In theses cases, one can use an additional identifier
+#' in parenthesis to make the names unique, e.g., "Pferde (F)" and "Pferde" for
+#' the family and the genus, respectively. The identifier "(F)" will be removed
+#' and not be shown in the visualisation.
+#'
 #' @return
 #' a `taxonomy_graph` object which inherits from `igraph`
 #'
@@ -148,6 +156,15 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
 # the visualisation
 prepare_taxonomy_df <- function(data) {
 
+  # the names may contain additional identifiers in parenthesis to distinguish
+  # taxons that have otherwise indistinguishable common names. Remove these
+  # for the label in the graph
+  data <- data %>%
+    dplyr::mutate(
+      label = stringr::str_remove(.data$name, "\\(.*\\)") %>%
+        stringr::str_trim()
+    )
+
   data <- data %>%
     dplyr::left_join(get_rank_colours(), by = "rank")
 
@@ -164,7 +181,7 @@ prepare_taxonomy_df <- function(data) {
   # add tooltip
   data$tooltip <- paste0(
     data$rank, "</br>",
-    "<strong>", data$name, "</strong></br>",
+    "<strong>", data$label, "</strong></br>",
     dplyr::if_else(is.na(data$scientific),
                    "",
                    paste0("(", data$scientific, ")"))

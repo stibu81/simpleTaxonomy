@@ -136,7 +136,10 @@ as_tibble.taxonomy_graph <- function(x, ...) {
   vertices <- igraph::as_data_frame(x, "vertices") %>%
     dplyr::as_tibble()
 
-  dplyr::full_join(edges, vertices, by = "name", relationship = "one-to-one")
+  edges %>%
+    dplyr::full_join(vertices, by = "name", relationship = "one-to-one") %>%
+    dplyr::select(-dplyr::any_of(c("label", "colour", "tooltip", "collapsed")))
+
 }
 
 
@@ -146,7 +149,7 @@ graph_as_nested_list <- function(graph, root = get_root_node(graph)) {
 
   root_attr <- igraph::vertex_attr(graph, index = root)
   node_list <- list(
-    name = root_attr$name,
+    name = root_attr$label,
     collapsed = root_attr$collapsed,
     fill = root_attr$colour,
     tooltip = root_attr$tooltip

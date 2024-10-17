@@ -45,6 +45,14 @@ The function checks that the file satisfies the following conditions:
 In addition, the function also warns if an unknown rank is used. This will
 still lead to a graph that can be plotted, but the nodes with unknown rank
 will not be coloured.
+
+The common names (column "name") of the taxons must be unique, because they
+are used to create the graph. Sometimes, there are taxons that have identical
+common names, e.g. the family Equidae and the genus Equus are both called
+"Pferde" in German. In theses cases, one can use an additional identifier
+in parenthesis to make the names unique, e.g., "Pferde (F)" and "Pferde" for
+the family and the genus, respectively. The identifier "(F)" will be removed
+and not be shown in the visualisation.
 }
 \examples{
 file <- get_example_taxonomy_file()
