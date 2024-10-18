@@ -1,6 +1,6 @@
 parent,name,scientific,rank
 ,Raubtiere,Carnivora,Ordnung
-Raubtiere,Hundeartige,Caniformia,Überfamilie
+Raubtiere,Hundeartige,Caniformia,Unterordnung
 Hundeartige,Hunde,Canidae,Familie
 Hunde,Echte Füchse,Vulpini,Tribus
 Echte Füchse,Vulpes,Vulpes,Gattung
@@ -62,7 +62,7 @@ Ailuridae,Kleine Pandas,Ailurus,Gattung
 Marderverwandte,Kleinbären,Procyonidae,Familie
 Kleinbären,Waschbär,Procyon lotor,Art
 Kleinbären,Nasenbären,Nasua,Gattung
-Raubtiere,Katzenartige,Feliformia,Überfamilie
+Raubtiere,Katzenartige,Feliformia,Unterordnung
 Katzenartige,Katzen,Felidae,Familie
 Katzen,Kleinkatzen,Felinae,Unterfamilie
 Kleinkatzen,Gepard,Acinonyx jubatus,Art
