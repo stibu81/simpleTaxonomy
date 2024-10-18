@@ -1,6 +1,6 @@
 Package: simpleTaxonomy
 Title: Create Interactive Visualisation of Taxonomic Hierarchy
-Version: 0.0.0.9017
+Version: 0.0.0.9018
 Authors@R: 
     person("Stefan", "Lanz", , "slanz1137@gmail.com", role = c("aut", "cre"))
 Description: Create interactive visualisations of a taxonomy hierarchy that is
@@ -16,6 +16,7 @@ Imports:
     dplyr,
     stringr,
     rlang,
+    tidyr,
     cli,
     igraph,
     htmlwidgets

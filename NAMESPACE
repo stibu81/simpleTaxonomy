@@ -2,6 +2,7 @@
 
 S3method(as_tibble,taxonomy_graph)
 export(as_tibble)
+export(count_ranks)
 export(find_taxon)
 export(get_example_taxonomy_file)
 export(get_root_node)
