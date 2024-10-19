@@ -7,6 +7,7 @@ Description: Create interactive visualisations of a taxonomy hierarchy that is
   specified in a csv file using a simple format. The visualisation uses
   the javascript library D3.js via the R package collapsibleTree.
 License: MIT + file LICENSE
+Language: en-GB
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
@@ -21,4 +22,5 @@ Imports:
     igraph,
     htmlwidgets
 Suggests: 
-    roxygen2
+    roxygen2,
+    spelling

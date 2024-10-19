@@ -1,19 +1,19 @@
-#' Count the Number of Taxons per Rank
+#' Count the Number of Taxa per Rank
 #'
-#' Count the number of taxons per rank in a `taxonomy_graph` and return
+#' Count the number of taxa per rank in a `taxonomy_graph` and return
 #' the result as a tibble.
 #'
 #' @param graph a `taxonomy_graph` object
 #' @param subgraph the name of a taxon which is to be used as the root of a
 #'  subgraph, to which counting is restricted.
 #' @param by_rank the name of a rank. Ranks will be counted for each of the
-#'  taxons with this rank.
+#'  taxa with this rank.
 #'
 #' @details
-#' If `by_rank` is not used, the number of taxons are counted in the complete
+#' If `by_rank` is not used, the number of taxa is counted in the complete
 #' graph or in the subgraph specified by `subgraph`.
 #'
-#' `by_rank` can be used to count ranks grouped by the taxons of a given rank.
+#' `by_rank` can be used to count ranks grouped by the taxa of a given rank.
 #' In this case, each row will correspond to a taxon of the requested rank
 #' and each column will correspond to a rank.
 #'

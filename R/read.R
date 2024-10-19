@@ -32,8 +32,8 @@
 #' still lead to a graph that can be plotted, but the nodes with unknown rank
 #' will not be coloured.
 #'
-#' The common names (column "name") of the taxons must be unique, because they
-#' are used to create the graph. Sometimes, there are taxons that have identical
+#' The common names (column "name") of the taxa must be unique, because they
+#' are used to create the graph. Sometimes, there are taxa that have identical
 #' common names, e.g. the family Equidae and the genus Equus are both called
 #' "Pferde" in German. In theses cases, one can use an additional identifier
 #' in parenthesis to make the names unique, e.g., "Pferde (F)" and "Pferde" for
@@ -103,7 +103,7 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
   }
   if (length(root) > 1) {
     cli::cli_abort(
-      paste("There are multiple root taxons:",
+      paste("There are multiple root taxa:",
             "\"{paste(root, collapse = '\", \"')}\""),
       call = error_call
     )
@@ -127,11 +127,11 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
     )
   }
 
-  # all parent taxons must be properly defined
+  # all parent taxa must be properly defined
   missing_parents <- setdiff(data$parent, c(data$name, NA_character_))
   if (length(missing_parents) > 0) {
     cli::cli_abort(
-      paste("There are undefined parent taxons:",
+      paste("There are undefined parent taxa:",
             "\"{paste(missing_parents, collapse = '\", \"')}\""),
       call = error_call
     )
@@ -141,7 +141,7 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
   missing_rank <- data$name[is.na(data$rank)]
   if (length(missing_rank) > 0) {
     cli::cli_abort(
-      paste("Some taxons have no rank:",
+      paste("Some taxa have no rank:",
             "\"{paste(missing_rank, collapse = '\", \"')}\""),
       call = error_call
     )
@@ -157,7 +157,7 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
 prepare_taxonomy_df <- function(data) {
 
   # the names may contain additional identifiers in parenthesis to distinguish
-  # taxons that have otherwise indistinguishable common names. Remove these
+  # taxa that have otherwise indistinguishable common names. Remove these
   # for the label in the graph
   data <- data %>%
     dplyr::mutate(

@@ -1,6 +1,6 @@
-#' Find Taxons By Pattern
+#' Find Taxa By Pattern
 #'
-#' Find taxony by pattern and return their names. The output can be passed
+#' Find taxa by pattern and return their common names. The output can be passed
 #' to the arguments `show`, `full_expand` or `focus` in [`plot_taxonomy()`].
 #'
 #' @param graph a `taxonomy_graph` object, typically created with

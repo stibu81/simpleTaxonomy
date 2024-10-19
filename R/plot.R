@@ -4,18 +4,18 @@
 #'
 #' @param graph a `taxonomy_graph` object, typically created with
 #' [read_taxonomy()].
-#' @param show character giving the names of taxons that should be visible.
-#' The tree will be shown uncollapsed up to those taxons.
+#' @param show character giving the names of taxa that should be visible.
+#' The tree will be shown uncollapsed up to those taxa.
 #' @param expand_rank character giving the names of ranks that should always
 #' be expanded.
-#' @param full_expand character giving the names of taxons that should be fully
-#' expanded, i.e., all taxons below the given taxon should be visible. Note
+#' @param full_expand character giving the names of taxa that should be fully
+#' expanded, i.e., all taxa below the given taxon should be visible. Note
 #' that this does not expand the graph above the given taxon, such that the
 #' expanded part may be invisible. Use `show` to expand the graph up to a
 #' given taxon.
-#' @param focus character giving one or several taxons to focus on. This means
+#' @param focus character giving one or several taxa to focus on. This means
 #' that the tree up to this taxon will be expanded as well as the full
-#' subtree below that taxon. It is equivalent to putting the same taxons in
+#' subtree below that taxon. It is equivalent to putting the same taxa in
 #' `show` and `full_expand`. If `focus` is used, those other two arguments will
 #' be ignored.
 #' @param link_length length of the horizontal links that connect nodes
@@ -64,7 +64,7 @@ plot_taxonomy <- function(graph,
     )
   }
 
-  # process argument focus: put the taxons in there into both, show and
+  # process argument focus: put the taxa in there into both, show and
   # full_expand. Also warn, if show or full_expand have been used together
   # with focus.
   if (length(focus) > 0) {
@@ -93,14 +93,14 @@ plot_taxonomy <- function(graph,
 # (i.e., not collapsed)
 get_expanded <- function(graph, show, expand_rank, full_expand) {
 
-  # check that all the taxons in show and full_expand actually exist in the data.
+  # check that all the taxa in show and full_expand actually exist in the data.
   # Remove those that don't.
-  show <- rm_invalid_taxons(show, graph)
-  full_expand <- rm_invalid_taxons(full_expand, graph)
+  show <- rm_invalid_taxa(show, graph)
+  full_expand <- rm_invalid_taxa(full_expand, graph)
 
   # evaluate show: if it is not empty, find the path from all the required
-  # taxons to the root. All nodes on the path must be expanded
-  # (except for the starting taxons themselves)
+  # taxa to the root. All nodes on the path must be expanded
+  # (except for the starting taxa themselves)
   expanded_show <- if (length(show) == 0) {
     rep(FALSE, igraph::vcount(graph))
   } else {
@@ -113,7 +113,7 @@ get_expanded <- function(graph, show, expand_rank, full_expand) {
   }
 
   # evaluate expand_full: if it is not empty, find the trees below the given
-  # taxons and expand every taxon inside them.
+  # taxa and expand every taxon inside them.
   expanded_full <- if (length(full_expand) == 0) {
     rep(FALSE, igraph::vcount(graph))
   } else {
@@ -133,13 +133,13 @@ get_expanded <- function(graph, show, expand_rank, full_expand) {
 }
 
 
-# remove invalid taxons from character vector
-rm_invalid_taxons <- function(x, graph) {
+# remove invalid taxa from character vector
+rm_invalid_taxa <- function(x, graph) {
 
   bad_names <- setdiff(x, names(igraph::V(graph)))
   if (length(bad_names) > 0) {
     cli::cli_alert_danger(
-      paste("The following taxons in \"{deparse(substitute(x))}\" do not exist",
+      paste("The following taxa in \"{deparse(substitute(x))}\" do not exist",
             "and will be ignored:",
             "\"{paste(bad_names, collapse = '\", \"')}\"")
     )

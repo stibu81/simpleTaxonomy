@@ -48,13 +48,13 @@ get_deepest_nodes <- function(graph) {
 }
 
 
-#' Extract a Subgraph
+#' Extract a Subgraph from a Taxonomy Graph
 #'
 #' Extract a subgraph from a `taxonomy_graph` below a given taxon.
 #'
 #' @param graph a `taxonomy_graph` object
 #' @param taxon character giving a single taxon. The subgraph will contain
-#' this taxon as the root and all the taxons that are in the tree below it.
+#' this taxon as the root and all the taxa that are in the tree below it.
 #'
 #' @return
 #' a `taxonomy_graph` object

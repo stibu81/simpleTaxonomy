@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyse.R
 \name{count_ranks}
 \alias{count_ranks}
-\title{Count the Number of Taxons per Rank}
+\title{Count the Number of Taxa per Rank}
 \usage{
 count_ranks(graph, subgraph = NULL, by_rank = NULL)
 }
@@ -13,20 +13,20 @@ count_ranks(graph, subgraph = NULL, by_rank = NULL)
 subgraph, to which counting is restricted.}
 
 \item{by_rank}{the name of a rank. Ranks will be counted for each of the
-taxons with this rank.}
+taxa with this rank.}
 }
 \value{
 a tibble
 }
 \description{
-Count the number of taxons per rank in a \code{taxonomy_graph} and return
+Count the number of taxa per rank in a \code{taxonomy_graph} and return
 the result as a tibble.
 }
 \details{
-If \code{by_rank} is not used, the number of taxons are counted in the complete
+If \code{by_rank} is not used, the number of taxa is counted in the complete
 graph or in the subgraph specified by \code{subgraph}.
 
-\code{by_rank} can be used to count ranks grouped by the taxons of a given rank.
+\code{by_rank} can be used to count ranks grouped by the taxa of a given rank.
 In this case, each row will correspond to a taxon of the requested rank
 and each column will correspond to a rank.
 }

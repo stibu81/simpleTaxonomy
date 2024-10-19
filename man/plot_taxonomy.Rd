@@ -18,21 +18,21 @@ plot_taxonomy(
 \item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
-\item{show}{character giving the names of taxons that should be visible.
-The tree will be shown uncollapsed up to those taxons.}
+\item{show}{character giving the names of taxa that should be visible.
+The tree will be shown uncollapsed up to those taxa.}
 
 \item{expand_rank}{character giving the names of ranks that should always
 be expanded.}
 
-\item{full_expand}{character giving the names of taxons that should be fully
-expanded, i.e., all taxons below the given taxon should be visible. Note
+\item{full_expand}{character giving the names of taxa that should be fully
+expanded, i.e., all taxa below the given taxon should be visible. Note
 that this does not expand the graph above the given taxon, such that the
 expanded part may be invisible. Use \code{show} to expand the graph up to a
 given taxon.}
 
-\item{focus}{character giving one or several taxons to focus on. This means
+\item{focus}{character giving one or several taxa to focus on. This means
 that the tree up to this taxon will be expanded as well as the full
-subtree below that taxon. It is equivalent to putting the same taxons in
+subtree below that taxon. It is equivalent to putting the same taxa in
 \code{show} and \code{full_expand}. If \code{focus} is used, those other two arguments will
 be ignored.}
 

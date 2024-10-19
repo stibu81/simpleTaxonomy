@@ -2,7 +2,7 @@
 % Please edit documentation in R/find.R
 \name{find_taxon}
 \alias{find_taxon}
-\title{Find Taxons By Pattern}
+\title{Find Taxa By Pattern}
 \usage{
 find_taxon(graph, pattern, target = c("all", "name", "scientific"))
 }
@@ -19,7 +19,7 @@ find_taxon(graph, pattern, target = c("all", "name", "scientific"))
 a character vector giving the taxon names that match the pattern
 }
 \description{
-Find taxony by pattern and return their names. The output can be passed
+Find taxa by pattern and return their common names. The output can be passed
 to the arguments \code{show}, \code{full_expand} or \code{focus} in \code{\link[=plot_taxonomy]{plot_taxonomy()}}.
 }
 \examples{

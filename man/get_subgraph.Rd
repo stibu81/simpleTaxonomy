@@ -2,7 +2,7 @@
 % Please edit documentation in R/igraph.R
 \name{get_subgraph}
 \alias{get_subgraph}
-\title{Extract a Subgraph}
+\title{Extract a Subgraph from a Taxonomy Graph}
 \usage{
 get_subgraph(graph, taxon)
 }
@@ -10,7 +10,7 @@ get_subgraph(graph, taxon)
 \item{graph}{a \code{taxonomy_graph} object}
 
 \item{taxon}{character giving a single taxon. The subgraph will contain
-this taxon as the root and all the taxons that are in the tree below it.}
+this taxon as the root and all the taxa that are in the tree below it.}
 }
 \value{
 a \code{taxonomy_graph} object
