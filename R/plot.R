@@ -77,8 +77,7 @@ plot_taxonomy <- function(graph,
     show <- full_expand <- focus
   }
 
-  expanded <- get_expanded(graph, show, expand_rank, full_expand)
-  igraph::vertex_attr(graph, "collapsed") <- !expanded
+  graph <- set_collapsed(graph, show, expand_rank, full_expand)
 
   widget_input = list(
     data = graph_as_nested_list(graph),
@@ -88,6 +87,14 @@ plot_taxonomy <- function(graph,
 
 }
 
+# set the values of the column collapsed
+set_collapsed <- function(graph, show, expand_rank, full_expand) {
+
+  expanded <- get_expanded(graph, show, expand_rank, full_expand)
+  igraph::vertex_attr(graph, "collapsed") <- !expanded
+
+  graph
+}
 
 # helper function to determine which nodes should be expanded
 # (i.e., not collapsed)
