@@ -53,7 +53,8 @@
 
 read_taxonomy <- function(file, delim = ",") {
 
-  data <- readr::read_delim(file, delim = delim, col_types = "c") %>%
+  data <- file %>%
+    read_taxonomy_file(delim) %>%
     clean_taxonomy_df() %>%
     check_taxonomy_df() %>%
     prepare_taxonomy_df()
@@ -62,6 +63,15 @@ read_taxonomy <- function(file, delim = ",") {
 
 }
 
+
+read_taxonomy_file <- function(file, delim, error_call = rlang::caller_env()) {
+
+  if (!file.exists(file)) {
+    cli::cli_abort("file \"{file}\" does not exist.", call = error_call)
+  }
+
+  readr::read_delim(file, delim = delim, col_types = "c")
+}
 
 # Perform a few cleaning steps on the taxonomy data
 clean_taxonomy_df <- function(data) {
