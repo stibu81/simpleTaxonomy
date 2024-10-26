@@ -29,7 +29,7 @@ get_wikipedia_image_url <- function(taxon, size) {
 
   url <- paste0("http://de.wikipedia.org/w/api.php?action=query&titles=",
                 utils::URLencode(taxon),
-                "&prop=pageimages&format=json&pithumbsize=", size)
+                "&prop=pageimages&format=json&pithumbsize=", size, "&redirects=")
   parsed <- jsonlite::fromJSON(url)$query$pages[[1]]
   if ("thumbnail" %in% names(parsed)) {
     parsed$thumbnail$source
