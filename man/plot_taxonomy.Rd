@@ -10,6 +10,7 @@ plot_taxonomy(
   expand_rank = c(),
   full_expand = c(),
   focus = c(),
+  show_images = FALSE,
   link_length = 150,
   font_size = 12
 )
@@ -35,6 +36,8 @@ that the tree up to this taxon will be expanded as well as the full
 subtree below that taxon. It is equivalent to putting the same taxa in
 \code{show} and \code{full_expand}. If \code{focus} is used, those other two arguments will
 be ignored.}
+
+\item{show_images}{should images be shown in tooltips.}
 
 \item{link_length}{length of the horizontal links that connect nodes
 in pixels.}

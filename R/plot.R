@@ -18,6 +18,9 @@
 #' subtree below that taxon. It is equivalent to putting the same taxa in
 #' `show` and `full_expand`. If `focus` is used, those other two arguments will
 #' be ignored.
+#' @param show_images should images be shown in tooltips. This requires that
+#' image URLs are contained in the `taxonomy_graph`. URLs from Wikipedia can
+#' be automatically added using [enrich_taxonomy_with_images()].
 #' @param link_length length of the horizontal links that connect nodes
 #' in pixels.
 #' @param font_size font size of the labels in pixels.
@@ -54,6 +57,7 @@ plot_taxonomy <- function(graph,
                           expand_rank = c(),
                           full_expand = c(),
                           focus = c(),
+                          show_images = FALSE,
                           link_length = 150,
                           font_size = 12) {
 
@@ -78,7 +82,7 @@ plot_taxonomy <- function(graph,
   }
 
   graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
-    add_tooltip()
+    add_tooltip(show_images = show_images)
 
   widget_input = list(
     data = graph_as_nested_list(graph),
@@ -182,19 +186,30 @@ get_widget_options <- function(graph, link_length, font_size) {
 }
 
 
-add_tooltip <- function(graph) {
+add_tooltip <- function(graph, show_images) {
 
-  rank <- igraph::vertex_attr(graph, "rank")
-  label <- igraph::vertex_attr(graph, "label")
-  scientific <- igraph::vertex_attr(graph, "scientific")
+  vertices <- igraph::vertex_attr(graph)
 
-  igraph::vertex_attr(graph, "tooltip") <- paste0(
-    rank, "</br>",
-    "<strong>", label, "</strong></br>",
-    dplyr::if_else(is.na(scientific),
+  tooltip <- paste0(
+    vertices$rank, "</br>",
+    "<strong>", vertices$label, "</strong></br>",
+    dplyr::if_else(is.na(vertices$scientific),
                    "",
-                   paste0("(", scientific, ")"))
+                   paste0("(", vertices$scientific, ")"))
   )
+
+  if (show_images) {
+    tooltip <- paste0(
+      tooltip,
+      dplyr::if_else(
+        is.na(vertices$image_url) | vertices$image_url == "not_found",
+        "",
+        paste0("</br><img src=\"", vertices$image_url, "\">")
+      )
+    )
+  }
+
+  igraph::vertex_attr(graph, "tooltip") <- tooltip
 
   graph
 }
