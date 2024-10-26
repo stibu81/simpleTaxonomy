@@ -37,3 +37,41 @@ get_wikipedia_image_url <- function(taxon, size) {
     NA_character_
   }
 }
+
+
+#' Enrich a Taxonomy File with URLs to Wikipedia-Images
+#'
+#' Add URLs to Images from Wikipedia to a file with a taxonomic hierarchy.
+#' By default, existing URLs are kept and only missing URLs are filled in.
+#'
+#' @param file path to the csv file
+#' @param delim the delimiter used in the file
+#'
+#' @return
+#' a `taxonomy_graph` with added image URLs. The file given by `file` is
+#' overwritten as a side effect.
+#'
+#' @export
+
+enrich_taxonomy_with_images <- function(file, delim = ",") {
+
+  taxonomy <- read_taxonomy(file, delim)
+
+  # get the missing URLs
+  vertices <- igraph::vertex_attr(taxonomy)
+  url_missing <- is.na(vertices$image_url)
+  new_urls <- get_wikipedia_image_urls(vertices$label[url_missing])
+
+  # If no URL was found, mark this as "not_found" to distinguish this from
+  # taxa that have not yet been tried
+  new_urls[is.na(new_urls)] <- "not_found"
+  vertices$image_url[url_missing] <- new_urls
+  igraph::vertex_attr(taxonomy, "image_url") <- vertices$image_url
+
+  # write the file
+  readr::write_delim(as_tibble(taxonomy), file, delim = delim)
+
+  taxonomy
+}
+
+
