@@ -15,7 +15,7 @@
 
 get_wikipedia_image_urls <- function(taxa, size = 100) {
 
-  # make sure that size is an integer
+  # make sure that size is a positive integer
   int_size <- suppressWarnings(as.integer(size))
   if (is.na(int_size) || size <= 0) {
     cli::cli_abort("{size} is not a positive integer.")

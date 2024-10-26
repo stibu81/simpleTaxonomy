@@ -21,6 +21,7 @@
 #' @param show_images should images be shown in tooltips. This requires that
 #' image URLs are contained in the `taxonomy_graph`. URLs from Wikipedia can
 #' be automatically added using [enrich_taxonomy_with_images()].
+#' @param image_size integer giving the width of images in pixels.
 #' @param link_length length of the horizontal links that connect nodes
 #' in pixels.
 #' @param font_size font size of the labels in pixels.
@@ -50,6 +51,9 @@
 #' # expand the path up to the family of the cats and everything below
 #' plot_taxonomy(taxonomy, focus = "Katzen")
 #'
+#' # add images to tooltips
+#' plot_taxonomy(taxonomy, focus = "Bären", show_images = TRUE)
+#'
 #' @export
 
 plot_taxonomy <- function(graph,
@@ -58,6 +62,7 @@ plot_taxonomy <- function(graph,
                           full_expand = c(),
                           focus = c(),
                           show_images = FALSE,
+                          image_size = 150,
                           link_length = 150,
                           font_size = 12) {
 
@@ -66,6 +71,12 @@ plot_taxonomy <- function(graph,
     cli::cli_abort(
       "{deparse(substitute(graph))} is not a taxonomy_graph object."
     )
+  }
+
+  # make sure that image_size is a positive integer
+  int_size <- suppressWarnings(as.integer(image_size))
+  if (is.na(int_size) || image_size <= 0) {
+    cli::cli_abort("{size} is not a positive integer.")
   }
 
   # process argument focus: put the taxa in there into both, show and
@@ -82,7 +93,7 @@ plot_taxonomy <- function(graph,
   }
 
   graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
-    add_tooltip(show_images = show_images)
+    add_tooltip(show_images = show_images, image_size = int_size)
 
   widget_input = list(
     data = graph_as_nested_list(graph),
@@ -186,7 +197,7 @@ get_widget_options <- function(graph, link_length, font_size) {
 }
 
 
-add_tooltip <- function(graph, show_images) {
+add_tooltip <- function(graph, show_images, image_size) {
 
   vertices <- igraph::vertex_attr(graph)
 
@@ -199,12 +210,17 @@ add_tooltip <- function(graph, show_images) {
   )
 
   if (show_images) {
+
+    # apply image size
+    image_url <- vertices$image_url %>%
+      stringr::str_replace("/[1-9][0-9]*px-", paste0("/", image_size, "px-"))
+
     tooltip <- paste0(
       tooltip,
       dplyr::if_else(
-        is.na(vertices$image_url) | vertices$image_url == "not_found",
+        is.na(image_url) | image_url == "not_found",
         "",
-        paste0("</br><img src=\"", vertices$image_url, "\">")
+        paste0("</br><img src=\"", image_url, "\">")
       )
     )
   }
