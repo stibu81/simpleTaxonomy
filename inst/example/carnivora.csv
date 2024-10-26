@@ -1,97 +1,97 @@
-parent,name,scientific,rank
-,Raubtiere,Carnivora,Ordnung
-Raubtiere,Hundeartige,Caniformia,Unterordnung
-Hundeartige,Hunde,Canidae,Familie
-Hunde,Echte Füchse,Vulpini,Tribus
-Echte Füchse,Vulpes,Vulpes,Gattung
-Vulpes,Polarfuchs,Vulpes lagopus,Art
-Vulpes,Rotfuchs,Vulpes vulpes,Art
-Vulpes,Wüstenfuchs,Vulpes zerda,Art
-Echte Füchse,Marderhund,Nyctereutes procyonoides,Art
-Hunde,Echte Hunde,Canini,Tribus
-Echte Hunde,Afrikanischer Wildhund,Lycaon pictus,Art
-Echte Hunde,Wolfs- und Schakalartige,Canis,Gattung
-Wolfs- und Schakalartige,Wolf,Canis lupus,Art
-Wolfs- und Schakalartige,Kojote,Canis latrans,Art
-Wolfs- und Schakalartige,Goldschakal,Canis aureus,Art
-Hundeartige,Bären,Ursidae,Familie
-Bären,Eigentliche Bären,Ursus,Gattung
-Eigentliche Bären,Amerikanischer Schwarzbär,Ursus americanus,Art
-Eigentliche Bären,Braunbär,Ursus arctos,Art
-Braunbär,Europäischer Braunbär,Ursus arctos arctos,Unterart
-Braunbär,Grizzlybär,Ursus arctos horribilis,Unterart
-Braunbär,Kodiakbär,Ursus arctos middendorffi,Unterart
-Eigentliche Bären,Eisbär,Ursus maritimus,Art
-Eigentliche Bären,Kragenbär,Ursus thibetanus,Art
-Bären,Grosser Panda,Ailuropoda melanoleuca,Art
-Bären,Brillenbär,Tremarctos ornatus,Art
-Bären,Malaienbär,Helarctos malayanus,Art
-Bären,Lippenbär,Melursus ursinus,Art
-Hundeartige,Robben,Pinnipedia,ohne Rang
-Robben,Walrosse,Odobenidae,Familie
-Walrosse,Walross,Odobenus rosmarus,Art
-Robben,Hundsrobben,Phocidae,Familie
-Hundsrobben,Südlicher See-Elefant,Mirounga leonina,Art
-Hundsrobben,Seeleopard,Hydrurga leptonyx,Art
-Hundsrobben,Seehund,Phoca vitulina,Art
-Hundsrobben,Kegelrobbe,Halichoerus grypus,Art
-Robben,Ohrenrobben,Otariidae,Familie
-Ohrenrobben,Nördlicher Seebär,Callorhinus ursinus,Art
-Ohrenrobben,Südliche Seebären,Arctocephalus,Gattung
-Ohrenrobben,Mähnenrobbe,Otaria flavescens,Art
-Ohrenrobben,Kalifornischer Seelöwe,Zalophus californianus,Art
-Hundeartige,Marderverwandte,Musteloidea,Überfamilie
-Marderverwandte,Marder,Mustelidae,Familie
-Marder,Europäischer Dachs,Meles meles,Art
-Marder,Echte Marder,Martes,Gattung
-Echte Marder,Baummarder,Martes martes,Art
-Echte Marder,Steinmarder,Martes foina,Art
-Marder,Vielfrass,Gulo gulo,Art
-Marder,Mustela,Mustela,Gattung
-Mustela,Hermelin,Mustela erminea,Art
-Mustela,Mauswiesel,Mustela nivalis,Art
-Mustela,Europäischer Nerz,Mustela lutreola,Art
-Mustela,Europäischer Iltis,Mustela putorius,Art
-Marder,Altweltotter,Lutra,Gattung
-Altweltotter,Eurasischer Fischotter,Lutra lutra,Art
-Marder,Honigdachs,Mellivora capensis,Art
-Marderverwandte,Skunks,Mephitidae,Familie
-Skunks,Streifenskunk,Mephitis mephitis,Art
-Marderverwandte,Ailuridae,Ailuridae,Familie
-Ailuridae,Kleine Pandas,Ailurus,Gattung
-Marderverwandte,Kleinbären,Procyonidae,Familie
-Kleinbären,Waschbär,Procyon lotor,Art
-Kleinbären,Nasenbären,Nasua,Gattung
-Raubtiere,Katzenartige,Feliformia,Unterordnung
-Katzenartige,Katzen,Felidae,Familie
-Katzen,Kleinkatzen,Felinae,Unterfamilie
-Kleinkatzen,Gepard,Acinonyx jubatus,Art
-Kleinkatzen,Puma,Puma concolor,Art
-Kleinkatzen,Echte Katzen,Felis,Gattung
-Echte Katzen,Europäische Wildkatze,Felis silvestris,Art
-Echte Katzen,Hauskatze,Felis catus,Art
-Kleinkatzen,Pardelkatzen,Leopardus,Gattung
-Pardelkatzen,Ozelot,Leopardus pardalis,Art
-Kleinkatzen,Eurasischer Luchs,Lynx lynx,Art
-Katzen,Grosskatzen,Pantherinae,Unterfamilie
-Grosskatzen,Eigentliche Grosskatzen,Panthera,Gattung
-Eigentliche Grosskatzen,Tiger,Panthera tigris,Art
-Eigentliche Grosskatzen,Jaguar,Panthera onca,Art
-Eigentliche Grosskatzen,Löwe,Panthera leo,Art
-Eigentliche Grosskatzen,Leopard,Panthera pardus,Art
-Eigentliche Grosskatzen,Schneeleopard,Panthera unica,Art
-Grosskatzen,Nebelparder,Neofelis diardi,Art
-Katzenartige,Hyänen,Hyanidae,Familie
-Hyänen,Tüpfelhyäne,Crocuta crocuta,Art
-Hyänen,Streifenhyäne,Hyaena hyaena,Art
-Katzenartige,Mangusten,Herpestidae,Familie
-Mangusten,Indischer Mungo,Urva edwardsii,Art
-Mangusten,Zebramanguste,Mungos mungo,Art
-Mangusten,Erdmännchen,Suricata suricatta,Art
-Katzenartige,Madagassische Raubtiere,Eupleridae,Familie
-Madagassische Raubtiere,Fossa,Cryptoprocta ferox,Art
-Madagassische Raubtiere,Fanaloka,Fossa fossana,Art
-Katzenartige,Schleichkatzen,Viverridae,Familie
-Schleichkatzen,Afrikanische Zibetkatze,Civettictis civetta,Art
-Schleichkatzen,Ginsterkatzen,Genetta,Gattung
-Schleichkatzen,Binturong,Arctictis binturong,Art
+parent,name,scientific,rank,image_url
+NA,Raubtiere,Carnivora,Ordnung,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Stud_327_with_Blesbuck.jpg/100px-Stud_327_with_Blesbuck.jpg
+Raubtiere,Hundeartige,Caniformia,Unterordnung,https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Canis_mesomelas_vs._Arctocephalus_pusillus.jpg/100px-Canis_mesomelas_vs._Arctocephalus_pusillus.jpg
+Hundeartige,Hunde,Canidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/NIEdot306.jpg/100px-NIEdot306.jpg
+Hunde,Echte Füchse,Vulpini,Tribus,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Vulpes_vulpes_standing_in_snow.jpg/100px-Vulpes_vulpes_standing_in_snow.jpg
+Echte Füchse,Vulpes,Vulpes,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Vulpes_vulpes_laying_in_snow.jpg/100px-Vulpes_vulpes_laying_in_snow.jpg
+Vulpes,Polarfuchs,Vulpes lagopus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Alopex_lagopus_qtl1.jpg/100px-Alopex_lagopus_qtl1.jpg
+Vulpes,Rotfuchs,Vulpes vulpes,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Vulpes_vulpes_1_%28Martin_Mecnarowski%29.jpg/100px-Vulpes_vulpes_1_%28Martin_Mecnarowski%29.jpg
+Vulpes,Wüstenfuchs,Vulpes zerda,Art,not_found
+Echte Füchse,Marderhund,Nyctereutes procyonoides,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/%D0%95%D0%BD%D0%BE%D1%82%D0%BE%D0%B2%D0%B8%D0%B4%D0%BD%D0%B0%D1%8F_%D1%81%D0%BE%D0%B1%D0%B0%D0%BA%D0%B0_%D0%93%D1%80%D0%BE%D0%B4%D0%BD%D0%BE_%28cropped_2%29.jpg/100px-%D0%95%D0%BD%D0%BE%D1%82%D0%BE%D0%B2%D0%B8%D0%B4%D0%BD%D0%B0%D1%8F_%D1%81%D0%BE%D0%B1%D0%B0%D0%BA%D0%B0_%D0%93%D1%80%D0%BE%D0%B4%D0%BD%D0%BE_%28cropped_2%29.jpg
+Hunde,Echte Hunde,Canini,Tribus,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Mexican_Wolf_2_yfb-edit_1.jpg/100px-Mexican_Wolf_2_yfb-edit_1.jpg
+Echte Hunde,Afrikanischer Wildhund,Lycaon pictus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Lycaon_pictus_%28Temminck%2C_1820%29.jpg/100px-Lycaon_pictus_%28Temminck%2C_1820%29.jpg
+Echte Hunde,Wolfs- und Schakalartige,Canis,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Canis_%28excluding_Lupulella%29.jpg/100px-Canis_%28excluding_Lupulella%29.jpg
+Wolfs- und Schakalartige,Wolf,Canis lupus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Eurasian_wolf_2.jpg/100px-Eurasian_wolf_2.jpg
+Wolfs- und Schakalartige,Kojote,Canis latrans,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/2009-Coyote-Yosemite.jpg/100px-2009-Coyote-Yosemite.jpg
+Wolfs- und Schakalartige,Goldschakal,Canis aureus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Canis_aureus_syriacus_114837596.jpg/100px-Canis_aureus_syriacus_114837596.jpg
+Hundeartige,Bären,Ursidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ours_brun_parcanimalierpyrenees_2.jpg/100px-Ours_brun_parcanimalierpyrenees_2.jpg
+Bären,Eigentliche Bären,Ursus,Gattung,not_found
+Eigentliche Bären,Amerikanischer Schwarzbär,Ursus americanus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Schwarzb%C3%A4r-Omega_Park.jpg/100px-Schwarzb%C3%A4r-Omega_Park.jpg
+Eigentliche Bären,Braunbär,Ursus arctos,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.jpg/100px-Kamchatka_Brown_Bear_near_Dvuhyurtochnoe_on_2015-07-23.jpg
+Braunbär,Europäischer Braunbär,Ursus arctos arctos,Unterart,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/European_Brown_Bear.jpg/100px-European_Brown_Bear.jpg
+Braunbär,Grizzlybär,Ursus arctos horribilis,Unterart,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/GrizzlyBearJeanBeaufort.jpg/100px-GrizzlyBearJeanBeaufort.jpg
+Braunbär,Kodiakbär,Ursus arctos middendorffi,Unterart,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Kodiak_bear_in_Orsa_Rovdjurspark_%2814916148309%29.jpg/100px-Kodiak_bear_in_Orsa_Rovdjurspark_%2814916148309%29.jpg
+Eigentliche Bären,Eisbär,Ursus maritimus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Polar_Bear_-_Alaska_%28cropped%29.jpg/100px-Polar_Bear_-_Alaska_%28cropped%29.jpg
+Eigentliche Bären,Kragenbär,Ursus thibetanus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Ursus_thibetanus_3_%28Wroclaw_zoo%29.JPG/100px-Ursus_thibetanus_3_%28Wroclaw_zoo%29.JPG
+Bären,Grosser Panda,Ailuropoda melanoleuca,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Grosser_Panda.JPG/100px-Grosser_Panda.JPG
+Bären,Brillenbär,Tremarctos ornatus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Tremarctos_ornatus_289948407.jpg/100px-Tremarctos_ornatus_289948407.jpg
+Bären,Malaienbär,Helarctos malayanus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Helarctos_malayanus_malayanus_85921248.jpg/100px-Helarctos_malayanus_malayanus_85921248.jpg
+Bären,Lippenbär,Melursus ursinus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Melursus_ursinus_ursinus_47417713.jpg/100px-Melursus_ursinus_ursinus_47417713.jpg
+Hundeartige,Robben,Pinnipedia,ohne Rang,https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Noaa-walrus30.jpg/100px-Noaa-walrus30.jpg
+Robben,Walrosse,Odobenidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Pacific_Walrus_-_Bull_%288247646168%29.jpg/100px-Pacific_Walrus_-_Bull_%288247646168%29.jpg
+Walrosse,Walross,Odobenus rosmarus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Pacific_Walrus_-_Bull_%288247646168%29.jpg/100px-Pacific_Walrus_-_Bull_%288247646168%29.jpg
+Robben,Hundsrobben,Phocidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Seehunde_auf_Duene.jpg/100px-Seehunde_auf_Duene.jpg
+Hundsrobben,Südlicher See-Elefant,Mirounga leonina,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Mirounga_leonina_male.JPG/100px-Mirounga_leonina_male.JPG
+Hundsrobben,Seeleopard,Hydrurga leptonyx,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Antarctic_Sound-2016-Brown_Bluff%E2%80%93Leopard_seal_%28Hydrurga_leptonyx%29_04.jpg/100px-Antarctic_Sound-2016-Brown_Bluff%E2%80%93Leopard_seal_%28Hydrurga_leptonyx%29_04.jpg
+Hundsrobben,Seehund,Phoca vitulina,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Seehund2cele4.jpg/100px-Seehund2cele4.jpg
+Hundsrobben,Kegelrobbe,Halichoerus grypus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Halichoerus_grypus_male.jpg/100px-Halichoerus_grypus_male.jpg
+Robben,Ohrenrobben,Otariidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Seal_0906.jpg/100px-Seal_0906.jpg
+Ohrenrobben,Nördlicher Seebär,Callorhinus ursinus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Northfursealbull.jpg/100px-Northfursealbull.jpg
+Ohrenrobben,Südliche Seebären,Arctocephalus,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Fur_seal_posing_on_top_of_the_rocks.jpg/100px-Fur_seal_posing_on_top_of_the_rocks.jpg
+Ohrenrobben,Mähnenrobbe,Otaria flavescens,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/M%C3%A4hnenrobben_%28auch_S%C3%BCdamerikanischer_Seel%C3%B6we_-_Otaria_flavescens%29_%28Peninsula_de_Valdes%2C_Jan_1984%29.jpg/100px-M%C3%A4hnenrobben_%28auch_S%C3%BCdamerikanischer_Seel%C3%B6we_-_Otaria_flavescens%29_%28Peninsula_de_Valdes%2C_Jan_1984%29.jpg
+Ohrenrobben,Kalifornischer Seelöwe,Zalophus californianus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Seeloewen_zoom.jpg/100px-Seeloewen_zoom.jpg
+Hundeartige,Marderverwandte,Musteloidea,Überfamilie,https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Martes_martes_in_Sweden.jpg/100px-Martes_martes_in_Sweden.jpg
+Marderverwandte,Marder,Mustelidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Mustela.erminea.jpg/100px-Mustela.erminea.jpg
+Marder,Europäischer Dachs,Meles meles,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Badger-badger.jpg/100px-Badger-badger.jpg
+Marder,Echte Marder,Martes,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/N%C3%BCrnberg_Martes_flavigula_N%C3%BCrnberg.jpg/100px-N%C3%BCrnberg_Martes_flavigula_N%C3%BCrnberg.jpg
+Echte Marder,Baummarder,Martes martes,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Martes_martes_crop.jpg/100px-Martes_martes_crop.jpg
+Echte Marder,Steinmarder,Martes foina,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Beech_Marten.jpg/100px-Beech_Marten.jpg
+Marder,Vielfrass,Gulo gulo,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Gulo_gulo_1.jpg/100px-Gulo_gulo_1.jpg
+Marder,Mustela,Mustela,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Europ%C3%A4ischer_Nerz.jpg/100px-Europ%C3%A4ischer_Nerz.jpg
+Mustela,Hermelin,Mustela erminea,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Mustela.erminea.jpg/100px-Mustela.erminea.jpg
+Mustela,Mauswiesel,Mustela nivalis,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Mustela_nivalis_-British_Wildlife_Centre-4.jpg/100px-Mustela_nivalis_-British_Wildlife_Centre-4.jpg
+Mustela,Europäischer Nerz,Mustela lutreola,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Europ%C3%A4ischer_Nerz.jpg/100px-Europ%C3%A4ischer_Nerz.jpg
+Mustela,Europäischer Iltis,Mustela putorius,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Ilder.jpg/100px-Ilder.jpg
+Marder,Altweltotter,Lutra,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Nutria_8._F._FOTO-ARDEIDAS.jpg/100px-Nutria_8._F._FOTO-ARDEIDAS.jpg
+Altweltotter,Eurasischer Fischotter,Lutra lutra,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Fischotter%2C_Lutra_Lutra.JPG/100px-Fischotter%2C_Lutra_Lutra.JPG
+Marder,Honigdachs,Mellivora capensis,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Honey_badger.jpg/100px-Honey_badger.jpg
+Marderverwandte,Skunks,Mephitidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Skunk_about_to_spray.jpg/100px-Skunk_about_to_spray.jpg
+Skunks,Streifenskunk,Mephitis mephitis,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Striped_Skunk.jpg/100px-Striped_Skunk.jpg
+Marderverwandte,Ailuridae,Ailuridae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Red_Panda_%2824960663871%29.jpg/100px-Red_Panda_%2824960663871%29.jpg
+Ailuridae,Kleine Pandas,Ailurus,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Red_Panda_%2824960663871%29.jpg/100px-Red_Panda_%2824960663871%29.jpg
+Marderverwandte,Kleinbären,Procyonidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/%2A_Raccoon.jpg/100px-%2A_Raccoon.jpg
+Kleinbären,Waschbär,Procyon lotor,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Raccoon_in_Central_Park_%2835264%29.jpg/100px-Raccoon_in_Central_Park_%2835264%29.jpg
+Kleinbären,Nasenbären,Nasua,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Nasua_nasua_01.jpg/100px-Nasua_nasua_01.jpg
+Raubtiere,Katzenartige,Feliformia,Unterordnung,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Suborder_feliformia.JPG/100px-Suborder_feliformia.JPG
+Katzenartige,Katzen,Felidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/The_Felidae.jpg/100px-The_Felidae.jpg
+Katzen,Kleinkatzen,Felinae,Unterfamilie,https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Close-up_of_a_Leopard_Cat_in_Sundarban.jpg/100px-Close-up_of_a_Leopard_Cat_in_Sundarban.jpg
+Kleinkatzen,Gepard,Acinonyx jubatus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Mosetlha%2C_Madikwe_Game_Reserve%2C_South_Africa_%2848012186231%29.jpg/100px-Mosetlha%2C_Madikwe_Game_Reserve%2C_South_Africa_%2848012186231%29.jpg
+Kleinkatzen,Puma,Puma concolor,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Mountain_Lion_%28C%29.jpg/100px-Mountain_Lion_%28C%29.jpg
+Kleinkatzen,Echte Katzen,Felis,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/European_Wildcat_Nationalpark_Bayerischer_Wald_02.jpg/100px-European_Wildcat_Nationalpark_Bayerischer_Wald_02.jpg
+Echte Katzen,Europäische Wildkatze,Felis silvestris,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Felis_silvestris_silvestris_Luc_Viatour.jpg/100px-Felis_silvestris_silvestris_Luc_Viatour.jpg
+Echte Katzen,Hauskatze,Felis catus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Hauskatze_langhaar.jpg/100px-Hauskatze_langhaar.jpg
+Kleinkatzen,Pardelkatzen,Leopardus,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Ocelot.jpg/100px-Ocelot.jpg
+Pardelkatzen,Ozelot,Leopardus pardalis,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Ocelot.jpg/100px-Ocelot.jpg
+Kleinkatzen,Eurasischer Luchs,Lynx lynx,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Lynx_lynx_1_%28Martin_Mecnarowski%29.jpg/100px-Lynx_lynx_1_%28Martin_Mecnarowski%29.jpg
+Katzen,Grosskatzen,Pantherinae,Unterfamilie,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Uncia_uncia.jpg/100px-Uncia_uncia.jpg
+Grosskatzen,Eigentliche Grosskatzen,Panthera,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Lioness_on_the_prowl.jpg/100px-Lioness_on_the_prowl.jpg
+Eigentliche Grosskatzen,Tiger,Panthera tigris,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg/100px-Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg
+Eigentliche Grosskatzen,Jaguar,Panthera onca,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Jaguar_%28Panthera_onca_palustris%29_male_Three_Brothers_River.JPG/100px-Jaguar_%28Panthera_onca_palustris%29_male_Three_Brothers_River.JPG
+Eigentliche Grosskatzen,Löwe,Panthera leo,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg/100px-011_The_lion_king_Tryggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg
+Eigentliche Grosskatzen,Leopard,Panthera pardus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Leopard_%28Panthera_pardus_pardus%29_Kruger.jpg/100px-Leopard_%28Panthera_pardus_pardus%29_Kruger.jpg
+Eigentliche Grosskatzen,Schneeleopard,Panthera unica,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Uncia_uncia.jpg/100px-Uncia_uncia.jpg
+Grosskatzen,Nebelparder,Neofelis diardi,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Neofelis_nebulosa.jpg/100px-Neofelis_nebulosa.jpg
+Katzenartige,Hyänen,Hyanidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Spotted_hyena_in_Kenya.jpg/100px-Spotted_hyena_in_Kenya.jpg
+Hyänen,Tüpfelhyäne,Crocuta crocuta,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Spotted_hyena_in_Kenya.jpg/100px-Spotted_hyena_in_Kenya.jpg
+Hyänen,Streifenhyäne,Hyaena hyaena,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Striped_hyena_%28Hyaena_hyaena%29_-_cropped.jpg/100px-Striped_hyena_%28Hyaena_hyaena%29_-_cropped.jpg
+Katzenartige,Mangusten,Herpestidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Banded_Mongoose_%28Mungos_mungo%29_foraging_outside_the_fence_..._%2830800475932%29_%282%29.jpg/100px-Banded_Mongoose_%28Mungos_mungo%29_foraging_outside_the_fence_..._%2830800475932%29_%282%29.jpg
+Mangusten,Indischer Mungo,Urva edwardsii,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Herpestes_edwardsii._2.jpg/100px-Herpestes_edwardsii._2.jpg
+Mangusten,Zebramanguste,Mungos mungo,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Banded_Mongoose_at_Copenhagen_Zoo.jpg/100px-Banded_Mongoose_at_Copenhagen_Zoo.jpg
+Mangusten,Erdmännchen,Suricata suricatta,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Suricatos_%28Suricata_suricatta%29%2C_parque_nacional_Makgadikgadi_Pans%2C_Botsuana%2C_2018-07-30%2C_DD_29.jpg/100px-Suricatos_%28Suricata_suricatta%29%2C_parque_nacional_Makgadikgadi_Pans%2C_Botsuana%2C_2018-07-30%2C_DD_29.jpg
+Katzenartige,Madagassische Raubtiere,Eupleridae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Mungo1.jpg/100px-Mungo1.jpg
+Madagassische Raubtiere,Fossa,Cryptoprocta ferox,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Cryptoprocta_Ferox.JPG/100px-Cryptoprocta_Ferox.JPG
+Madagassische Raubtiere,Fanaloka,Fossa fossana,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Spotted_fanaloka_%28Fossa_fossana%29.jpg/100px-Spotted_fanaloka_%28Fossa_fossana%29.jpg
+Katzenartige,Schleichkatzen,Viverridae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Viverrids_mosaic.jpg/100px-Viverrids_mosaic.jpg
+Schleichkatzen,Afrikanische Zibetkatze,Civettictis civetta,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Civettictis_civetta_11.jpg/100px-Civettictis_civetta_11.jpg
+Schleichkatzen,Ginsterkatzen,Genetta,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Genetta_genetta_felina_%28Wroclaw_zoo%29.JPG/100px-Genetta_genetta_felina_%28Wroclaw_zoo%29.JPG
+Schleichkatzen,Binturong,Arctictis binturong,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Binturong_in_Overloon.jpg/100px-Binturong_in_Overloon.jpg

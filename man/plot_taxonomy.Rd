@@ -10,6 +10,8 @@ plot_taxonomy(
   expand_rank = c(),
   full_expand = c(),
   focus = c(),
+  show_images = FALSE,
+  image_size = 150,
   link_length = 150,
   font_size = 12
 )
@@ -35,6 +37,12 @@ that the tree up to this taxon will be expanded as well as the full
 subtree below that taxon. It is equivalent to putting the same taxa in
 \code{show} and \code{full_expand}. If \code{focus} is used, those other two arguments will
 be ignored.}
+
+\item{show_images}{should images be shown in tooltips. This requires that
+image URLs are contained in the \code{taxonomy_graph}. URLs from Wikipedia can
+be automatically added using \code{\link[=enrich_taxonomy_with_images]{enrich_taxonomy_with_images()}}.}
+
+\item{image_size}{integer giving the width of images in pixels.}
 
 \item{link_length}{length of the horizontal links that connect nodes
 in pixels.}
@@ -68,5 +76,8 @@ plot_taxonomy(taxonomy, full_expand = "Katzen")
 
 # expand the path up to the family of the cats and everything below
 plot_taxonomy(taxonomy, focus = "Katzen")
+
+# add images to tooltips
+plot_taxonomy(taxonomy, focus = "Bären", show_images = TRUE)
 
 }

@@ -18,6 +18,10 @@
 #' subtree below that taxon. It is equivalent to putting the same taxa in
 #' `show` and `full_expand`. If `focus` is used, those other two arguments will
 #' be ignored.
+#' @param show_images should images be shown in tooltips. This requires that
+#' image URLs are contained in the `taxonomy_graph`. URLs from Wikipedia can
+#' be automatically added using [enrich_taxonomy_with_images()].
+#' @param image_size integer giving the width of images in pixels.
 #' @param link_length length of the horizontal links that connect nodes
 #' in pixels.
 #' @param font_size font size of the labels in pixels.
@@ -47,6 +51,9 @@
 #' # expand the path up to the family of the cats and everything below
 #' plot_taxonomy(taxonomy, focus = "Katzen")
 #'
+#' # add images to tooltips
+#' plot_taxonomy(taxonomy, focus = "Bären", show_images = TRUE)
+#'
 #' @export
 
 plot_taxonomy <- function(graph,
@@ -54,6 +61,8 @@ plot_taxonomy <- function(graph,
                           expand_rank = c(),
                           full_expand = c(),
                           focus = c(),
+                          show_images = FALSE,
+                          image_size = 150,
                           link_length = 150,
                           font_size = 12) {
 
@@ -62,6 +71,12 @@ plot_taxonomy <- function(graph,
     cli::cli_abort(
       "{deparse(substitute(graph))} is not a taxonomy_graph object."
     )
+  }
+
+  # make sure that image_size is a positive integer
+  int_size <- suppressWarnings(as.integer(image_size))
+  if (is.na(int_size) || image_size <= 0) {
+    cli::cli_abort("{size} is not a positive integer.")
   }
 
   # process argument focus: put the taxa in there into both, show and
@@ -77,8 +92,8 @@ plot_taxonomy <- function(graph,
     show <- full_expand <- focus
   }
 
-  expanded <- get_expanded(graph, show, expand_rank, full_expand)
-  igraph::vertex_attr(graph, "collapsed") <- !expanded
+  graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
+    add_tooltip(show_images = show_images, image_size = int_size)
 
   widget_input = list(
     data = graph_as_nested_list(graph),
@@ -88,6 +103,14 @@ plot_taxonomy <- function(graph,
 
 }
 
+# set the values of the column collapsed
+set_collapsed <- function(graph, show, expand_rank, full_expand) {
+
+  expanded <- get_expanded(graph, show, expand_rank, full_expand)
+  igraph::vertex_attr(graph, "collapsed") <- !expanded
+
+  graph
+}
 
 # helper function to determine which nodes should be expanded
 # (i.e., not collapsed)
@@ -171,4 +194,38 @@ get_widget_options <- function(graph, link_length, font_size) {
       right = (right_margin * 0.6 * font_size) + 25
     )
   )
+}
+
+
+add_tooltip <- function(graph, show_images, image_size) {
+
+  vertices <- igraph::vertex_attr(graph)
+
+  tooltip <- paste0(
+    vertices$rank, "</br>",
+    "<strong>", vertices$label, "</strong></br>",
+    dplyr::if_else(is.na(vertices$scientific),
+                   "",
+                   paste0("(", vertices$scientific, ")"))
+  )
+
+  if (show_images) {
+
+    # apply image size
+    image_url <- vertices$image_url %>%
+      stringr::str_replace("/[1-9][0-9]*px-", paste0("/", image_size, "px-"))
+
+    tooltip <- paste0(
+      tooltip,
+      dplyr::if_else(
+        is.na(image_url) | image_url == "not_found",
+        "",
+        paste0("</br><img src=\"", image_url, "\">")
+      )
+    )
+  }
+
+  igraph::vertex_attr(graph, "tooltip") <- tooltip
+
+  graph
 }

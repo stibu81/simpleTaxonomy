@@ -147,9 +147,14 @@ as_tibble.taxonomy_graph <- function(x, ...) {
   vertices <- igraph::as_data_frame(x, "vertices") %>%
     dplyr::as_tibble()
 
+  # if column image_url is completely empty, remove it
+  if (all(is.na(vertices$image_url))) {
+    vertices <- vertices %>% dplyr::select(-"image_url")
+  }
+
   edges %>%
     dplyr::full_join(vertices, by = "name", relationship = "one-to-one") %>%
-    dplyr::select(-dplyr::any_of(c("label", "colour", "tooltip", "collapsed")))
+    dplyr::select(-dplyr::any_of(c("label", "colour", "collapsed")))
 
 }
 

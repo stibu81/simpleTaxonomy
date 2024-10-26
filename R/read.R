@@ -103,8 +103,15 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
       call = error_call
     )
   }
+
+  # if the column "image_url" is missing, add it and fill with NA
+  if (!"image_url" %in% names(data)) {
+    data <- data %>%
+      dplyr::mutate(image_url = NA_character_)
+  }
+
   data <- data %>%
-    dplyr::select(dplyr::all_of(expected_names))
+    dplyr::select(dplyr::all_of(expected_names), "image_url")
 
   # check unique root taxon
   root <- data$name[is.na(data$parent)]
@@ -187,15 +194,6 @@ prepare_taxonomy_df <- function(data) {
             "The corresponding nodes will not be coloured.")
     )
   }
-
-  # add tooltip
-  data$tooltip <- paste0(
-    data$rank, "</br>",
-    "<strong>", data$label, "</strong></br>",
-    dplyr::if_else(is.na(data$scientific),
-                   "",
-                   paste0("(", data$scientific, ")"))
-  )
 
   # by default, collapse everything
   data$collapsed <- TRUE
