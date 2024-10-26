@@ -103,8 +103,15 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
       call = error_call
     )
   }
+
+  # if the column "image_url" is missing, add it and fill with NA
+  if (!"image_url" %in% names(data)) {
+    data <- data %>%
+      dplyr::mutate(image_url = NA_character_)
+  }
+
   data <- data %>%
-    dplyr::select(dplyr::all_of(expected_names))
+    dplyr::select(dplyr::all_of(expected_names), "image_url")
 
   # check unique root taxon
   root <- data$name[is.na(data$parent)]
