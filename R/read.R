@@ -188,15 +188,6 @@ prepare_taxonomy_df <- function(data) {
     )
   }
 
-  # add tooltip
-  data$tooltip <- paste0(
-    data$rank, "</br>",
-    "<strong>", data$label, "</strong></br>",
-    dplyr::if_else(is.na(data$scientific),
-                   "",
-                   paste0("(", data$scientific, ")"))
-  )
-
   # by default, collapse everything
   data$collapsed <- TRUE
 

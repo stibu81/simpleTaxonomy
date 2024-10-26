@@ -77,7 +77,8 @@ plot_taxonomy <- function(graph,
     show <- full_expand <- focus
   }
 
-  graph <- set_collapsed(graph, show, expand_rank, full_expand)
+  graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
+    add_tooltip()
 
   widget_input = list(
     data = graph_as_nested_list(graph),
@@ -178,4 +179,22 @@ get_widget_options <- function(graph, link_length, font_size) {
       right = (right_margin * 0.6 * font_size) + 25
     )
   )
+}
+
+
+add_tooltip <- function(graph) {
+
+  rank <- igraph::vertex_attr(graph, "rank")
+  label <- igraph::vertex_attr(graph, "label")
+  scientific <- igraph::vertex_attr(graph, "scientific")
+
+  igraph::vertex_attr(graph, "tooltip") <- paste0(
+    rank, "</br>",
+    "<strong>", label, "</strong></br>",
+    dplyr::if_else(is.na(scientific),
+                   "",
+                   paste0("(", scientific, ")"))
+  )
+
+  graph
 }

@@ -149,7 +149,7 @@ as_tibble.taxonomy_graph <- function(x, ...) {
 
   edges %>%
     dplyr::full_join(vertices, by = "name", relationship = "one-to-one") %>%
-    dplyr::select(-dplyr::any_of(c("label", "colour", "tooltip", "collapsed")))
+    dplyr::select(-dplyr::any_of(c("label", "colour", "collapsed")))
 
 }
 
