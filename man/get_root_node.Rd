@@ -2,22 +2,28 @@
 % Please edit documentation in R/igraph.R
 \name{get_root_node}
 \alias{get_root_node}
-\title{Get the Root Node of a Taxonomy Graph}
+\alias{get_leaf_nodes}
+\title{Get the Root Node and the Leaves of a Taxonomy Graph}
 \usage{
 get_root_node(graph)
+
+get_leaf_nodes(graph)
 }
 \arguments{
 \item{graph}{a \code{taxonomy_graph} object}
 }
 \value{
-a \code{igraph.vs} object corresponding to the root node of the graph.
+a \code{igraph.vs} object corresponding to the root node (for
+\code{get_root_node()}) or the leaf nodes (for \code{get_leaf_nodes()})
+of the graph.
 }
 \description{
-Get the Root Node of a Taxonomy Graph
+Get the Root Node and the Leaves of a Taxonomy Graph
 }
 \examples{
 file <- get_example_taxonomy_file()
 taxonomy <- read_taxonomy(file)
 get_root_node(taxonomy)
+get_leaf_nodes(taxonomy)
 
 }

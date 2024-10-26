@@ -1,19 +1,30 @@
-#' Get the Root Node of a Taxonomy Graph
+#' Get the Root Node and the Leaves of a Taxonomy Graph
 #'
 #' @param graph a `taxonomy_graph` object
 #'
 #' @return
-#' a `igraph.vs` object corresponding to the root node of the graph.
+#' a `igraph.vs` object corresponding to the root node (for
+#' `get_root_node()`) or the leaf nodes (for `get_leaf_nodes()`)
+#' of the graph.
 #'
 #' @examples
 #' file <- get_example_taxonomy_file()
 #' taxonomy <- read_taxonomy(file)
 #' get_root_node(taxonomy)
+#' get_leaf_nodes(taxonomy)
 #'
 #' @export
 
 get_root_node <- function(graph) {
   igraph::V(graph)[igraph::degree(graph, mode = "in") == 0]
+}
+
+
+#' @rdname get_root_node
+#' @export
+
+get_leaf_nodes <- function(graph) {
+  igraph::V(graph)[igraph::degree(graph, mode = "out") == 0]
 }
 
 
