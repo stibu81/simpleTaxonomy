@@ -6,6 +6,7 @@
 #' @param taxa character with the taxa for which an image URL should be
 #'  obtained.
 #' @param size integer giving the width of the image in pixel.
+#' @param progress Wheter to show a progress bar.
 #'
 #' @return
 #' a character vector with URLs. For taxa where no thumbnail was found, the
@@ -13,7 +14,7 @@
 #'
 #' @export
 
-get_wikipedia_image_urls <- function(taxa, size = 100) {
+get_wikipedia_image_urls <- function(taxa, size = 100, progress = TRUE) {
 
   # make sure that size is a positive integer
   int_size <- suppressWarnings(as.integer(size))
@@ -21,7 +22,9 @@ get_wikipedia_image_urls <- function(taxa, size = 100) {
     cli::cli_abort("{size} is not a positive integer.")
   }
 
-  vapply(taxa, get_wikipedia_image_url, character(1), size = int_size)
+  purrr::map_chr(taxa, get_wikipedia_image_url,
+                 size = int_size,
+                 .progress = progress)
 
 }
 

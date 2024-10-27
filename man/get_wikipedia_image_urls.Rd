@@ -4,13 +4,15 @@
 \alias{get_wikipedia_image_urls}
 \title{Download URL for Wikipedia Images}
 \usage{
-get_wikipedia_image_urls(taxa, size = 100)
+get_wikipedia_image_urls(taxa, size = 100, progress = TRUE)
 }
 \arguments{
 \item{taxa}{character with the taxa for which an image URL should be
 obtained.}
 
 \item{size}{integer giving the width of the image in pixel.}
+
+\item{progress}{Wheter to show a progress bar.}
 }
 \value{
 a character vector with URLs. For taxa where no thumbnail was found, the
