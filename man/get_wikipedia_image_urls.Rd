@@ -12,7 +12,7 @@ obtained.}
 
 \item{size}{integer giving the width of the image in pixel.}
 
-\item{progress}{Wheter to show a progress bar.}
+\item{progress}{Whether to show a progress bar.}
 }
 \value{
 a character vector with URLs. For taxa where no thumbnail was found, the

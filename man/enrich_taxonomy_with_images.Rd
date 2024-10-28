@@ -4,12 +4,16 @@
 \alias{enrich_taxonomy_with_images}
 \title{Enrich a Taxonomy File with URLs to Wikipedia-Images}
 \usage{
-enrich_taxonomy_with_images(file, delim = ",")
+enrich_taxonomy_with_images(file, delim = ",", retry = FALSE, progress = TRUE)
 }
 \arguments{
 \item{file}{path to the csv file}
 
 \item{delim}{the delimiter used in the file}
+
+\item{retry}{Whether to retry images that have not been found previously.}
+
+\item{progress}{Whether to show a progress bar.}
 }
 \value{
 a \code{taxonomy_graph} with added image URLs. The file given by \code{file} is

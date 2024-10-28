@@ -6,7 +6,7 @@
 #' @param taxa character with the taxa for which an image URL should be
 #'  obtained.
 #' @param size integer giving the width of the image in pixel.
-#' @param progress Wheter to show a progress bar.
+#' @param progress Whether to show a progress bar.
 #'
 #' @return
 #' a character vector with URLs. For taxa where no thumbnail was found, the
@@ -49,6 +49,8 @@ get_wikipedia_image_url <- function(taxon, size) {
 #'
 #' @param file path to the csv file
 #' @param delim the delimiter used in the file
+#' @param retry Whether to retry images that have not been found previously.
+#' @param progress Whether to show a progress bar.
 #'
 #' @return
 #' a `taxonomy_graph` with added image URLs. The file given by `file` is
@@ -56,20 +58,37 @@ get_wikipedia_image_url <- function(taxon, size) {
 #'
 #' @export
 
-enrich_taxonomy_with_images <- function(file, delim = ",") {
+enrich_taxonomy_with_images <- function(file,
+                                        delim = ",",
+                                        retry = FALSE,
+                                        progress = TRUE) {
 
   taxonomy <- read_taxonomy(file, delim)
 
   # get the missing URLs
   vertices <- igraph::vertex_attr(taxonomy)
-  url_missing <- is.na(vertices$image_url)
-  new_urls <- get_wikipedia_image_urls(vertices$label[url_missing])
+  # if retry is requested, set images that have not been found to NA
+  image_url <- vertices$image_url
+  if (retry) image_url[image_url == "not_found"] <- NA_character_
+  url_missing <- is.na(image_url)
+  new_urls <- get_wikipedia_image_urls(
+    vertices$label[url_missing],
+    progress = ifelse(progress, "common names", FALSE)
+  )
+
+  # for those that failed, try again with the scientific name
+  url_missing2 <- is.na(new_urls)
+  new_urls2 <- get_wikipedia_image_urls(
+    vertices$scientific[url_missing][url_missing2],
+    progress = ifelse(progress, "scientific names", FALSE)
+  )
+  new_urls[url_missing2] <- new_urls2
 
   # If no URL was found, mark this as "not_found" to distinguish this from
   # taxa that have not yet been tried
   new_urls[is.na(new_urls)] <- "not_found"
-  vertices$image_url[url_missing] <- new_urls
-  igraph::vertex_attr(taxonomy, "image_url") <- vertices$image_url
+  image_url[url_missing] <- new_urls
+  igraph::vertex_attr(taxonomy, "image_url") <- image_url
 
   # write the file
   readr::write_delim(as_tibble(taxonomy), file, delim = delim)
