@@ -99,8 +99,13 @@ plot_taxonomy <- function(graph,
     data = graph_as_nested_list(graph),
     options = get_widget_options(graph, link_length, font_size)
   )
-  htmlwidgets::createWidget("collapsibleTree", widget_input)
-
+  htmlwidgets::createWidget(
+    "collapsibleTree", widget_input,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      browser.padding = 10,
+      browser.fill = TRUE
+    )
+  )
 }
 
 # set the values of the column collapsed
