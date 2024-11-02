@@ -66,7 +66,8 @@ read_taxonomy <- function(file, delim = ",") {
 
 read_taxonomy_file <- function(file, delim, error_call = rlang::caller_env()) {
 
-  if (!file.exists(file)) {
+  # only check if file exists for local paths, not for urls
+  if (!is_url(file) && !file.exists(file)) {
     cli::cli_abort("file \"{file}\" does not exist.", call = error_call)
   }
 
@@ -242,4 +243,10 @@ get_rank_colours <- function() {
 
 get_example_taxonomy_file <- function() {
   system.file("example", "carnivora.csv", package = "simpleTaxonomy")
+}
+
+
+# check whether a path is a URL
+is_url <- function(path) {
+  stringr::str_detect(path, "^https?://")
 }
