@@ -145,6 +145,16 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
     )
   }
 
+  # also scientific names must be unique
+  dup_sci <- unique(data$scientific[duplicated(data$scientific)])
+  if (length(dup_sci) > 0) {
+    cli::cli_abort(
+      paste("There are duplicate scientific names:",
+            "\"{paste(dup_sci, collapse = '\", \"')}\""),
+      call = error_call
+    )
+  }
+
   # all parent taxa must be properly defined
   missing_parents <- setdiff(data$parent, c(data$name, NA_character_))
   if (length(missing_parents) > 0) {
