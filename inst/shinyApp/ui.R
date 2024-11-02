@@ -1,14 +1,15 @@
 library(shiny)
+library(bslib)
 library(collapsibleTree)
 library(simpleTaxonomy)
 
-fluidPage(
+page_sidebar(
 
-  titlePanel("Taxonomy"),
+  title = "simpleTaxonomy",
 
-  sidebarLayout(
-    sidebarPanel(
-      width = 2,
+  theme = bs_theme(preset = "yeti"),
+
+  sidebar = sidebar(
       # choices will be filled in the server in order to use server side
       # processing
       selectizeInput(
@@ -17,12 +18,12 @@ fluidPage(
         choices = NULL,
         multiple = TRUE
       ),
-      checkboxInput(
+      input_switch(
         "full_expand",
         label = "Full expand",
         value = FALSE
       ),
-      checkboxInput(
+      input_switch(
         "show_images",
         label = "Show images",
         value = TRUE
@@ -38,9 +39,7 @@ fluidPage(
       )
     ),
 
-    mainPanel(
-      width = 10,
-      collapsibleTreeOutput("taxonomy_plot", height = "90vh")
+    card(
+      collapsibleTreeOutput("taxonomy_plot")
     )
-  )
 )

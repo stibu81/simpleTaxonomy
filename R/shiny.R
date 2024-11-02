@@ -21,7 +21,7 @@ run_taxonomy <- function(file = NULL,
                          expand_ranks = c("Gattung", "Art", "Unterart"),
                          launch_browser = NULL) {
 
-  rlang::check_installed("shiny",
+  rlang::check_installed(c("shiny", "bslib"),
                          "in order to run the app.")
 
   app_dir <- system.file("shinyApp", package = "simpleTaxonomy")
