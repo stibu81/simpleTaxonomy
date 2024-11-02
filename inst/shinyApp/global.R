@@ -2,10 +2,16 @@ library(simpleTaxonomy)
 library(igraph)
 library(dplyr)
 
-# define options
-taxonomy_file <- paste0("https://raw.githubusercontent.com/",
-                        "stibu81/taxonomyData/refs/heads/main/taxonomy.csv")
-expand_ranks_default <- c("Gattung", "Art", "Unterart")
+# define settings: take from options, if defined, use defaults otherwise
+taxonomy_file <- getOption("simpleTaxonomy_file")
+if (is.null(taxonomy_file)) {
+  taxonomy_file <- paste0("https://raw.githubusercontent.com/",
+                          "stibu81/taxonomyData/refs/heads/main/taxonomy.csv")
+}
+expand_ranks_default <- getOption("simpleTaxonomy_expand_ranks")
+if (is.null(expand_ranks_default)) {
+  expand_ranks_default <- c("Gattung", "Art", "Unterart")
+}
 
 # read the taxonomy
 taxonomy <- read_taxonomy(taxonomy_file)
