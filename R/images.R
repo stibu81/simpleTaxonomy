@@ -91,7 +91,7 @@ enrich_taxonomy_with_images <- function(file,
   igraph::vertex_attr(taxonomy, "image_url") <- image_url
 
   # write the file
-  readr::write_delim(as_tibble(taxonomy), file, delim = delim)
+  readr::write_delim(as_tibble(taxonomy), file, delim = delim, na = "")
 
   taxonomy
 }
