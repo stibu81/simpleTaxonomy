@@ -50,13 +50,3 @@ run_taxonomy <- function(file = NULL,
                 launch.browser = launch_browser)
 }
 
-
-# Helper function to take a value from an option or use a default value,
-# if the option does not exist.
-get_option_or_default <- function(option, default) {
-  value <- getOption(option)
-  if (is.null(value)) {
-    value <- default
-  }
-  value
-}
