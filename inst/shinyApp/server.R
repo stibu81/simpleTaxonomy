@@ -22,6 +22,7 @@ function(input, output, session) {
     plot_taxonomy(taxonomy,
                   show = taxa[input$taxa_show],
                   full_expand = if (input$full_expand) taxa[input$taxa_show],
+                  highlight = if (input$highlight) taxa[input$taxa_show],
                   expand_rank = input$expand_ranks,
                   show_images = input$show_images,
                   image_size = image_size())

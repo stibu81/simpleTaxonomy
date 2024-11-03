@@ -23,6 +23,11 @@ page_sidebar(
         label = "Full expand",
         value = FALSE
       ),
+      input_switch(
+        "highlight",
+        label = "Highlight",
+        value = FALSE
+      ),
       # choices are filled here to avoid repeated rendering of the plot when
       # the app starts
       selectizeInput(
