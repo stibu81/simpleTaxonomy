@@ -21,13 +21,14 @@ image_size_default <- simpleTaxonomy:::get_option_or_default(
 
 # read the taxonomy
 taxonomy <- read_taxonomy(taxonomy_file)
-taxonomy_df <- as_tibble(taxonomy)
+# only get the nodes here, which is much faster than as_tibble(taxonomy)
+vertices <- as_tibble(vertex_attr(taxonomy))
 
 
 # create a vector of ranks that appear in the data. In order to have them
 # sorted correctly, take them from get_rank_colours()
 ranks <- simpleTaxonomy:::get_rank_colours() %>%
-  filter(.data$rank %in% taxonomy_df$rank) %>%
+  filter(.data$rank %in% vertices$rank) %>%
   pull("rank") %>%
   # don't list the rank of the root node
   setdiff(vertex_attr(taxonomy, "rank", get_root_node(taxonomy)))
@@ -36,10 +37,10 @@ ranks <- simpleTaxonomy:::get_rank_colours() %>%
 # scientific names, because the common names must be passed to plot_taxonomy().
 # only add the scientific name, if it is defined and not already contained in
 # the common names.
-use_sci <- !is.na(taxonomy_df$scientific) &
-  !taxonomy_df$scientific %in% taxonomy_df$name
-taxa <- c(taxonomy_df$name, taxonomy_df$name[use_sci])
-names(taxa) <- c(taxonomy_df$name, taxonomy_df$scientific[use_sci])
+use_sci <- !is.na(vertices$scientific) &
+  !vertices$scientific %in% vertices$name
+taxa <- c(vertices$name, vertices$name[use_sci])
+names(taxa) <- c(vertices$name, vertices$scientific[use_sci])
 
 # warn if there are duplicates
 if (anyDuplicated(names(taxa)) > 0) {
