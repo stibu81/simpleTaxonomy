@@ -18,6 +18,8 @@
 #' subtree below that taxon. It is equivalent to putting the same taxa in
 #' `show` and `full_expand`. If `focus` is used, those other two arguments will
 #' be ignored.
+#' @param highlight character giving the names of taxa that should be
+#' highlighted.
 #' @param show_images should images be shown in tooltips. This requires that
 #' image URLs are contained in the `taxonomy_graph`. URLs from Wikipedia can
 #' be automatically added using [enrich_taxonomy_with_images()].
@@ -34,14 +36,14 @@
 #' `collapsibleTree` but also much faster.
 #'
 #' @return
-#' a htmlwidget with the interactive tree visualisation.
+#' a `collapsibelTree` htmlwidget with the interactive tree visualisation.
 #'
 #' @examples
 #' file <- get_example_taxonomy_file()
 #' taxonomy <- read_taxonomy(file)
 #' plot_taxonomy(taxonomy)
 #'
-#' # expand the full path to the Grizzly bear
+#' # expand the full path to the grizzly bear
 #' plot_taxonomy(taxonomy, show = "Grizzlybär")
 #'
 #' # fully expand the cat family (Felidae)
@@ -54,6 +56,11 @@
 #' # add images to tooltips
 #' plot_taxonomy(taxonomy, focus = "Bären", show_images = TRUE)
 #'
+#' # show and highlight black bear and kodiak bear
+#' plot_taxonomy(taxonomy,
+#'               show = c("Amerikanischer Schwarzbär", "Kodiakbär"),
+#'               highlight = c("Amerikanischer Schwarzbär", "Kodiakbär"))
+#'
 #' @export
 
 plot_taxonomy <- function(graph,
@@ -61,6 +68,7 @@ plot_taxonomy <- function(graph,
                           expand_rank = c(),
                           full_expand = c(),
                           focus = c(),
+                          highlight = c(),
                           show_images = FALSE,
                           image_size = 150,
                           link_length = 150,
@@ -93,7 +101,8 @@ plot_taxonomy <- function(graph,
   }
 
   graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
-    add_tooltip(show_images = show_images, image_size = int_size)
+    add_tooltip(show_images = show_images, image_size = int_size) %>%
+    set_highlight(highlight = highlight)
 
   widget_input = list(
     data = graph_as_nested_list(graph),
@@ -231,6 +240,21 @@ add_tooltip <- function(graph, show_images, image_size) {
   }
 
   igraph::vertex_attr(graph, "tooltip") <- tooltip
+
+  graph
+}
+
+
+set_highlight <- function(graph, highlight, colour = "#FF0000") {
+
+  # check that all the taxa in show and full_expand actually exist in the data.
+  # Remove those that don't.
+  highlight <- rm_invalid_taxa(highlight, graph)
+  if (length(highlight) == 0) return(graph)
+
+  colours <- igraph::vertex_attr(graph, "colour")
+  colours[igraph::vertex_attr(graph, "name") %in% highlight] <- colour
+  igraph::vertex_attr(graph, "colour") <- colours
 
   graph
 }

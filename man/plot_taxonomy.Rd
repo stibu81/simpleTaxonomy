@@ -10,6 +10,7 @@ plot_taxonomy(
   expand_rank = c(),
   full_expand = c(),
   focus = c(),
+  highlight = c(),
   show_images = FALSE,
   image_size = 150,
   link_length = 150,
@@ -38,6 +39,9 @@ subtree below that taxon. It is equivalent to putting the same taxa in
 \code{show} and \code{full_expand}. If \code{focus} is used, those other two arguments will
 be ignored.}
 
+\item{highlight}{character giving the names of taxa that should be
+highlighted.}
+
 \item{show_images}{should images be shown in tooltips. This requires that
 image URLs are contained in the \code{taxonomy_graph}. URLs from Wikipedia can
 be automatically added using \code{\link[=enrich_taxonomy_with_images]{enrich_taxonomy_with_images()}}.}
@@ -50,7 +54,7 @@ in pixels.}
 \item{font_size}{font size of the labels in pixels.}
 }
 \value{
-a htmlwidget with the interactive tree visualisation.
+a \code{collapsibelTree} htmlwidget with the interactive tree visualisation.
 }
 \description{
 Create an interactive visualisation of a taxonomic hierarchy.
@@ -67,7 +71,7 @@ file <- get_example_taxonomy_file()
 taxonomy <- read_taxonomy(file)
 plot_taxonomy(taxonomy)
 
-# expand the full path to the Grizzly bear
+# expand the full path to the grizzly bear
 plot_taxonomy(taxonomy, show = "Grizzlybär")
 
 # fully expand the cat family (Felidae)
@@ -79,5 +83,10 @@ plot_taxonomy(taxonomy, focus = "Katzen")
 
 # add images to tooltips
 plot_taxonomy(taxonomy, focus = "Bären", show_images = TRUE)
+
+# show and highlight black bear and kodiak bear
+plot_taxonomy(taxonomy,
+              show = c("Amerikanischer Schwarzbär", "Kodiakbär"),
+              highlight = c("Amerikanischer Schwarzbär", "Kodiakbär"))
 
 }
