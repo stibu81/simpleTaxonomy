@@ -23,11 +23,6 @@ page_sidebar(
         label = "Full expand",
         value = FALSE
       ),
-      input_switch(
-        "show_images",
-        label = "Show images",
-        value = TRUE
-      ),
       # choices are filled here to avoid repeated rendering of the plot when
       # the app starts
       selectizeInput(
@@ -36,6 +31,18 @@ page_sidebar(
         choices = ranks,
         selected = expand_ranks_default,
         multiple = TRUE
+      ),
+      input_switch(
+        "show_images",
+        label = "Show images",
+        value = TRUE
+      ),
+      sliderInput(
+        "image_size",
+        label = "Image size:",
+        min = 100, max = 400,
+        step = 50,
+        value = image_size_default
       )
     ),
 

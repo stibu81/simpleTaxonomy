@@ -7,6 +7,7 @@
 run_taxonomy(
   file = NULL,
   expand_ranks = c("Gattung", "Art", "Unterart"),
+  image_size = 150,
   launch_browser = NULL
 )
 }
@@ -16,6 +17,9 @@ data from \url{https://github.com/stibu81/taxonomyData} is used.}
 
 \item{expand_ranks}{a list of ranks that should always be expanded. This
 can be changed interactively in the app.}
+
+\item{image_size}{numeric giving the image size used in the app. The user
+can change this interactively in the app.}
 
 \item{launch_browser}{logical, if \code{TRUE}, the application
 is opened in the system's default browser, if \code{FALSE},

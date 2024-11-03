@@ -6,19 +6,22 @@
 #' app loads the data from <https://github.com/stibu81/taxonomyData>.
 #'
 #' @param file Path to a file containing a `taxonomy_graph`. If omitted, the
-#'  data from <https://github.com/stibu81/taxonomyData> is used.
+#' data from <https://github.com/stibu81/taxonomyData> is used.
 #' @param expand_ranks a list of ranks that should always be expanded. This
-#'  can be changed interactively in the app.
+#' can be changed interactively in the app.
+#' @param image_size numeric giving the image size used in the app. The user
+#' can change this interactively in the app.
 #' @param launch_browser logical, if \code{TRUE}, the application
-#'  is opened in the system's default browser, if \code{FALSE},
-#'  no browser is started. If the argument is omitted, the value
-#'  according to the option \code{shiny.launch.browser} is used,
-#'  which in RStudio opens the internal shiny viewer.
+#' is opened in the system's default browser, if \code{FALSE},
+#' no browser is started. If the argument is omitted, the value
+#' according to the option \code{shiny.launch.browser} is used,
+#' which in RStudio opens the internal shiny viewer.
 #'
 #' @export
 
 run_taxonomy <- function(file = NULL,
                          expand_ranks = c("Gattung", "Art", "Unterart"),
+                         image_size = 150,
                          launch_browser = NULL) {
 
   rlang::check_installed(c("shiny", "bslib"),
@@ -34,7 +37,8 @@ run_taxonomy <- function(file = NULL,
   # pass settings as options to the app
   options(
     simpleTaxonomy_file = if (is.null(file)) file else normalizePath(file),
-    simpleTaxonomy_expand_ranks = expand_ranks
+    simpleTaxonomy_expand_ranks = expand_ranks,
+    simpleTaxonomy_image_size = image_size
   )
 
   if (is.null(launch_browser)) {
@@ -44,4 +48,15 @@ run_taxonomy <- function(file = NULL,
   shiny::runApp(app_dir,
                 display.mode = "normal",
                 launch.browser = launch_browser)
+}
+
+
+# Helper function to take a value from an option or use a default value,
+# if the option does not exist.
+get_option_or_default <- function(option, default) {
+  value <- getOption(option)
+  if (is.null(value)) {
+    value <- default
+  }
+  value
 }

@@ -2,16 +2,22 @@ library(simpleTaxonomy)
 library(igraph)
 library(dplyr)
 
-# define settings: take from options, if defined, use defaults otherwise
-taxonomy_file <- getOption("simpleTaxonomy_file")
-if (is.null(taxonomy_file)) {
-  taxonomy_file <- paste0("https://raw.githubusercontent.com/",
-                          "stibu81/taxonomyData/refs/heads/main/taxonomy.csv")
-}
-expand_ranks_default <- getOption("simpleTaxonomy_expand_ranks")
-if (is.null(expand_ranks_default)) {
-  expand_ranks_default <- c("Gattung", "Art", "Unterart")
-}
+# define settings: take from options, if defined, use defaults otherwise.
+# the options are used to pass settings from run_taxonomy() to the app.
+taxonomy_file <- simpleTaxonomy:::get_option_or_default(
+  "simpleTaxonomy_file",
+  paste0("https://raw.githubusercontent.com/",
+         "stibu81/taxonomyData/refs/heads/main/taxonomy.csv")
+)
+expand_ranks_default <- simpleTaxonomy:::get_option_or_default(
+  "simpleTaxonomy_expand_ranks",
+  c("Gattung", "Art", "Unterart")
+)
+image_size_default <- simpleTaxonomy:::get_option_or_default(
+  "simpleTaxonomy_image_size",
+  150
+)
+
 
 # read the taxonomy
 taxonomy <- read_taxonomy(taxonomy_file)
