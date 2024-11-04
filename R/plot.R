@@ -198,6 +198,7 @@ get_widget_options <- function(graph, link_length, font_size) {
   right_margin <- max(nchar(names(get_deepest_nodes(graph))))
 
   list(
+    input = "selected_taxon",
     hierarchy = 1:get_tree_depth(graph),
     linkLength = link_length, fontSize = font_size,
     tooltip = TRUE, collapsed = "collapsed", zoomable = TRUE,
