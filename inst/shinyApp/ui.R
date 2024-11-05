@@ -14,37 +14,37 @@ page_sidebar(
       # processing
       selectizeInput(
         "taxa_show",
-        "Show taxa:",
+        "Taxa anzeigen:",
         choices = NULL,
         multiple = TRUE
       ),
       input_switch(
         "full_expand",
-        label = "Full expand",
+        label = "Vollständig öffnen",
         value = FALSE
       ),
       input_switch(
         "highlight",
-        label = "Highlight",
+        label = "Hervorheben",
         value = FALSE
       ),
       # choices are filled here to avoid repeated rendering of the plot when
       # the app starts
       selectizeInput(
         "expand_ranks",
-        label = "Always expand ranks:",
+        label = "Stufen immer öffnen:",
         choices = ranks,
         selected = expand_ranks_default,
         multiple = TRUE
       ),
       input_switch(
         "show_images",
-        label = "Show images",
+        label = "Bilder anzeigen",
         value = TRUE
       ),
       sliderInput(
         "image_size",
-        label = "Image size:",
+        label = "Bildgrösse:",
         min = 100, max = 400,
         step = 50,
         value = image_size_default
