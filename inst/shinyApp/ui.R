@@ -48,7 +48,8 @@ page_sidebar(
         min = 100, max = 400,
         step = 50,
         value = image_size_default
-      )
+      ),
+      uiOutput("wikipedia_link")
     ),
 
     card(

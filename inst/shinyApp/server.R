@@ -1,5 +1,6 @@
 library(shiny)
 library(dplyr)
+library(stringr)
 library(collapsibleTree)
 library(simpleTaxonomy)
 
@@ -26,6 +27,21 @@ function(input, output, session) {
                   expand_rank = input$expand_ranks,
                   show_images = input$show_images,
                   image_size = image_size())
+  })
+
+  output$wikipedia_link <- renderUI({
+    if (length(input$selected_taxon) > 0) {
+      current_taxon <- tail(input$selected_taxon, n = 1)
+      link <- paste0("https://de.wikipedia.org/wiki/",
+                     str_replace_all(current_taxon, " +", "_"))
+      shiny::actionButton(
+        inputId = "wiki_button",
+        class = "btn-primary",
+        label = current_taxon,
+        icon = icon("wikipedia-w"),
+        onclick = paste0("window.open(\"", link, "\", \"_blank\")")
+      )
+    }
   })
 
 }
