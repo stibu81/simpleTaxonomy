@@ -9,6 +9,14 @@ page_sidebar(
 
   theme = bs_theme(preset = "yeti"),
 
+  # Add custom CSS for rounded button with some space above
+  tags$style(HTML("
+    .btn-rounded {
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+  ")),
+
   sidebar = sidebar(
       # choices will be filled in the server in order to use server side
       # processing

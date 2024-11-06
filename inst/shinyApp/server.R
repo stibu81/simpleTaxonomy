@@ -36,7 +36,7 @@ function(input, output, session) {
                      str_replace_all(current_taxon, " +", "_"))
       shiny::actionButton(
         inputId = "wiki_button",
-        class = "btn-primary",
+        class = "btn-primary btn-rounded",
         label = current_taxon,
         icon = icon("wikipedia-w"),
         onclick = paste0("window.open(\"", link, "\", \"_blank\")")
