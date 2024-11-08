@@ -18,6 +18,8 @@ page_sidebar(
   ")),
 
   sidebar = sidebar(
+      gap = "20px",
+      padding = c("20px", "15px"),
       # choices will be filled in the server in order to use server side
       # processing
       selectizeInput(
