@@ -20,7 +20,9 @@
 #'
 #' @export
 
-find_taxon <- function(graph, pattern, target = c("all", "name", "scientific")) {
+find_taxon <- function(graph,
+                       pattern,
+                       target = c("all", "name", "scientific")) {
 
   target <- match.arg(target)
 

@@ -66,7 +66,8 @@ read_taxonomy <- function(file, delim = ",") {
 
 read_taxonomy_file <- function(file, delim, error_call = rlang::caller_env()) {
 
-  if (!file.exists(file)) {
+  # only check if file exists for local paths, not for urls
+  if (!is_url(file) && !file.exists(file)) {
     cli::cli_abort("file \"{file}\" does not exist.", call = error_call)
   }
 
@@ -140,6 +141,16 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
     cli::cli_abort(
       paste("There are duplicate names:",
             "\"{paste(dup_names, collapse = '\", \"')}\""),
+      call = error_call
+    )
+  }
+
+  # also scientific names must be unique
+  dup_sci <- unique(data$scientific[duplicated(data$scientific)])
+  if (length(dup_sci) > 0) {
+    cli::cli_abort(
+      paste("There are duplicate scientific names:",
+            "\"{paste(dup_sci, collapse = '\", \"')}\""),
       call = error_call
     )
   }
@@ -242,4 +253,10 @@ get_rank_colours <- function() {
 
 get_example_taxonomy_file <- function() {
   system.file("example", "carnivora.csv", package = "simpleTaxonomy")
+}
+
+
+# check whether a path is a URL
+is_url <- function(path) {
+  stringr::str_detect(path, "^https?://")
 }

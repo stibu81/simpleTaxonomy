@@ -13,8 +13,8 @@ get_tree_depth(graph)
 integer giving the depth of the graph
 }
 \description{
-Get the depth of a taxonomy tree graph, i.e., the number of nodes from the root
-to the most distant leaf.
+Get the depth of a taxonomy tree graph, i.e., the number of nodes from the
+root to the most distant leaf.
 }
 \examples{
 file <- get_example_taxonomy_file()

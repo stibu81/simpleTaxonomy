@@ -30,9 +30,11 @@ get_wikipedia_image_urls <- function(taxa, size = 100, progress = TRUE) {
 
 get_wikipedia_image_url <- function(taxon, size) {
 
-  url <- paste0("http://de.wikipedia.org/w/api.php?action=query&titles=",
-                utils::URLencode(taxon),
-                "&prop=pageimages&format=json&pithumbsize=", size, "&redirects=")
+  url <- paste0(
+    "http://de.wikipedia.org/w/api.php?action=query&titles=",
+    utils::URLencode(taxon),
+    "&prop=pageimages&format=json&pithumbsize=", size, "&redirects="
+  )
   parsed <- jsonlite::fromJSON(url)$query$pages[[1]]
   if ("thumbnail" %in% names(parsed)) {
     parsed$thumbnail$source
@@ -51,6 +53,7 @@ get_wikipedia_image_url <- function(taxon, size) {
 #' @param delim the delimiter used in the file
 #' @param retry Whether to retry images that have not been found previously.
 #' @param progress Whether to show a progress bar.
+#' @param quiet Should all output be suppressed?
 #'
 #' @return
 #' a `taxonomy_graph` with added image URLs. The file given by `file` is
@@ -61,7 +64,8 @@ get_wikipedia_image_url <- function(taxon, size) {
 enrich_taxonomy_with_images <- function(file,
                                         delim = ",",
                                         retry = FALSE,
-                                        progress = TRUE) {
+                                        progress = TRUE,
+                                        quiet = FALSE) {
 
   taxonomy <- read_taxonomy(file, delim)
 
@@ -71,6 +75,8 @@ enrich_taxonomy_with_images <- function(file,
   image_url <- vertices$image_url
   if (retry) image_url[image_url == "not_found"] <- NA_character_
   url_missing <- is.na(image_url)
+
+  if (!quiet) cat("try to get images for", sum(url_missing), "taxa.\n")
   new_urls <- get_wikipedia_image_urls(
     vertices$label[url_missing],
     progress = ifelse(progress, "common names", FALSE)
@@ -91,9 +97,13 @@ enrich_taxonomy_with_images <- function(file,
   igraph::vertex_attr(taxonomy, "image_url") <- image_url
 
   # write the file
-  readr::write_delim(as_tibble(taxonomy), file, delim = delim)
+  readr::write_delim(as_tibble(taxonomy), file, delim = delim, na = "")
+
+  # print a summary
+  if (!quiet) {
+    cat("found: ", sum(new_urls != "not_found"),
+        "\nfailed: ", sum(new_urls == "not_found"))
+  }
 
   taxonomy
 }
-
-
