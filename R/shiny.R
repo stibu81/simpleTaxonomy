@@ -49,4 +49,3 @@ run_taxonomy <- function(file = NULL,
                 display.mode = "normal",
                 launch.browser = launch_browser)
 }
-

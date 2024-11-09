@@ -12,7 +12,7 @@ NULL
 # warning in R CMD check: All declared Imports should be used.
 # The following function makes use of a function from collapsibleTree to
 # avoid this warning, but has no other use.
-# see: https://r-pkgs.org/dependencies-in-practice.html#how-to-not-use-a-package-in-imports
+# see: https://r-pkgs.org/dependencies-in-practice.html#how-to-not-use-a-package-in-imports # nolint: line_length_linter
 
 .ignore_unused_import <- function() {
   collapsibleTree::collapsibleTree

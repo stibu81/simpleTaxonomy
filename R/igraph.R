@@ -30,8 +30,8 @@ get_leaf_nodes <- function(graph) {
 
 #' Get Depth of a Taxonomy Tree Graph
 #'
-#' Get the depth of a taxonomy tree graph, i.e., the number of nodes from the root
-#' to the most distant leaf.
+#' Get the depth of a taxonomy tree graph, i.e., the number of nodes from the
+#' root to the most distant leaf.
 #'
 #' @param graph a `taxonomy_graph` object
 #'

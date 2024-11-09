@@ -104,7 +104,7 @@ plot_taxonomy <- function(graph,
     add_tooltip(show_images = show_images, image_size = int_size) %>%
     set_highlight(highlight = highlight)
 
-  widget_input = list(
+  widget_input <- list(
     data = graph_as_nested_list(graph),
     options = get_widget_options(graph, link_length, font_size)
   )
@@ -141,7 +141,11 @@ get_expanded <- function(graph, show, expand_rank, full_expand) {
   expanded_show <- if (length(show) == 0) {
     rep(FALSE, igraph::vcount(graph))
   } else {
-    paths <- igraph::shortest_paths(graph, from = get_root_node(graph), to = show)
+    paths <- igraph::shortest_paths(
+      graph,
+      from = get_root_node(graph),
+      to = show
+    )
     expanded <- paths$vpath %>%
       lapply(\(x) utils::head(x, -1)) %>%
       # unlist() does not preserve the class, so we use do.call() instead

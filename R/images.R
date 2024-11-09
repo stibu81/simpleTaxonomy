@@ -30,9 +30,11 @@ get_wikipedia_image_urls <- function(taxa, size = 100, progress = TRUE) {
 
 get_wikipedia_image_url <- function(taxon, size) {
 
-  url <- paste0("http://de.wikipedia.org/w/api.php?action=query&titles=",
-                utils::URLencode(taxon),
-                "&prop=pageimages&format=json&pithumbsize=", size, "&redirects=")
+  url <- paste0(
+    "http://de.wikipedia.org/w/api.php?action=query&titles=",
+    utils::URLencode(taxon),
+    "&prop=pageimages&format=json&pithumbsize=", size, "&redirects="
+  )
   parsed <- jsonlite::fromJSON(url)$query$pages[[1]]
   if ("thumbnail" %in% names(parsed)) {
     parsed$thumbnail$source
@@ -105,5 +107,3 @@ enrich_taxonomy_with_images <- function(file,
 
   taxonomy
 }
-
-
