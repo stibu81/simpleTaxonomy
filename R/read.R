@@ -224,6 +224,7 @@ get_rank_colours <- function() {
     "Reich",              "#00FFFF",
     "Stamm",              "#76EEC6",
     "Unterstamm",         "#66CDAA",
+    "Überklasse",         "#38aa5e",
     "Klasse",             "#008000",
     "Unterklasse",        "#0FA601",
     "\u00dcberordnung",   "#24D902",
