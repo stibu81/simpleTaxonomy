@@ -12,6 +12,7 @@ taxonomy_file <- getOption(
 expand_ranks_default <- getOption("simpleTaxonomy_expand_ranks",
                                   c("Gattung", "Art", "Unterart"))
 image_size_default <- getOption("simpleTaxonomy_image_size", 150)
+link_length_default <- getOption("simpleTaxonomy_link_length", 200)
 
 
 # read the taxonomy

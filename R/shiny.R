@@ -22,6 +22,7 @@
 run_taxonomy <- function(file = NULL,
                          expand_ranks = c("Gattung", "Art", "Unterart"),
                          image_size = 150,
+                         link_length = 200,
                          launch_browser = NULL) {
 
   rlang::check_installed(c("shiny", "bslib"),
@@ -38,7 +39,8 @@ run_taxonomy <- function(file = NULL,
   options(
     simpleTaxonomy_file = if (is.null(file)) file else normalizePath(file),
     simpleTaxonomy_expand_ranks = expand_ranks,
-    simpleTaxonomy_image_size = image_size
+    simpleTaxonomy_image_size = image_size,
+    simpleTaxonomy_link_length = link_length
   )
 
   if (is.null(launch_browser)) {

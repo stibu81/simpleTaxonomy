@@ -59,6 +59,13 @@ page_sidebar(
       step = 50,
       value = image_size_default
     ),
+    sliderInput(
+      "link_length",
+      label = "Verbindungslänge:",
+      min = 100, max = 500,
+      step = 10,
+      value = link_length_default
+    ),
     uiOutput("wikipedia_link")
   ),
 

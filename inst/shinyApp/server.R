@@ -19,6 +19,7 @@ function(input, output, session) {
   output$taxonomy_plot <- renderCollapsibleTree({
 
     image_size <- debounce(reactive(input$image_size), 500)
+    link_length <- debounce(reactive(input$link_length), 500)
 
     plot_taxonomy(taxonomy,
                   show = taxa[input$taxa_show],
@@ -26,6 +27,7 @@ function(input, output, session) {
                   highlight = if (input$highlight) taxa[input$taxa_show],
                   expand_rank = input$expand_ranks,
                   show_images = input$show_images,
+                  link_length = link_length(),
                   image_size = image_size())
   })
 
