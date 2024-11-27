@@ -161,7 +161,19 @@ as_tibble.taxonomy_graph <- function(x, ...) {
 
 # convert a graph to a nested list in the format required by the htmlwidget
 # from callapsibleTree
-graph_as_nested_list <- function(graph, root = get_root_node(graph)) {
+graph_as_nested_list <- function(graph) {
+
+  # igraph::neighbors runs much faster, if integer indices are used instead
+  # of igraph.vs objects. Use this setting to ensure that this happens
+  opt_old <- igraph::igraph_options(return.vs.es = FALSE)
+  on.exit(igraph::igraph_options(opt_old))
+
+  # do the recursion
+  graph_as_nested_list_recursive(graph, as.integer(get_root_node(graph)))
+}
+
+
+graph_as_nested_list_recursive <- function(graph, root) {
 
   root_attr <- igraph::vertex_attr(graph, index = root)
   node_list <- list(
@@ -172,12 +184,15 @@ graph_as_nested_list <- function(graph, root = get_root_node(graph)) {
   )
 
   # if there are children, they must be adde to the list
-  children <- igraph::neighbors(graph, root)
+  # note that using mode with an integer is much faster
+  children <- igraph::neighbors(graph, root, mode = 1)
   if (length(children) == 0) return(node_list)
 
   c(node_list,
     list(
-      children = unname(lapply(children, graph_as_nested_list, graph = graph))
+      children = unname(
+        lapply(children, graph_as_nested_list_recursive, graph = graph)
+      )
     )
   )
 }
