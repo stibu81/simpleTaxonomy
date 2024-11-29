@@ -172,16 +172,24 @@ graph_as_nested_list <- function(graph) {
   # graph_as_nested_list_recursive()
   vertices <- igraph::vertex_attr(graph)
 
+  # commpute children only once to avoid repeated computation in
+  # graph_as_nested_list_recursive()
+  all_children <- igraph::adjacent_vertices(graph, igraph::V(graph))
+
   # do the recursion
   graph_as_nested_list_recursive(
     graph,
     as.integer(get_root_node(graph)),
-    vertices
+    vertices,
+    all_children
   )
 }
 
 
-graph_as_nested_list_recursive <- function(graph, root, vertices) {
+graph_as_nested_list_recursive <- function(graph,
+                                           root,
+                                           vertices,
+                                           all_children) {
 
   node_list <- list(
     name = vertices$label[root],
@@ -192,14 +200,14 @@ graph_as_nested_list_recursive <- function(graph, root, vertices) {
 
   # if there are children, they must be adde to the list
   # note that using mode with an integer is much faster
-  children <- igraph::neighbors(graph, root, mode = 1)
+  children <- all_children[[root]]
   if (length(children) == 0) return(node_list)
 
   c(node_list,
     list(
       children = unname(
         lapply(children, graph_as_nested_list_recursive,
-               graph = graph, vertices = vertices)
+               graph = graph, vertices = vertices, all_children = all_children)
       )
     )
   )
