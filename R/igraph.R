@@ -168,19 +168,26 @@ graph_as_nested_list <- function(graph) {
   opt_old <- igraph::igraph_options(return.vs.es = FALSE)
   on.exit(igraph::igraph_options(opt_old))
 
+  # extract vertex attributes once to avoide repeated extraction in
+  # graph_as_nested_list_recursive()
+  vertices <- igraph::vertex_attr(taxonomy)
+
   # do the recursion
-  graph_as_nested_list_recursive(graph, as.integer(get_root_node(graph)))
+  graph_as_nested_list_recursive(
+    graph,
+    as.integer(get_root_node(graph)),
+    vertices
+  )
 }
 
 
-graph_as_nested_list_recursive <- function(graph, root) {
+graph_as_nested_list_recursive <- function(graph, root, vertices) {
 
-  root_attr <- igraph::vertex_attr(graph, index = root)
   node_list <- list(
-    name = root_attr$label,
-    collapsed = root_attr$collapsed,
-    fill = root_attr$colour,
-    tooltip = root_attr$tooltip
+    name = vertices$label[root],
+    collapsed = vertices$collapsed[root],
+    fill = vertices$colour[root],
+    tooltip = vertices$tooltip[root]
   )
 
   # if there are children, they must be adde to the list
@@ -191,7 +198,8 @@ graph_as_nested_list_recursive <- function(graph, root) {
   c(node_list,
     list(
       children = unname(
-        lapply(children, graph_as_nested_list_recursive, graph = graph)
+        lapply(children, graph_as_nested_list_recursive,
+               graph = graph, vertices = vertices)
       )
     )
   )
