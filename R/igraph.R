@@ -170,7 +170,7 @@ graph_as_nested_list <- function(graph) {
 
   # extract vertex attributes once to avoide repeated extraction in
   # graph_as_nested_list_recursive()
-  vertices <- igraph::vertex_attr(taxonomy)
+  vertices <- igraph::vertex_attr(graph)
 
   # do the recursion
   graph_as_nested_list_recursive(
