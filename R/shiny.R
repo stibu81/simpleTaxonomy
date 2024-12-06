@@ -9,8 +9,10 @@
 #' data from <https://github.com/stibu81/taxonomyData> is used.
 #' @param expand_ranks a list of ranks that should always be expanded. This
 #' can be changed interactively in the app.
-#' @param image_size numeric giving the image size used in the app. The user
-#' can change this interactively in the app.
+#' @param image_size numeric giving the default image width in pixels used in
+#' the app. The user can change this interactively in the app.
+#' @param link_length numeric giving the default length of links in pixels
+#' used in the app. The user can change this interactively in the app.
 #' @param launch_browser logical, if \code{TRUE}, the application
 #' is opened in the system's default browser, if \code{FALSE},
 #' no browser is started. If the argument is omitted, the value
