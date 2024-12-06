@@ -1,12 +1,12 @@
 parent,name,scientific,rank,image_url
-NA,Raubtiere,Carnivora,Ordnung,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Stud_327_with_Blesbuck.jpg/100px-Stud_327_with_Blesbuck.jpg
+,Raubtiere,Carnivora,Ordnung,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Stud_327_with_Blesbuck.jpg/100px-Stud_327_with_Blesbuck.jpg
 Raubtiere,Hundeartige,Caniformia,Unterordnung,https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Canis_mesomelas_vs._Arctocephalus_pusillus.jpg/100px-Canis_mesomelas_vs._Arctocephalus_pusillus.jpg
 Hundeartige,Hunde,Canidae,Familie,https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/NIEdot306.jpg/100px-NIEdot306.jpg
 Hunde,Echte Füchse,Vulpini,Tribus,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Vulpes_vulpes_standing_in_snow.jpg/100px-Vulpes_vulpes_standing_in_snow.jpg
 Echte Füchse,Vulpes,Vulpes,Gattung,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Vulpes_vulpes_laying_in_snow.jpg/100px-Vulpes_vulpes_laying_in_snow.jpg
 Vulpes,Polarfuchs,Vulpes lagopus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Alopex_lagopus_qtl1.jpg/100px-Alopex_lagopus_qtl1.jpg
 Vulpes,Rotfuchs,Vulpes vulpes,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Vulpes_vulpes_1_%28Martin_Mecnarowski%29.jpg/100px-Vulpes_vulpes_1_%28Martin_Mecnarowski%29.jpg
-Vulpes,Wüstenfuchs,Vulpes zerda,Art,not_found
+Vulpes,Wüstenfuchs,Vulpes zerda,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Fennec_Fox_Vulpes_zerda.jpg/100px-Fennec_Fox_Vulpes_zerda.jpg
 Echte Füchse,Marderhund,Nyctereutes procyonoides,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/%D0%95%D0%BD%D0%BE%D1%82%D0%BE%D0%B2%D0%B8%D0%B4%D0%BD%D0%B0%D1%8F_%D1%81%D0%BE%D0%B1%D0%B0%D0%BA%D0%B0_%D0%93%D1%80%D0%BE%D0%B4%D0%BD%D0%BE_%28cropped_2%29.jpg/100px-%D0%95%D0%BD%D0%BE%D1%82%D0%BE%D0%B2%D0%B8%D0%B4%D0%BD%D0%B0%D1%8F_%D1%81%D0%BE%D0%B1%D0%B0%D0%BA%D0%B0_%D0%93%D1%80%D0%BE%D0%B4%D0%BD%D0%BE_%28cropped_2%29.jpg
 Hunde,Echte Hunde,Canini,Tribus,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Mexican_Wolf_2_yfb-edit_1.jpg/100px-Mexican_Wolf_2_yfb-edit_1.jpg
 Echte Hunde,Afrikanischer Wildhund,Lycaon pictus,Art,https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Lycaon_pictus_%28Temminck%2C_1820%29.jpg/100px-Lycaon_pictus_%28Temminck%2C_1820%29.jpg
