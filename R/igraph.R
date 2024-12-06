@@ -161,23 +161,76 @@ as_tibble.taxonomy_graph <- function(x, ...) {
 
 # convert a graph to a nested list in the format required by the htmlwidget
 # from callapsibleTree
-graph_as_nested_list <- function(graph, root = get_root_node(graph)) {
+graph_as_nested_list <- function(graph) {
 
-  root_attr <- igraph::vertex_attr(graph, index = root)
+  # igraph::neighbors runs much faster, if integer indices are used instead
+  # of igraph.vs objects. Use this setting to ensure that this happens
+  opt_old <- igraph::igraph_options(return.vs.es = FALSE)
+  on.exit(igraph::igraph_options(opt_old))
+
+  # extract vertex attributes once to avoide repeated extraction in
+  # graph_as_nested_list_recursive()
+  vertices <- igraph::vertex_attr(graph)
+
+  # commpute children only once to avoid repeated computation in
+  # graph_as_nested_list_recursive()
+  all_children <- igraph::adjacent_vertices(graph, igraph::V(graph))
+  # if an igraph version with bug is used, we must add one to all vertex indices
+  if (getOption("simpleTaxonomy_has_igraph_bug")) {
+    all_children <- lapply(all_children, `+`, 1)
+  }
+
+  # do the recursion
+  graph_as_nested_list_recursive(
+    graph,
+    as.integer(get_root_node(graph)),
+    vertices,
+    all_children
+  )
+}
+
+
+graph_as_nested_list_recursive <- function(graph,
+                                           root,
+                                           vertices,
+                                           all_children) {
+
   node_list <- list(
-    name = root_attr$label,
-    collapsed = root_attr$collapsed,
-    fill = root_attr$colour,
-    tooltip = root_attr$tooltip
+    name = vertices$label[root],
+    collapsed = vertices$collapsed[root],
+    fill = vertices$colour[root],
+    tooltip = vertices$tooltip[root]
   )
 
   # if there are children, they must be adde to the list
-  children <- igraph::neighbors(graph, root)
+  # note that using mode with an integer is much faster
+  children <- all_children[[root]]
   if (length(children) == 0) return(node_list)
 
   c(node_list,
     list(
-      children = unname(lapply(children, graph_as_nested_list, graph = graph))
+      children = unname(
+        lapply(children, graph_as_nested_list_recursive,
+               graph = graph, vertices = vertices, all_children = all_children)
+      )
     )
   )
+}
+
+
+# some versions of igraph have a bug in adjacent_vertices() that causes vertex
+# indices to be off by one if return.vs.es is FALSE. This function checks,
+# whether this bug is present.
+# Issue: https://github.com/igraph/rigraph/issues/1605
+
+has_igraph_bug <- function() {
+
+  g <- igraph::make_tree(2)
+
+  opt_old <- igraph::igraph_options(return.vs.es = FALSE)
+  on.exit(igraph::igraph_options(opt_old))
+
+  # if the adjacent vertex of 1 is returned as 1, the bug is present
+  igraph::adjacent_vertices(g, 1)[[1]] == 1
+
 }
