@@ -175,6 +175,10 @@ graph_as_nested_list <- function(graph) {
   # commpute children only once to avoid repeated computation in
   # graph_as_nested_list_recursive()
   all_children <- igraph::adjacent_vertices(graph, igraph::V(graph))
+  # if an igraph version with bug is used, we must add one to all vertex indices
+  if (getOption("simpleTaxonomy_has_igraph_bug")) {
+    all_children <- lapply(all_children, `+`, 1)
+  }
 
   # do the recursion
   graph_as_nested_list_recursive(
@@ -211,4 +215,22 @@ graph_as_nested_list_recursive <- function(graph,
       )
     )
   )
+}
+
+
+# some versions of igraph have a bug in adjacent_vertices() that causes vertex
+# indices to be off by one if return.vs.es is FALSE. This function checks,
+# whether this bug is present.
+# Issue: https://github.com/igraph/rigraph/issues/1605
+
+has_igraph_bug <- function() {
+
+  g <- igraph::make_tree(2)
+
+  opt_old <- igraph::igraph_options(return.vs.es = FALSE)
+  on.exit(igraph::igraph_options(opt_old))
+
+  # if the adjacent vertex of 1 is returned as 1, the bug is present
+  igraph::adjacent_vertices(g, 1)[[1]] == 1
+
 }
