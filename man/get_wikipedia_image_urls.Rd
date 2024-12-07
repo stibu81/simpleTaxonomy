@@ -4,13 +4,19 @@
 \alias{get_wikipedia_image_urls}
 \title{Download URL for Wikipedia Images}
 \usage{
-get_wikipedia_image_urls(taxa, size = 100, progress = TRUE)
+get_wikipedia_image_urls(taxa, size = 100, lang = "de", progress = TRUE)
 }
 \arguments{
 \item{taxa}{character with the taxa for which an image URL should be
 obtained.}
 
 \item{size}{integer giving the width of the image in pixel.}
+
+\item{lang}{language of the Wikipedia page to use. Available languages
+include "de" (German, the default), "en" (English), "fr" (French), and
+"es" (Spanish). See
+\href{https://meta.wikimedia.org/wiki/List_of_Wikipedias#All_Wikipedias_ordered_by_number_of_articles}{List of Wikipedias}
+for a full list of available languages.}
 
 \item{progress}{Whether to show a progress bar.}
 }

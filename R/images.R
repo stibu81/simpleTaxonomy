@@ -6,6 +6,11 @@
 #' @param taxa character with the taxa for which an image URL should be
 #'  obtained.
 #' @param size integer giving the width of the image in pixel.
+#' @param lang language of the Wikipedia page to use. Available languages
+#'  include "de" (German, the default), "en" (English), "fr" (French), and
+#'  "es" (Spanish). See
+#'  [List of Wikipedias](https://meta.wikimedia.org/wiki/List_of_Wikipedias#All_Wikipedias_ordered_by_number_of_articles)
+#'  for a full list of available languages.
 #' @param progress Whether to show a progress bar.
 #'
 #' @return
@@ -14,7 +19,10 @@
 #'
 #' @export
 
-get_wikipedia_image_urls <- function(taxa, size = 100, progress = TRUE) {
+get_wikipedia_image_urls <- function(taxa,
+                                     size = 100,
+                                     lang = "de",
+                                     progress = TRUE) {
 
   # make sure that size is a positive integer
   int_size <- suppressWarnings(as.integer(size))
@@ -22,16 +30,39 @@ get_wikipedia_image_urls <- function(taxa, size = 100, progress = TRUE) {
     cli::cli_abort("{size} is not a positive integer.")
   }
 
-  purrr::map_chr(taxa, get_wikipedia_image_url,
-                 size = int_size,
-                 .progress = progress)
+  # catch failure when connecting to wikipedia. A possible reason for failure
+  # is an invalid language.
+  error_call <- rlang::current_call()
+  tryCatch(
+    suppressWarnings(
+      purrr::map_chr(taxa, get_wikipedia_image_url,
+                     size = int_size,
+                     lang = lang,
+                   .progress = progress)
+    ),
+    error = function(e) {
+      cli::cli_abort(
+        c(
+          "x" = "Connection to {lang}.wikipedia.org failed.",
+          "i" = paste("Check your internet connection and make sure,",
+                      "\"{lang}\" is a valid Wikipedia language code."),
+          ">" = paste0("Look up valid language codes ",
+                       "{.href [here](https://meta.wikimedia.org/wiki/",
+                       "List_of_Wikipedias#",
+                       "All_Wikipedias_ordered_by_number_of_articles)}.")
+        ),
+        call = error_call
+      )
+    }
+  )
 
 }
 
-get_wikipedia_image_url <- function(taxon, size) {
+get_wikipedia_image_url <- function(taxon, size, lang,
+                                    error_call = rlang::caller_env()) {
 
   url <- paste0(
-    "http://de.wikipedia.org/w/api.php?action=query&titles=",
+    "http://", lang, ".wikipedia.org/w/api.php?action=query&titles=",
     utils::URLencode(taxon),
     "&prop=pageimages&format=json&pithumbsize=", size, "&redirects="
   )
