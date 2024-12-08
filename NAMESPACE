@@ -3,6 +3,7 @@
 S3method(as_tibble,taxonomy_graph)
 S3method(print,taxonomy_graph)
 export(as_tibble)
+export(available_ranks)
 export(count_ranks)
 export(enrich_taxonomy_with_images)
 export(find_taxon)

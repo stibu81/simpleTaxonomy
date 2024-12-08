@@ -22,14 +22,15 @@ vertices <- as_tibble(vertex_attr(taxonomy))
 
 
 # create a vector of ranks that appear in the data. In order to have them
-# sorted correctly, take them from get_rank_colours()
-ranks <- simpleTaxonomy:::get_rank_colours() %>%
-  filter(.data$rank %in% vertices$rank) %>%
-  pull("rank") %>%
-  # don't list the rank of the root node
-  setdiff(vertex_attr(taxonomy, "rank", get_root_node(taxonomy)))
+# sorted correctly, take them from available_ranks()
+ranks <- available_ranks() %>%
+  filter(.data$de %in% vertices$rank) %>%
+  # don't list the first rank and ranks that have no defined level in the
+  # hierarchy (e.g., "ohne Rang")
+  filter(level > 1) %>%
+  pull("de")
 
-# create a look up table of taxa. This is needed to allow searching also for
+# create a look-up table of taxa. This is needed to allow searching also for
 # scientific names, because the common names must be passed to plot_taxonomy().
 # only add the scientific name, if it is defined and not already contained in
 # the common names.

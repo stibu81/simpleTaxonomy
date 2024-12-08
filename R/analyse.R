@@ -47,7 +47,7 @@ count_ranks <- function(graph, subgraph = NULL, by_rank = NULL) {
   if (!is.null(subgraph)) graph <- get_subgraph(graph, subgraph)
 
   # get the order of the ranks
-  ranks_ordered <- rev(get_rank_colours()$rank)
+  ranks_ordered <- rev(available_ranks()$de)
 
   # to variants:
   # * if by_rank is used, count for each taxon of the selected rank and put

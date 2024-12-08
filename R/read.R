@@ -214,6 +214,27 @@ prepare_taxonomy_df <- function(data) {
 }
 
 
+#' Get a Table of Available Ranks
+#'
+#' Get the available ranks as a data frame. The ranks are returned in the
+#' correct hierarchical order from highest to lowest. Other ranks may be used,
+#' but only those listed here will be represented by coloured nodes in the
+#' visualisation.
+#'
+#' @returns
+#' a tibble with columns `level` and `de` (ranks in German).
+#'
+#' @export
+
+available_ranks <- function() {
+  get_rank_colours() %>%
+    dplyr::mutate(
+      level = c(1:(dplyr::n() - 1), NA_integer_)
+    ) %>%
+    dplyr::select("level", de = "rank")
+}
+
+
 # get a data frame with the colours by rank
 get_rank_colours <- function() {
 
