@@ -16,10 +16,22 @@ page_sidebar(
       margin-top: 10px;
     }
   ")),
+  # Add custom CSS for background colour of accordeon panel and
+  # collapsed accordeon header: same colour as sidebar background
+  tags$style(HTML("
+    .accordion-body {
+      background-color: #f2f2f2;
+    }
+    .accordion-button.collapsed {
+      background-color: #f2f2f2;
+    }
+  ")),
+
 
   sidebar = sidebar(
-    gap = "20px",
+    gap = "15px",
     padding = c("20px", "15px"),
+    bg = "#F2F2F2",
     # choices will be filled in the server in order to use server side
     # processing
     selectizeInput(
@@ -47,26 +59,32 @@ page_sidebar(
       selected = expand_ranks_default,
       multiple = TRUE
     ),
-    input_switch(
-      "show_images",
-      label = "Bilder anzeigen",
-      value = TRUE
+    uiOutput("wikipedia_link"),
+    accordion(
+      accordion_panel(
+        "Darstellung",
+        input_switch(
+          "show_images",
+          label = "Bilder anzeigen",
+          value = TRUE
+        ),
+        sliderInput(
+          "image_size",
+          label = "Bildgrösse:",
+          min = 100, max = 400,
+          step = 50,
+          value = image_size_default
+        ),
+        sliderInput(
+          "link_length",
+          label = "Verbindungslänge:",
+          min = 100, max = 500,
+          step = 10,
+          value = link_length_default
+        )
+      ),
+      open = FALSE
     ),
-    sliderInput(
-      "image_size",
-      label = "Bildgrösse:",
-      min = 100, max = 400,
-      step = 50,
-      value = image_size_default
-    ),
-    sliderInput(
-      "link_length",
-      label = "Verbindungslänge:",
-      min = 100, max = 500,
-      step = 10,
-      value = link_length_default
-    ),
-    uiOutput("wikipedia_link")
   ),
 
   card(
