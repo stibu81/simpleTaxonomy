@@ -32,18 +32,25 @@ function(input, output, session) {
   })
 
   output$wikipedia_link <- renderUI({
-    if (length(input$selected_taxon) > 0) {
-      current_taxon <- tail(input$selected_taxon, n = 1)
-      link <- paste0("https://de.wikipedia.org/wiki/",
-                     str_replace_all(current_taxon, " +", "_"))
-      shiny::actionButton(
-        inputId = "wiki_button",
-        class = "btn-primary btn-rounded",
-        label = current_taxon,
-        icon = icon("wikipedia-w"),
-        onclick = paste0("window.open(\"", link, "\", \"_blank\")")
-      )
+    # at the start, input$select_taxon is NULL. When the root is clicked,
+    # it is an empty list. => In both cases, show the link for the root taxon.
+    clicked_taxon <- if (length(input$selected_taxon) == 0) {
+      names(get_root_node(taxonomy))
+    # if any other node is clicked, input$select_taxon is a list containing
+    # the labels of oll the nodes from the root to the clicked node.
+    # => take the last taxon in the list.
+    } else {
+      tail(input$selected_taxon, n = 1)
     }
+    link <- paste0("https://de.wikipedia.org/wiki/",
+                   str_replace_all(clicked_taxon, " +", "_"))
+    shiny::actionButton(
+      inputId = "wiki_button",
+      class = "btn-primary btn-rounded",
+      label = clicked_taxon,
+      icon = icon("wikipedia-w"),
+      onclick = paste0("window.open(\"", link, "\", \"_blank\")")
+    )
   })
 
 }
