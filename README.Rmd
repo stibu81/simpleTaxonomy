@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# simpleTaxonomy
+# simpleTaxonomy <img src="man/figures/simpleTaxonomy_logo.png" align="right" width="175" />
 
 <!-- badges: start -->
 <!-- badges: end -->

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# simpleTaxonomy
+# simpleTaxonomy <img src="man/figures/simpleTaxonomy_logo.png" align="right" width="175" />
 
 <!-- badges: start -->
 <!-- badges: end -->
