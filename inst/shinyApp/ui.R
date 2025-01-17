@@ -5,7 +5,10 @@ library(simpleTaxonomy)
 
 page_sidebar(
 
-  title = "simpleTaxonomy",
+  title = h4("simpleTaxonomy",
+             img(src = "simpleTaxonomy_logo.png",
+                 style = "position:absolute; right:20px; top:5px",
+                 height = 42)),
 
   theme = bs_theme(preset = "yeti"),
 
