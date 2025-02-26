@@ -7,6 +7,8 @@ Description: Create interactive visualisations of a taxonomy hierarchy that is
   specified in a csv file using a simple format. The visualisation uses
   the javascript library D3.js via the R package collapsibleTree.
 License: MIT + file LICENSE
+URL: https://stibu81.github.io/simpleTaxonomy/
+BugReports: https://github.com/stibu81/simpleTaxonomy/issues
 Language: en-GB
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

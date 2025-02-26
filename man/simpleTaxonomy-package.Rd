@@ -8,6 +8,14 @@
 \description{
 Create interactive visualisations of a taxonomy hierarchy that is specified in a csv file using a simple format. The visualisation uses the javascript library D3.js via the R package collapsibleTree.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://stibu81.github.io/simpleTaxonomy/}
+  \item Report bugs at \url{https://github.com/stibu81/simpleTaxonomy/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Stefan Lanz \email{slanz1137@gmail.com}
 
