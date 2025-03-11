@@ -1,3 +1,4 @@
+tmpfile <- tempfile("simpleTaxonomy_logo", fileext = ".png")
 
 hexSticker::sticker(
   devtools::package_file("man", "figures", "tree.png"),
@@ -9,5 +10,7 @@ hexSticker::sticker(
   h_fill = "turquoise3",
   h_color = "#212F3A",
   h_size = 1.5,
-  filename = devtools::package_file("man", "figures", "simpleTaxonomy_logo.png")
+  filename = tmpfile
 )
+
+usethis::use_logo(tmpfile, "360x417")
