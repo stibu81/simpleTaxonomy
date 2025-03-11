@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# simpleTaxonomy <img src="man/figures/simpleTaxonomy_logo.png" align="right" width="175" />
+# simpleTaxonomy <a href="https://stibu81.github.io/simpleTaxonomy/"><img src="man/figures/logo.png" align="right" width="175" alt="simpleTaxonomy website" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -19,8 +19,8 @@ You can install the development version of simpleTaxonomy from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("stibu81/simpleTaxonomy")
+# install.packages("remotes")
+remotes::install_github("stibu81/simpleTaxonomy")
 ```
 
 ## Example
@@ -207,6 +207,7 @@ directly from GitHub as follows:
 url <- paste0("https://raw.githubusercontent.com/",
               "stibu81/taxonomyData/refs/heads/main/taxonomy.csv")
 taxonomy <- read_taxonomy(url)
+#> ! There are invalid ranks:  "Kohorte". The corresponding nodes will not be coloured.
 ```
 
 A visualisation of the current state of the taxonomic hierarchy is also
