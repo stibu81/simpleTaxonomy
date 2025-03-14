@@ -30,6 +30,8 @@ page_sidebar(
     }
   ")),
 
+  # add favicon
+  tags$link(rel="icon", href="favicon-16x16.png"),
 
   sidebar = sidebar(
     gap = "15px",
