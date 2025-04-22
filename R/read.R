@@ -240,15 +240,20 @@ get_rank_colours <- function() {
 
   dplyr::tribble(
     ~"rank",              ~"colour",
-    "Lebewesen",          "#104E8B",
-    "Dom\u00e4ne",        "#1C86EE",
-    "Reich",              "#00FFFF",
-    "Stamm",              "#76EEC6",
-    "Unterstamm",         "#66CDAA",
-    "\u00dcberklasse",    "#38aa5e",
+    "Lebewesen",          "#3333CC",
+    "Dom\u00e4ne",        "#0B55AE",
+    "Reich",              "#12B5F4",
+    "Stamm",              "#00FFFF",
+    "Unterstamm",         "#00CCCC",
+    "Teilstamm",          "#00AA86",
+    "\u00dcberklasse",    "#006600",
     "Klasse",             "#008000",
     "Unterklasse",        "#0FA601",
     "Teilklasse",         "#16B701",
+    "Kohorte",            "#9900CC",
+    "Unterkohorte",       "#CC00CC",
+    "Division",           "#FF00FF",
+    "Serie",              "#FF99FF",
     "\u00dcberordnung",   "#24D902",
     "Ordnung",            "#33FF33",
     "Unterordnung",       "#9EFB18",
@@ -260,9 +265,9 @@ get_rank_colours <- function() {
     "Gattung",            "#CD8500",
     "Art",                "#A52A2A",
     "Unterart",           "#7C2020",
+    "Reihe",              "#FFFFFF",
     "ohne Rang",          "#FFFFFF"
   )
-
 }
 
 
