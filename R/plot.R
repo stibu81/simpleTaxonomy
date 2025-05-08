@@ -29,14 +29,16 @@
 #' @param font_size font size of the labels in pixels.
 #'
 #' @details
-#' The function makes use of the html widget defined in [`collapsibleTree`],
-#' but not of the function [collapsibleTreeNetwork()]
+#' The function makes use of the html widget defined in the package
+#' [collapsibleTree][collapsibleTree::collapsibleTree]
+#' but not of the function
+#' [`collapsibleTreeNetwork()`][collapsibleTree::collapsibleTreeNetwork()]
 #' from that package that can produce the same plot from the same input data.
 #' `plot_taxonomy()` is less flexible than the function from
-#' `collapsibleTree` but also much faster.
+#' collapsibleTree but also much faster.
 #'
 #' @return
-#' a `collapsibelTree` htmlwidget with the interactive tree visualisation.
+#' a `collapsibleTree` htmlwidget with the interactive tree visualisation.
 #'
 #' @examples
 #' file <- get_example_taxonomy_file()
