@@ -1,0 +1,14 @@
+/* Add custom CSS for background colour of accordeon panel and
+   collapsed accordeon header: same colour as sidebar background */
+.accordion-body {
+  background-color: #f2f2f2;
+}
+.accordion-button.collapsed {
+  background-color: #f2f2f2;
+}
+
+/* add special class for rounded button with some space on top */
+.btn-rounded {
+  border-radius: 4px;
+  margin-top: 10px;
+}

@@ -12,26 +12,10 @@ page_sidebar(
 
   theme = bs_theme(preset = "yeti"),
 
-  # Add custom CSS for rounded button with some space above
-  tags$style(HTML("
-    .btn-rounded {
-      border-radius: 4px;
-      margin-top: 10px;
-    }
-  ")),
-  # Add custom CSS for background colour of accordeon panel and
-  # collapsed accordeon header: same colour as sidebar background
-  tags$style(HTML("
-    .accordion-body {
-      background-color: #f2f2f2;
-    }
-    .accordion-button.collapsed {
-      background-color: #f2f2f2;
-    }
-  ")),
-
-  # add favicon
-  tags$link(rel="icon", href="favicon-16x16.png"),
+  header = tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "simpleTaxonomy.css"),
+    tags$link(rel="icon", href="favicon-16x16.png"),
+  ),
 
   sidebar = sidebar(
     gap = "15px",
