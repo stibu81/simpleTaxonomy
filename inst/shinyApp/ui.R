@@ -3,7 +3,7 @@ library(bslib)
 library(collapsibleTree)
 library(simpleTaxonomy)
 
-page_sidebar(
+page_navbar(
 
   title = h4("simpleTaxonomy",
              img(src = "simpleTaxonomy_logo.png",
@@ -76,7 +76,16 @@ page_sidebar(
     ),
   ),
 
-  card(
-    collapsibleTreeOutput("taxonomy_plot")
+  nav_panel(
+    "",
+    card(
+      collapsibleTreeOutput("taxonomy_plot")
+    )
+  ),
+
+  navbar_options = navbar_options(
+    theme = "light",
+    underline = FALSE,
+    bg = "#333333"
   )
 )

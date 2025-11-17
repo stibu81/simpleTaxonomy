@@ -1,3 +1,23 @@
+/* style the navbar: limit the heigth and vertically center the title,
+   change font colour to white. The bg colour is set with navbar_options()
+   in ui.R */
+.navbar-brand {
+  display: flex;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.navbar-brand,
+.navbar-brand:hover,
+.navbar-brand:focus {
+  color: white;
+}
+.navbar-nav .nav-link {
+  color: white;
+}
+.navbar-nav .nav-link.active {
+  color: white;
+}
+
 /* Add custom CSS for background colour of accordeon panel and
    collapsed accordeon header: same colour as sidebar background */
 .accordion-body {
