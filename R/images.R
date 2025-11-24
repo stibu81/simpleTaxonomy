@@ -105,21 +105,17 @@ enrich_taxonomy_with_images <- function(file,
   # if retry is requested, set images that have not been found to NA
   image_url <- vertices$image_url
   if (retry) image_url[image_url == "not_found"] <- NA_character_
+
   url_missing <- is.na(image_url)
-
   if (!quiet) cat("try to get images for", sum(url_missing), "taxa.\n")
-  new_urls <- get_wikipedia_image_urls(
-    vertices$label[url_missing],
-    progress = ifelse(progress, "common names", FALSE)
-  )
 
-  # for those that failed, try again with the scientific name
-  url_missing2 <- is.na(new_urls)
-  new_urls2 <- get_wikipedia_image_urls(
-    vertices$scientific[url_missing][url_missing2],
-    progress = ifelse(progress, "scientific names", FALSE)
-  )
-  new_urls[url_missing2] <- new_urls2
+  # try in turns: common names (de), scientific names (de), scientific names (en)
+  new_urls <- vertices$label[url_missing] %>%
+    insert_missing_image_urls(image_url[url_missing], "de", progress, "common names")
+  new_urls <- vertices$scientific[url_missing] %>%
+    insert_missing_image_urls(new_urls, "de", progress, "scientific names")
+  new_urls <- vertices$scientific[url_missing] %>%
+    insert_missing_image_urls(new_urls, "en", progress, "English Wikipedia")
 
   # If no URL was found, mark this as "not_found" to distinguish this from
   # taxa that have not yet been tried
@@ -133,8 +129,19 @@ enrich_taxonomy_with_images <- function(file,
   # print a summary
   if (!quiet) {
     cat("found: ", sum(new_urls != "not_found"),
-        "\nfailed: ", sum(new_urls == "not_found"))
+        "\nfailed: ", sum(new_urls == "not_found"), "\n")
   }
 
   taxonomy
+}
+
+
+insert_missing_image_urls <- function(taxa, image_url, lang, progress, label) {
+  url_missing <- is.na(image_url)
+  image_url[url_missing] <- get_wikipedia_image_urls(
+    taxa[url_missing],
+    progress = ifelse(progress, label, FALSE),
+    lang = lang
+  )
+  image_url
 }
