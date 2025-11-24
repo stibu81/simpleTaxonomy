@@ -10,13 +10,13 @@ Source:
 [`DESCRIPTION`](https://github.com/stibu81/simpleTaxonomy/blob/main/DESCRIPTION)
 
 Lanz S (2025). *simpleTaxonomy: Create Interactive Visualisation of
-Taxonomic Hierarchy*. R package version 0.0.0.9033,
+Taxonomic Hierarchy*. R package version 0.0.0.9034,
 <https://stibu81.github.io/simpleTaxonomy/>.
 
     @Manual{,
       title = {simpleTaxonomy: Create Interactive Visualisation of Taxonomic Hierarchy},
       author = {Stefan Lanz},
       year = {2025},
-      note = {R package version 0.0.0.9033},
+      note = {R package version 0.0.0.9034},
       url = {https://stibu81.github.io/simpleTaxonomy/},
     }
