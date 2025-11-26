@@ -6,7 +6,7 @@ result as a tibble.
 ## Usage
 
 ``` r
-count_ranks(graph, subgraph = NULL, by_rank = NULL)
+count_ranks(graph, subgraph = NULL, by_rank = NULL, only_major_ranks = FALSE)
 ```
 
 ## Arguments
@@ -24,6 +24,11 @@ count_ranks(graph, subgraph = NULL, by_rank = NULL)
 
   the name of a rank. Ranks will be counted for each of the taxa with
   this rank.
+
+- only_major_ranks:
+
+  should counts only be shown for the major ranks (Lebewesen, Domäne,
+  Reich, Stamm, Klasse, Ordnung, Familie, Gattung, Art)?
 
 ## Value
 

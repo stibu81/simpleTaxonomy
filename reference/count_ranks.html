@@ -40,7 +40,7 @@ the result as a tibble.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">count_ranks</span><span class="op">(</span><span class="va">graph</span>, subgraph <span class="op">=</span> <span class="cn">NULL</span>, by_rank <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">count_ranks</span><span class="op">(</span><span class="va">graph</span>, subgraph <span class="op">=</span> <span class="cn">NULL</span>, by_rank <span class="op">=</span> <span class="cn">NULL</span>, only_major_ranks <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -59,6 +59,11 @@ subgraph, to which counting is restricted.</p></dd>
 <dt id="arg-by-rank">by_rank<a class="anchor" aria-label="anchor" href="#arg-by-rank"></a></dt>
 <dd><p>the name of a rank. Ranks will be counted for each of the
 taxa with this rank.</p></dd>
+
+
+<dt id="arg-only-major-ranks">only_major_ranks<a class="anchor" aria-label="anchor" href="#arg-only-major-ranks"></a></dt>
+<dd><p>should counts only be shown for the major ranks
+(Lebewesen, Domäne, Reich, Stamm, Klasse, Ordnung, Familie, Gattung, Art)?</p></dd>
 
 </dl></div>
     <div class="section level2">
