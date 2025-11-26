@@ -8,6 +8,8 @@
 #'  subgraph, to which counting is restricted.
 #' @param by_rank the name of a rank. Ranks will be counted for each of the
 #'  taxa with this rank.
+#' @param only_major_ranks should counts only be shown for the major ranks
+#'  (Lebewesen, Domäne, Reich, Stamm, Klasse, Ordnung, Familie, Gattung, Art)?
 #'
 #' @details
 #' If `by_rank` is not used, the number of taxa is counted in the complete
@@ -35,7 +37,8 @@
 #'
 #' @export
 
-count_ranks <- function(graph, subgraph = NULL, by_rank = NULL) {
+count_ranks <- function(graph, subgraph = NULL, by_rank = NULL,
+                        only_major_ranks = FALSE) {
 
   # this only works for taxonomy_graph objects
   if (!inherits(graph, "taxonomy_graph")) {
@@ -83,7 +86,9 @@ count_ranks <- function(graph, subgraph = NULL, by_rank = NULL) {
     # get a subgraph for each taxon with the selected rank, count, & transform
     counts <- tax_with_rank %>%
       lapply(\(tax) get_subgraph(graph, tax)) %>%
-      lapply(\(subgraph) do_count_ranks(subgraph, ranks_ordered)) %>%
+      lapply(
+        \(subgraph) do_count_ranks(subgraph, ranks_ordered, only_major_ranks)
+      ) %>%
       stats::setNames(tax_with_rank) %>%
       dplyr::bind_rows(.id = by_rank) %>%
       # the rank used for grouping must be removed in order to avoid duplication
@@ -101,7 +106,7 @@ count_ranks <- function(graph, subgraph = NULL, by_rank = NULL) {
       dplyr::mutate(dplyr::across(is.character, get_taxon_labels))
 
   } else {
-    counts <- do_count_ranks(graph, ranks_ordered)
+    counts <- do_count_ranks(graph, ranks_ordered, only_major_ranks)
   }
 
   counts
@@ -109,10 +114,23 @@ count_ranks <- function(graph, subgraph = NULL, by_rank = NULL) {
 
 
 # helper function that does the actual counting
-do_count_ranks <- function(graph, ranks_ordered) {
-  graph %>%
+do_count_ranks <- function(graph, ranks_ordered, only_major_ranks) {
+  rank_counts <- graph %>%
     as_tibble() %>%
     dplyr::mutate(rank = ordered(rank, levels = ranks_ordered)) %>%
     dplyr::count(rank) %>%
     dplyr::arrange(dplyr::desc(rank))
+
+  if (only_major_ranks) {
+    rank_counts <- rank_counts %>%
+      dplyr::filter(.data$rank %in% get_major_ranks())
+  }
+
+  rank_counts
+}
+
+
+get_major_ranks <- function() {
+  c("Lebewesen", "Dom\u00e4ne", "Reich", "Stamm", "Klasse", "Ordnung",
+    "Familie", "Gattung", "Art")
 }

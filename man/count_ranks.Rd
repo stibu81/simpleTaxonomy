@@ -4,7 +4,7 @@
 \alias{count_ranks}
 \title{Count the Number of Taxa per Rank}
 \usage{
-count_ranks(graph, subgraph = NULL, by_rank = NULL)
+count_ranks(graph, subgraph = NULL, by_rank = NULL, only_major_ranks = FALSE)
 }
 \arguments{
 \item{graph}{a \code{taxonomy_graph} object}
@@ -14,6 +14,9 @@ subgraph, to which counting is restricted.}
 
 \item{by_rank}{the name of a rank. Ranks will be counted for each of the
 taxa with this rank.}
+
+\item{only_major_ranks}{should counts only be shown for the major ranks
+(Lebewesen, Domäne, Reich, Stamm, Klasse, Ordnung, Familie, Gattung, Art)?}
 }
 \value{
 a tibble
