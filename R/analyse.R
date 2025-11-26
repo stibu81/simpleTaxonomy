@@ -74,7 +74,7 @@ count_ranks <- function(graph, subgraph = NULL, by_rank = NULL) {
     if (length(tax_with_rank) == 0) {
       cli::cli_abort(
         paste(
-          "\"{by_rank}\" is a valid taxon, but it does not appear in the",
+          "\"{by_rank}\" is a valid rank, but it does not appear in the",
           "taxonomy graph."
         )
       )
@@ -95,7 +95,10 @@ count_ranks <- function(graph, subgraph = NULL, by_rank = NULL) {
         values_from = "n",
         values_fill = 0
       ) %>%
-      dplyr::select(dplyr::any_of(rev(ranks_ordered)))
+      dplyr::select(dplyr::any_of(rev(ranks_ordered))) %>%
+      # replace the taxon names by labels. The columns with taxon names is the
+      # only character column in the tibble.
+      dplyr::mutate(dplyr::across(is.character, get_taxon_labels))
 
   } else {
     counts <- do_count_ranks(graph, ranks_ordered)

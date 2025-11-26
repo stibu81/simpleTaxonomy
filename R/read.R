@@ -189,8 +189,7 @@ prepare_taxonomy_df <- function(data) {
   # for the label in the graph
   data <- data %>%
     dplyr::mutate(
-      label = stringr::str_remove(.data$name, "\\(.*\\)") %>%
-        stringr::str_trim()
+      label = get_taxon_labels(.data$name)
     )
 
   data <- data %>%
@@ -287,4 +286,12 @@ get_example_taxonomy_file <- function() {
 # check whether a path is a URL
 is_url <- function(path) {
   stringr::str_detect(path, "^https?://")
+}
+
+
+# get the label for a vector of taxa: this is done by removing parts of the
+# taxa that are written in parentheses.
+get_taxon_labels <- function(taxa) {
+  stringr::str_remove(taxa, "\\(.*\\)") %>%
+    stringr::str_trim()
 }
