@@ -27,3 +27,5 @@
   : Read Taxonomic Hierarchy From File
 - [`run_taxonomy()`](https://stibu81.github.io/simpleTaxonomy/reference/run_taxonomy.md)
   : Run simpleTaxonomy Shiny App
+- [`save_taxonomy()`](https://stibu81.github.io/simpleTaxonomy/reference/save_taxonomy.md)
+  : Save Taxonomic Hierarchy to HTML-File
