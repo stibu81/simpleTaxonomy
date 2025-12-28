@@ -43,3 +43,10 @@ names(taxa) <- c(vertices$name, vertices$scientific[use_sci])
 if (anyDuplicated(names(taxa)) > 0) {
   warning("There are duplicate taxa.")
 }
+
+# we also need the taxa that are not leaves, i.e. that have children
+i_leaf <- as.integer(get_leaf_nodes(taxonomy))
+use_sci <- use_sci[-i_leaf]
+no_leaf_taxa <- c(vertices$name[-i_leaf], vertices$name[-i_leaf][use_sci])
+names(no_leaf_taxa) <- c(vertices$name[-i_leaf],
+                         vertices$scientific[-i_leaf][use_sci])

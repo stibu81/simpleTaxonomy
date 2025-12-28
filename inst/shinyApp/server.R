@@ -1,18 +1,25 @@
 library(shiny)
 library(dplyr)
 library(stringr)
+library(DT)
 library(collapsibleTree)
 library(simpleTaxonomy)
 
 
 function(input, output, session) {
 
-  # choices of taxa_show must be filled here in order to use server side
-  # processing
+  # choices of taxa_show and counts_root must be filled here in order
+  # to use server side processing
   updateSelectizeInput(
     session,
     "taxa_show",
     choices = names(taxa),
+    server = TRUE
+  )
+  updateSelectizeInput(
+    session,
+    "counts_root",
+    choices = names(no_leaf_taxa),
     server = TRUE
   )
 
@@ -51,6 +58,14 @@ function(input, output, session) {
       icon = icon("wikipedia-w"),
       onclick = paste0("window.open(\"", link, "\", \"_blank\")")
     )
+  })
+
+  output$rank_counts <- renderDataTable({
+    if (input$counts_root != "") {
+      datatable(
+        count_ranks(taxonomy, subgraph = no_leaf_taxa[input$counts_root])
+      )
+    }
   })
 
 }
