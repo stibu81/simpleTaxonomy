@@ -1,5 +1,6 @@
 library(shiny)
 library(bslib)
+library(DT)
 library(collapsibleTree)
 library(simpleTaxonomy)
 
@@ -62,6 +63,20 @@ sidebar_tree <- sidebar(
   )
 )
 
+sidebar_counts <- sidebar(
+  gap = "15px",
+  padding = c("20px", "15px"),
+  bg = "#F2F2F2",
+  # choices will be filled in the server in order to use server side
+  # processing
+  selectizeInput(
+    "counts_root",
+    "Zähle Taxa in:",
+    choices = NULL,
+    multiple = FALSE
+  )
+)
+
 page_navbar(
 
   title = h4("simpleTaxonomy",
@@ -77,12 +92,18 @@ page_navbar(
   ),
 
   nav_panel(
-    "",
+    "Baum",
     layout_sidebar(
       sidebar = sidebar_tree,
-      card(
-        collapsibleTreeOutput("taxonomy_plot")
-      )
+      card(collapsibleTreeOutput("taxonomy_plot"))
+    )
+  ),
+
+  nav_panel(
+    "Tabelle",
+    layout_sidebar(
+      sidebar = sidebar_counts,
+      card(dataTableOutput("rank_counts"))
     )
   ),
 
