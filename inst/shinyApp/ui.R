@@ -74,6 +74,11 @@ sidebar_counts <- sidebar(
     "Zähle Taxa in:",
     choices = NULL,
     multiple = FALSE
+  ),
+  input_switch(
+    "only_major_ranks",
+    label = "Nur Hauptrangstufen",
+    value = FALSE
   )
 )
 
