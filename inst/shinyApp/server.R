@@ -91,26 +91,28 @@ function(input, output, session) {
       by_rank <- if (!input$counts_by_rank %in% c("", "ohne")) {
         input$counts_by_rank
       }
-      if (input$counts_show_all) {
-        dom = "ft"
-        n_rows = 10000
-      } else {
-        dom = "ftp"
-        n_rows = 12
-      }
       rank_counts <- count_ranks(
         taxonomy,
         subgraph = no_leaf_taxa[input$counts_root],
         by_rank = by_rank,
         only_major_ranks = input$only_major_ranks
       )
+
+      # set the number of rows to show. Only show the pagination-controls
+      # (dom = "p) if there are multiple pages.
+      n_rows <- if (input$counts_show_all) 1000 else 12
+      dom <- if (nrow(rank_counts) > n_rows) "ftp" else "ft"
+
       # if there is no summary by rank, use better column names
       if (is.null(by_rank)) {
         names(rank_counts) <- c("Rangstufe", "Anzahl")
       }
+
       datatable(
         rank_counts,
         rownames = FALSE,
+        selection = "none",
+        extensions = "FixedColumns",
         options = list(
           dom = dom,
           pageLength = n_rows,
@@ -118,7 +120,9 @@ function(input, output, session) {
             search = "<b>Suche:</b>",
             emptyTable = "Es sind keine Daten verf\u00fcgbar.",
             paginate = list(previous = "Zur\u00fcck", `next` = "Nächste")
-          )
+          ),
+          scrollX = TRUE,
+          fixedColumns = list(leftColumns = 1)
         )
       )
     }
