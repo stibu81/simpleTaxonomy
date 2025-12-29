@@ -220,6 +220,15 @@ get_widget_options <- function(graph, link_length, font_size) {
 
 add_tooltip <- function(graph, show_images, image_size) {
 
+  tooltip <- create_tooltip(graph, show_images, image_size)
+  igraph::vertex_attr(graph, "tooltip") <- tooltip
+
+  graph
+}
+
+
+create_tooltip <- function(graph, show_images, image_size) {
+
   vertices <- igraph::vertex_attr(graph)
 
   tooltip <- paste0(
@@ -231,7 +240,6 @@ add_tooltip <- function(graph, show_images, image_size) {
   )
 
   if (show_images) {
-
     # apply image size
     image_url <- vertices$image_url %>%
       stringr::str_replace("/[1-9][0-9]*px-", paste0("/", image_size, "px-"))
@@ -246,9 +254,7 @@ add_tooltip <- function(graph, show_images, image_size) {
     )
   }
 
-  igraph::vertex_attr(graph, "tooltip") <- tooltip
-
-  graph
+  tooltip
 }
 
 
