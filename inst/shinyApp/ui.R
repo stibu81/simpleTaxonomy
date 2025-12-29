@@ -90,7 +90,10 @@ sidebar_counts <- sidebar(
     "counts_show_all",
     label = "Alle anzeigen",
     value = FALSE
-  )
+  ),
+  tags$strong("Ausgewähltes Taxon:"),
+  # use inline for better spacing.
+  htmlOutput("counts_image", inline = TRUE)
 )
 
 page_navbar(
