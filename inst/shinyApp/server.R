@@ -65,11 +65,35 @@ function(input, output, session) {
       by_rank <- if (!input$counts_by_rank %in% c("", "ohne")) {
         input$counts_by_rank
       }
+      if (input$counts_show_all) {
+        dom = "ft"
+        n_rows = 10000
+      } else {
+        dom = "ftp"
+        n_rows = 12
+      }
+      rank_counts <- count_ranks(
+        taxonomy,
+        subgraph = no_leaf_taxa[input$counts_root],
+        by_rank = by_rank,
+        only_major_ranks = input$only_major_ranks
+      )
+      # if there is no summary by rank, use better column names
+      if (is.null(by_rank)) {
+        names(rank_counts) <- c("Rangstufe", "Anzahl")
+      }
       datatable(
-        count_ranks(taxonomy,
-                    subgraph = no_leaf_taxa[input$counts_root],
-                    by_rank = by_rank,
-                    only_major_ranks = input$only_major_ranks)
+        rank_counts,
+        rownames = FALSE,
+        options = list(
+          dom = dom,
+          pageLength = n_rows,
+          language  = list(
+            search = "<b>Suche:</b>",
+            emptyTable = "Es sind keine Daten verf\u00fcgbar.",
+            paginate = list(previous = "Zur\u00fcck", `next` = "Nächste")
+          )
+        )
       )
     }
   })

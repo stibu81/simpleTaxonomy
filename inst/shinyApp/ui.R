@@ -85,6 +85,11 @@ sidebar_counts <- sidebar(
     "Gruppieren nach Rang:",
     choices = c("ohne", available_ranks()$de),
     selected = "ohne"
+  ),
+  input_switch(
+    "counts_show_all",
+    label = "Alle anzeigen",
+    value = FALSE
   )
 )
 
