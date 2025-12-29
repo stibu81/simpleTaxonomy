@@ -2,6 +2,7 @@ library(shiny)
 library(dplyr)
 library(stringr)
 library(DT)
+library(igraph)
 library(collapsibleTree)
 library(simpleTaxonomy)
 
@@ -59,6 +60,31 @@ function(input, output, session) {
       onclick = paste0("window.open(\"", link, "\", \"_blank\")")
     )
   })
+
+  # fill the selection of orders to group by according to the selection
+  # of the top level taxon
+  observeEvent(
+    input$counts_root,
+    {
+      if (input$counts_root != "") {
+        old_by_rank_value <- input$counts_by_rank
+        subgraph <- get_subgraph(taxonomy, input$counts_root)
+        use_ranks <- c("ohne", intersect(ranks, vertex_attr(subgraph, "rank")))
+        # if the old value is still valid, keep it, otherwise select "ohne"
+        new_by_rank_value <- if (old_by_rank_value %in% use_ranks) {
+          old_by_rank_value
+          } else {
+            "ohne"
+          }
+        updateSelectizeInput(
+          session,
+          "counts_by_rank",
+          choices = use_ranks,
+          selected = new_by_rank_value
+        )
+      }
+    }
+  )
 
   output$rank_counts <- renderDataTable({
     if (input$counts_root != "") {
