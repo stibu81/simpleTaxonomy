@@ -79,6 +79,12 @@ sidebar_counts <- sidebar(
     "only_major_ranks",
     label = "Nur Hauptrangstufen",
     value = FALSE
+  ),
+  selectizeInput(
+    "counts_by_rank",
+    "Gruppieren nach Rang:",
+    choices = c("ohne", available_ranks()$de),
+    selected = "ohne"
   )
 )
 
