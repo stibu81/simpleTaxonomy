@@ -62,9 +62,13 @@ function(input, output, session) {
 
   output$rank_counts <- renderDataTable({
     if (input$counts_root != "") {
+      by_rank <- if (!input$counts_by_rank %in% c("", "ohne")) {
+        input$counts_by_rank
+      }
       datatable(
         count_ranks(taxonomy,
                     subgraph = no_leaf_taxa[input$counts_root],
+                    by_rank = by_rank,
                     only_major_ranks = input$only_major_ranks)
       )
     }
