@@ -83,7 +83,7 @@ sidebar_counts <- sidebar(
   selectizeInput(
     "counts_by_rank",
     "Gruppieren nach Rang:",
-    choices = c("ohne", available_ranks()$de),
+    choices = "ohne",
     selected = "ohne"
   ),
   input_switch(
