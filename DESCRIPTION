@@ -31,5 +31,6 @@ Imports:
 Suggests: 
     shiny,
     bslib,
+    DT,
     roxygen2,
     spelling
