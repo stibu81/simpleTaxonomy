@@ -104,7 +104,9 @@ page_navbar(
                  style = "position:absolute; right:20px; top:5px",
                  height = 42)),
 
-  theme = bs_theme(preset = "yeti"),
+  # use the colour from the logo as primary colour, sligthly darkened for better
+  # contrast with colorspace::darken("turquoise3", amount = 0.07)
+  theme = bs_theme(preset = "yeti", primary = "#06b6bd"),
 
   header = tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "simpleTaxonomy.css"),
