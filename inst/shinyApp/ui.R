@@ -93,7 +93,8 @@ sidebar_counts <- sidebar(
   ),
   tags$strong("Ausgewähltes Taxon:"),
   # use inline for better spacing.
-  htmlOutput("counts_image", inline = TRUE)
+  htmlOutput("counts_image", inline = TRUE),
+  uiOutput("counts_wikipedia_link")
 )
 
 page_navbar(

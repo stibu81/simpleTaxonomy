@@ -94,4 +94,8 @@ function(input, output, session) {
     HTML(tooltip)
   })
 
+  output$counts_wikipedia_link <- renderUI(
+    simpleTaxonomy:::create_wiki_button(taxonomy, input$counts_root)
+  )
+
 }
