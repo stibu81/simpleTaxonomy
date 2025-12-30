@@ -53,3 +53,50 @@ run_taxonomy <- function(file = NULL,
                 display.mode = "normal",
                 launch.browser = launch_browser)
 }
+
+
+create_counts_dt <- function(taxonomy,
+                             root,
+                             by_rank,
+                             only_major_ranks,
+                             show_all,
+                             taxa) {
+  if (root != "") {
+      by_rank <- if (!by_rank %in% c("", "ohne")) by_rank
+      rank_counts <- count_ranks(
+        taxonomy,
+        subgraph = taxa[root],
+        by_rank = by_rank,
+        only_major_ranks = only_major_ranks
+      )
+
+      # set the number of rows to show. Only show the pagination-controls
+      # (dom = "p) if there are multiple pages.
+      n_rows <- if (show_all) 1000 else 12
+      dom <- if (nrow(rank_counts) > n_rows) "ftp" else "ft"
+
+      # if there is no summary by rank, use better column names
+      if (is.null(by_rank)) {
+        names(rank_counts) <- c("Rangstufe", "Anzahl")
+      }
+
+      DT::datatable(
+        rank_counts,
+        rownames = FALSE,
+        selection = "none",
+        extensions = "FixedColumns",
+        options = list(
+          dom = dom,
+          pageLength = n_rows,
+          language  = list(
+            search = "<b>Suche:</b>",
+            emptyTable = "Es sind keine Daten verf\u00fcgbar.",
+            paginate = list(previous = "Zur\u00fcck", `next` = "N\u00e4chste")
+          ),
+          scrollX = TRUE,
+          fixedColumns = list(leftColumns = 1)
+        )
+      )
+    }
+}
+

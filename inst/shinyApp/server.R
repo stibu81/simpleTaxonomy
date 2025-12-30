@@ -86,47 +86,14 @@ function(input, output, session) {
     }
   )
 
-  output$rank_counts <- renderDataTable({
-    if (input$counts_root != "") {
-      by_rank <- if (!input$counts_by_rank %in% c("", "ohne")) {
-        input$counts_by_rank
-      }
-      rank_counts <- count_ranks(
-        taxonomy,
-        subgraph = no_leaf_taxa[input$counts_root],
-        by_rank = by_rank,
-        only_major_ranks = input$only_major_ranks
-      )
-
-      # set the number of rows to show. Only show the pagination-controls
-      # (dom = "p) if there are multiple pages.
-      n_rows <- if (input$counts_show_all) 1000 else 12
-      dom <- if (nrow(rank_counts) > n_rows) "ftp" else "ft"
-
-      # if there is no summary by rank, use better column names
-      if (is.null(by_rank)) {
-        names(rank_counts) <- c("Rangstufe", "Anzahl")
-      }
-
-      datatable(
-        rank_counts,
-        rownames = FALSE,
-        selection = "none",
-        extensions = "FixedColumns",
-        options = list(
-          dom = dom,
-          pageLength = n_rows,
-          language  = list(
-            search = "<b>Suche:</b>",
-            emptyTable = "Es sind keine Daten verf\u00fcgbar.",
-            paginate = list(previous = "Zur\u00fcck", `next` = "Nächste")
-          ),
-          scrollX = TRUE,
-          fixedColumns = list(leftColumns = 1)
-        )
-      )
-    }
-  })
+  output$rank_counts <- renderDataTable(
+    simpleTaxonomy:::create_counts_dt(taxonomy,
+                                      input$counts_root,
+                                      input$counts_by_rank,
+                                      input$only_major_ranks,
+                                      input$counts_show_all,
+                                      no_leaf_taxa)
+  )
 
   output$counts_image <- renderUI({
     i_taxon <- which(names(V(taxonomy)) == no_leaf_taxa[input$counts_root])
