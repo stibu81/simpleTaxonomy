@@ -58,7 +58,7 @@
 </h1>
 </div>
 <!-- badges: start -->
-<!-- badges: end -->
+
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
@@ -115,7 +115,7 @@
 <p>Currently, only German ranks are supported. You can obtain the list of supported ranks as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/available_ranks.html">available_ranks</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 21 × 2</span></span>
+<span><span class="co">#&gt; # A tibble: 28 × 2</span></span>
 <span><span class="co">#&gt;    level de         </span></span>
 <span><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;      </span></span>
 <span><span class="co">#&gt;  1     1 Lebewesen  </span></span>
@@ -123,12 +123,12 @@
 <span><span class="co">#&gt;  3     3 Reich      </span></span>
 <span><span class="co">#&gt;  4     4 Stamm      </span></span>
 <span><span class="co">#&gt;  5     5 Unterstamm </span></span>
-<span><span class="co">#&gt;  6     6 Überklasse </span></span>
-<span><span class="co">#&gt;  7     7 Klasse     </span></span>
-<span><span class="co">#&gt;  8     8 Unterklasse</span></span>
-<span><span class="co">#&gt;  9     9 Teilklasse </span></span>
-<span><span class="co">#&gt; 10    10 Überordnung</span></span>
-<span><span class="co">#&gt; # ℹ 11 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;  6     6 Teilstamm  </span></span>
+<span><span class="co">#&gt;  7     7 Überklasse </span></span>
+<span><span class="co">#&gt;  8     8 Klasse     </span></span>
+<span><span class="co">#&gt;  9     9 Unterklasse</span></span>
+<span><span class="co">#&gt; 10    10 Teilklasse </span></span>
+<span><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div>
 <p>Ranks not contained in this list may be used, but they will not be coloured in the visualisation.</p>
 <p>Sometimes, several taxa have the same common name. An example are the family Equidae and the genus Equus, which in German are both called “Pferde” (horses). These taxa can be distinguished by adding an identifier in parenthesis. So, we could name the family and the genus “Pferde (F)” and “Pferde”, respectively, to make them unique. The identifier will be used to distinguish the two taxa when building the structure of the tree, but it will not be shown in the visualisation.</p>
 </div>
@@ -191,8 +191,7 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/"</span>,</span>
 <span>              <span class="st">"stibu81/taxonomyData/refs/heads/main/taxonomy.csv"</span><span class="op">)</span></span>
-<span><span class="va">taxonomy</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_taxonomy.html">read_taxonomy</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ! There are invalid ranks:  "Kohorte". The corresponding nodes will not be coloured.</span></span></code></pre></div>
+<span><span class="va">taxonomy</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_taxonomy.html">read_taxonomy</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span></code></pre></div>
 <p>A visualisation of the current state of the taxonomic hierarchy is also available <a href="https://stibu81.github.io/taxonomyData/" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
@@ -237,7 +236,12 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/stibu81/simpleTaxonomy/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/stibu81/simpleTaxonomy/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
