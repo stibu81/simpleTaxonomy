@@ -63,11 +63,17 @@ create_counts_dt <- function(taxonomy,
                              taxa) {
   if (root != "") {
       by_rank <- if (!by_rank %in% c("", "ohne")) by_rank
-      rank_counts <- count_ranks(
-        taxonomy,
-        subgraph = taxa[root],
-        by_rank = by_rank,
-        only_major_ranks = only_major_ranks
+      # catch error in count_ranks() and return empty tibble in case of error
+      # not catching this error leads to an error message briefly flashing
+      # in some situations.
+      rank_counts <- tryCatch(
+        count_ranks(
+          taxonomy,
+          subgraph = taxa[root],
+          by_rank = by_rank,
+          only_major_ranks = only_major_ranks
+        ),
+        error = function(e) tibble::tibble()
       )
 
       # set the number of rows to show. Only show the pagination-controls
