@@ -50,7 +50,7 @@ function(input, output, session) {
     } else {
       tail(input$selected_taxon, n = 1)
     }
-    create_wiki_button(taxonomy, clicked_taxon)
+    simpleTaxonomy:::create_wiki_button(taxonomy, clicked_taxon)
   })
 
   # fill the selection of orders to group by according to the selection
