@@ -4,6 +4,8 @@
 # simpleTaxonomy <a href="https://stibu81.github.io/simpleTaxonomy/"><img src="man/figures/logo.png" align="right" width="175" alt="simpleTaxonomy website" /></a>
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/stibu81/simpleTaxonomy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stibu81/simpleTaxonomy/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -89,7 +91,7 @@ supported ranks as follows:
 
 ``` r
 available_ranks()
-#> # A tibble: 21 × 2
+#> # A tibble: 28 × 2
 #>    level de         
 #>    <int> <chr>      
 #>  1     1 Lebewesen  
@@ -97,12 +99,12 @@ available_ranks()
 #>  3     3 Reich      
 #>  4     4 Stamm      
 #>  5     5 Unterstamm 
-#>  6     6 Überklasse 
-#>  7     7 Klasse     
-#>  8     8 Unterklasse
-#>  9     9 Teilklasse 
-#> 10    10 Überordnung
-#> # ℹ 11 more rows
+#>  6     6 Teilstamm  
+#>  7     7 Überklasse 
+#>  8     8 Klasse     
+#>  9     9 Unterklasse
+#> 10    10 Teilklasse 
+#> # ℹ 18 more rows
 ```
 
 Ranks not contained in this list may be used, but they will not be
@@ -207,7 +209,6 @@ directly from GitHub as follows:
 url <- paste0("https://raw.githubusercontent.com/",
               "stibu81/taxonomyData/refs/heads/main/taxonomy.csv")
 taxonomy <- read_taxonomy(url)
-#> ! There are invalid ranks:  "Kohorte". The corresponding nodes will not be coloured.
 ```
 
 A visualisation of the current state of the taxonomic hierarchy is also
