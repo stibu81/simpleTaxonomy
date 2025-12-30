@@ -73,7 +73,7 @@ create_counts_dt <- function(taxonomy,
           by_rank = by_rank,
           only_major_ranks = only_major_ranks
         ),
-        error = function(e) tibble::tibble()
+        error = function(e) dplyr::tibble()
       )
 
       # set the number of rows to show. Only show the pagination-controls
