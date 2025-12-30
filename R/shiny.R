@@ -100,3 +100,18 @@ create_counts_dt <- function(taxonomy,
     }
 }
 
+create_wiki_button <- function(taxonomy, taxon) {
+  i_taxon <- names(igraph::V(taxonomy)) == taxon
+  sci <- igraph::vertex_attr(taxonomy, "scientific")[i_taxon]
+  link <- paste0(
+    "https://de.wikipedia.org/wiki/",
+    stringr::str_replace_all(if (is.na(sci)) taxon else sci, " +", "_")
+  )
+  shiny::actionButton(
+    inputId = "wiki_button",
+    class = "btn-primary btn-rounded",
+    label = taxon,
+    icon = shiny::icon("wikipedia-w"),
+    onclick = paste0("window.open(\"", link, "\", \"_blank\")")
+  )
+}

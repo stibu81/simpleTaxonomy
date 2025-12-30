@@ -50,15 +50,7 @@ function(input, output, session) {
     } else {
       tail(input$selected_taxon, n = 1)
     }
-    link <- paste0("https://de.wikipedia.org/wiki/",
-                   str_replace_all(clicked_taxon, " +", "_"))
-    shiny::actionButton(
-      inputId = "wiki_button",
-      class = "btn-primary btn-rounded",
-      label = clicked_taxon,
-      icon = icon("wikipedia-w"),
-      onclick = paste0("window.open(\"", link, "\", \"_blank\")")
-    )
+    create_wiki_button(taxonomy, clicked_taxon)
   })
 
   # fill the selection of orders to group by according to the selection
