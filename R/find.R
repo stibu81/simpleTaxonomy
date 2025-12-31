@@ -26,7 +26,7 @@ find_taxon <- function(graph,
 
   target <- match.arg(target)
 
-  data <- igraph::as_data_frame(graph, "vertices")
+  data <- igraph::vertex.attributes(graph)
 
   # ignore case
   pattern <- stringr::regex(pattern, ignore_case = TRUE)
