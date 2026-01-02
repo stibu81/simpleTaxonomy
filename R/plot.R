@@ -4,13 +4,15 @@
 #'
 #' @param graph a `taxonomy_graph` object, typically created with
 #' [read_taxonomy()].
-#' @param show character giving the names of taxa that should be visible.
+#' @param show character giving the common or scientific names of taxa that
+#' should be visible.
 #' The tree will be shown uncollapsed up to those taxa.
 #' @param expand_rank character giving the names of ranks that should always
 #' be expanded.
-#' @param full_expand character giving the names of taxa that should be fully
+#' @param full_expand character giving the common or scientific names of
+#' taxa that should be fully
 #' expanded, i.e., all taxa below the given taxon should be visible. Note
-#' that this does not expand the graph above the given taxon, such that the
+#' that this does not expand the graph above the given taxa, such that the
 #' expanded part may be invisible. Use `show` to expand the graph up to a
 #' given taxon.
 #' @param focus character giving one or several taxa to focus on. This means
@@ -18,7 +20,8 @@
 #' subtree below that taxon. It is equivalent to putting the same taxa in
 #' `show` and `full_expand`. If `focus` is used, those other two arguments will
 #' be ignored.
-#' @param highlight character giving the names of taxa that should be
+#' @param highlight character giving the common or scientific names of taxa
+#' that should be
 #' highlighted.
 #' @param show_images should images be shown in tooltips. This requires that
 #' image URLs are contained in the `taxonomy_graph`. URLs from Wikipedia can
@@ -176,19 +179,21 @@ get_expanded <- function(graph, show, expand_rank, full_expand) {
 }
 
 
-# remove invalid taxa from character vector
+# match taxa to common names and remove invalid taxa
 rm_invalid_taxa <- function(x, graph) {
 
-  bad_names <- setdiff(x, names(igraph::V(graph)))
-  if (length(bad_names) > 0) {
+  use_x <- get_taxon_names(graph, x)
+
+  is_bad_name <- is.na(use_x)
+  if (sum(is_bad_name) > 0) {
     cli::cli_alert_danger(
       paste("The following taxa in \"{deparse(substitute(x))}\" do not exist",
             "and will be ignored:",
-            "\"{paste(bad_names, collapse = '\", \"')}\"")
+            "\"{paste(x[is_bad_name], collapse = '\", \"')}\"")
     )
   }
 
-  setdiff(x, bad_names)
+  use_x[!is_bad_name]
 }
 
 

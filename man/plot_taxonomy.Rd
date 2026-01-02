@@ -21,15 +21,17 @@ plot_taxonomy(
 \item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
-\item{show}{character giving the names of taxa that should be visible.
+\item{show}{character giving the common or scientific names of taxa that
+should be visible.
 The tree will be shown uncollapsed up to those taxa.}
 
 \item{expand_rank}{character giving the names of ranks that should always
 be expanded.}
 
-\item{full_expand}{character giving the names of taxa that should be fully
+\item{full_expand}{character giving the common or scientific names of
+taxa that should be fully
 expanded, i.e., all taxa below the given taxon should be visible. Note
-that this does not expand the graph above the given taxon, such that the
+that this does not expand the graph above the given taxa, such that the
 expanded part may be invisible. Use \code{show} to expand the graph up to a
 given taxon.}
 
@@ -39,7 +41,8 @@ subtree below that taxon. It is equivalent to putting the same taxa in
 \code{show} and \code{full_expand}. If \code{focus} is used, those other two arguments will
 be ignored.}
 
-\item{highlight}{character giving the names of taxa that should be
+\item{highlight}{character giving the common or scientific names of taxa
+that should be
 highlighted.}
 
 \item{show_images}{should images be shown in tooltips. This requires that
