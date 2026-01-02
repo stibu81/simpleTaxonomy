@@ -4,10 +4,10 @@
 \alias{get_taxon_names}
 \title{Get Taxon Labels by Common or Scientific Name}
 \usage{
-get_taxon_names(taxonomy, char)
+get_taxon_names(graph, char)
 }
 \arguments{
-\item{taxonomy}{a \code{taxonomy_graph} object, typically created with
+\item{graph}{a \code{taxonomy_graph} object, typically created with
 \code{\link[=read_taxonomy]{read_taxonomy()}}.}
 
 \item{char}{a character vector of common and/or scientific names to be

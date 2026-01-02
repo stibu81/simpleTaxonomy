@@ -47,8 +47,8 @@ find_taxon <- function(graph,
     FALSE
   }
 
-  data$name[match_name | match_sci] %>%
-    Filter(f = \(x) !is.na(x))
+  out <- data$name[match_name | match_sci]
+  out[!is.na(out)]
 }
 
 
@@ -59,7 +59,7 @@ find_taxon <- function(graph,
 #' names. It is much more efficient than [`find_taxon()`] because it relies
 #' on a matching table stored in the `taxonomy_graph`.
 #'
-#' @param taxonomy a `taxonomy_graph` object, typically created with
+#' @param graph a `taxonomy_graph` object, typically created with
 #' [`read_taxonomy()`].
 #' @param char a character vector of common and/or scientific names to be
 #'  converted to labels. Matching is case-sensitive.
@@ -71,6 +71,6 @@ find_taxon <- function(graph,
 #'
 #' @export
 
-get_taxon_names <- function(taxonomy, char) {
-  attr(taxonomy, "match_labs")[char]
+get_taxon_names <- function(graph, char) {
+  attr(graph, "match_labs")[char]
 }
