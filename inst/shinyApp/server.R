@@ -87,10 +87,9 @@ function(input, output, session) {
   )
 
   output$counts_image <- renderUI({
-    i_taxon <- which(
-      names(V(taxonomy)) == get_taxon_names(taxonomy, input$counts_root)
-    )
-    taxon_node <- induced_subgraph(taxonomy, i_taxon)
+    if (input$counts_root == "") return(NULL)
+    taxon_node <- induced_subgraph(taxonomy,
+                                   get_taxon_names(taxonomy, input$counts_root))
     tooltip <- simpleTaxonomy:::create_tooltip(taxon_node, TRUE, 220)
     HTML(tooltip)
   })
