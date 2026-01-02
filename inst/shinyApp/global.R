@@ -30,23 +30,13 @@ ranks <- available_ranks() %>%
   filter(level > 1) %>%
   pull("de")
 
-# create a look-up table of taxa. This is needed to allow searching also for
-# scientific names, because the common names must be passed to plot_taxonomy().
-# only add the scientific name, if it is defined and not already contained in
-# the common names.
-use_sci <- !is.na(vertices$scientific) &
-  !vertices$scientific %in% vertices$name
-taxa <- c(vertices$name, vertices$name[use_sci])
-names(taxa) <- c(vertices$name, vertices$scientific[use_sci])
-
 # warn if there are duplicates
 if (anyDuplicated(names(taxa)) > 0) {
   warning("There are duplicate taxa.")
 }
 
-# we also need the taxa that are not leaves, i.e. that have children
-i_leaf <- as.integer(get_leaf_nodes(taxonomy))
-use_sci <- use_sci[-i_leaf]
-no_leaf_taxa <- c(vertices$name[-i_leaf], vertices$name[-i_leaf][use_sci])
-names(no_leaf_taxa) <- c(vertices$name[-i_leaf],
-                         vertices$scientific[-i_leaf][use_sci])
+# we need the common and scientific names of taxa that are not leaves,
+# i.e. that have children
+no_leaf_taxa <- attr(taxonomy, "match_labs")[
+  !attr(taxonomy, "match_labs") %in% names(get_leaf_nodes(taxonomy))
+] %>% names()

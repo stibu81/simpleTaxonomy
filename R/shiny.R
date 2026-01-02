@@ -59,8 +59,7 @@ create_counts_dt <- function(taxonomy,
                              root,
                              by_rank,
                              only_major_ranks,
-                             show_all,
-                             taxa) {
+                             show_all) {
   if (root != "") {
       by_rank <- if (!by_rank %in% c("", "ohne")) by_rank
       # catch error in count_ranks() and return empty tibble in case of error
@@ -69,7 +68,7 @@ create_counts_dt <- function(taxonomy,
       rank_counts <- tryCatch(
         count_ranks(
           taxonomy,
-          subgraph = taxa[root],
+          subgraph = root,
           by_rank = by_rank,
           only_major_ranks = only_major_ranks
         ),
@@ -107,6 +106,9 @@ create_counts_dt <- function(taxonomy,
 }
 
 create_wiki_button <- function(taxonomy, taxon) {
+  if (taxon == "") return(NULL)
+
+  taxon <- get_taxon_names(taxonomy, taxon)
   i_taxon <- names(igraph::V(taxonomy)) == taxon
   sci <- igraph::vertex_attr(taxonomy, "scientific")[i_taxon]
   link <- paste0(

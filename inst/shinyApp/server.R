@@ -14,13 +14,13 @@ function(input, output, session) {
   updateSelectizeInput(
     session,
     "taxa_show",
-    choices = names(taxa),
+    choices = names(attr(taxonomy, "match_labs")),
     server = TRUE
   )
   updateSelectizeInput(
     session,
     "counts_root",
-    choices = names(no_leaf_taxa),
+    choices = no_leaf_taxa,
     server = TRUE
   )
 
@@ -30,9 +30,9 @@ function(input, output, session) {
     link_length <- debounce(reactive(input$link_length), 500)
 
     plot_taxonomy(taxonomy,
-                  show = taxa[input$taxa_show],
-                  full_expand = if (input$full_expand) taxa[input$taxa_show],
-                  highlight = if (input$highlight) taxa[input$taxa_show],
+                  show = input$taxa_show,
+                  full_expand = if (input$full_expand) input$taxa_show,
+                  highlight = if (input$highlight) input$taxa_show,
                   expand_rank = input$expand_ranks,
                   show_images = input$show_images,
                   link_length = link_length(),
@@ -48,7 +48,7 @@ function(input, output, session) {
     # the labels of oll the nodes from the root to the clicked node.
     # => take the last taxon in the list.
     } else {
-      tail(input$selected_taxon, n = 1)
+      unlist(tail(input$selected_taxon, n = 1))
     }
     simpleTaxonomy:::create_wiki_button(taxonomy, clicked_taxon)
   })
@@ -60,7 +60,7 @@ function(input, output, session) {
     {
       if (input$counts_root != "") {
         old_by_rank_value <- input$counts_by_rank
-        subgraph <- get_subgraph(taxonomy, no_leaf_taxa[input$counts_root])
+        subgraph <- get_subgraph(taxonomy, input$counts_root)
         use_ranks <- c("ohne", intersect(ranks, vertex_attr(subgraph, "rank")))
         # if the old value is still valid, keep it, otherwise select "ohne"
         new_by_rank_value <- if (old_by_rank_value %in% use_ranks) {
@@ -83,12 +83,13 @@ function(input, output, session) {
                                       input$counts_root,
                                       input$counts_by_rank,
                                       input$only_major_ranks,
-                                      input$counts_show_all,
-                                      no_leaf_taxa)
+                                      input$counts_show_all)
   )
 
   output$counts_image <- renderUI({
-    i_taxon <- which(names(V(taxonomy)) == no_leaf_taxa[input$counts_root])
+    i_taxon <- which(
+      names(V(taxonomy)) == get_taxon_names(taxonomy, input$counts_root)
+    )
     taxon_node <- induced_subgraph(taxonomy, i_taxon)
     tooltip <- simpleTaxonomy:::create_tooltip(taxon_node, TRUE, 220)
     HTML(tooltip)
