@@ -13,7 +13,9 @@ find_taxon(graph, pattern, target = c("all", "name", "scientific"))
 \item{pattern}{a regex pattern, matching is case insensitive.}
 
 \item{target}{character giving the column to search in
-("name" or "scientific"). The default is "all" which searches in all columns.}
+("name" or "scientific"). The default is "all" which searches in all columns.
+
+For more efficient exact matching, use \code{\link[=get_taxon_names]{get_taxon_names()}}.}
 }
 \value{
 a character vector giving the taxon names that match the pattern
@@ -28,4 +30,7 @@ taxonomy <- read_taxonomy(file)
 find_taxon(taxonomy, "katze")
 find_taxon(taxonomy, "felis")
 
+}
+\seealso{
+get_taxon_names
 }

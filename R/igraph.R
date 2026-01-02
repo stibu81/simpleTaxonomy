@@ -122,6 +122,13 @@ create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
 
   class(graph) <- c("taxonomy_graph", class(graph))
 
+  # add a matching table for the labels: this allows to get the label from
+  # either the common or scientific name.
+  match_labs <- c(data$name, data$name)
+  names(match_labs) <- c(data$name, data$scientific)
+  keep <- !duplicated(names(match_labs)) & !is.na(names(match_labs))
+  attr(graph, "match_labs") <- match_labs[keep]
+
   graph
 }
 
