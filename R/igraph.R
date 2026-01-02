@@ -90,13 +90,17 @@ get_subgraph <- function(graph, taxon) {
   if (length(taxon) != 1) {
     cli::cli_abort("taxon must have length 1.")
   }
-  if (!taxon %in% names(igraph::V(graph))) {
+  use_taxon <- get_taxon_names(graph, taxon)
+  if (is.na(use_taxon)) {
     cli::cli_abort("taxon \"{taxon}\" does not exist in the graph.")
   }
 
-  subcomponent <- igraph::subcomponent(graph, taxon, mode = "out")
+  subcomponent <- igraph::subcomponent(graph, use_taxon, mode = "out")
   subgraph <- igraph::subgraph(graph, subcomponent)
   class(subgraph) <- c("taxonomy_graph", class(subgraph))
+
+  # recreating the matching table is faster than filtering it
+  subgraph <- add_match_labs(subgraph)
 
   subgraph
 }
@@ -124,14 +128,20 @@ create_taxonomy_graph <- function(data, error_call = rlang::caller_env()) {
 
   # add a matching table for the labels: this allows to get the label from
   # either the common or scientific name.
-  match_labs <- c(data$name, data$name)
-  names(match_labs) <- c(data$name, data$scientific)
-  keep <- !duplicated(names(match_labs)) & !is.na(names(match_labs))
-  attr(graph, "match_labs") <- match_labs[keep]
+  graph <- add_match_labs(graph)
 
   graph
 }
 
+
+add_match_labs <- function(graph) {
+  vertices <- igraph::vertex.attributes(graph)
+  match_labs <- c(vertices$name, vertices$name)
+  names(match_labs) <- c(vertices$name, vertices$scientific)
+  keep <- !duplicated(names(match_labs)) & !is.na(names(match_labs))
+  attr(graph, "match_labs") <- match_labs[keep]
+  graph
+}
 
 #' @importFrom dplyr as_tibble
 #' @export
