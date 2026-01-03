@@ -125,7 +125,7 @@ page_navbar(
     "Tabelle",
     layout_sidebar(
       sidebar = sidebar_counts,
-      card(dataTableOutput("rank_counts"))
+      card(DTOutput("rank_counts"))
     )
   ),
 

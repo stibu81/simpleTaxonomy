@@ -78,7 +78,7 @@ function(input, output, session) {
     }
   )
 
-  output$rank_counts <- renderDataTable(
+  output$rank_counts <- renderDT(
     simpleTaxonomy:::create_counts_dt(taxonomy,
                                       input$counts_root,
                                       input$counts_by_rank,
