@@ -37,9 +37,16 @@ run_taxonomy <- function(file = NULL,
     )
   }
 
+  # prepare the file path: since the app will run in its own working directory,
+  # relative paths do not work. => If file is not missing or an URL,
+  # normalise the path.
+  if (!is.null(file) && !is_url(file)) {
+    file <- normalizePath(file)
+  }
+
   # pass settings as options to the app
   options(
-    simpleTaxonomy_file = if (is.null(file)) file else normalizePath(file),
+    simpleTaxonomy_file = file,
     simpleTaxonomy_expand_ranks = expand_ranks,
     simpleTaxonomy_image_size = image_size,
     simpleTaxonomy_link_length = link_length
