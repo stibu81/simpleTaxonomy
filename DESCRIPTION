@@ -32,5 +32,6 @@ Suggests:
     shiny,
     bslib,
     DT,
+    logger,
     roxygen2,
     spelling

@@ -2,6 +2,7 @@ function(input, output, session) {
 
   taxonomy_sg <- reactive({
     if (input$tree_root != "") {
+      logger::log_info("filter the graph to the root '{input$tree_root}'")
       get_subgraph(taxonomy, input$tree_root)
     }
   })
@@ -21,6 +22,7 @@ function(input, output, session) {
   observe({
     # only do the update, if we are working with a valid taxonomy_graph
     if (!is.null(taxonomy_sg())) {
+      logger::log_info("update choices in input$taxa_show")
       selected <- isolate(input$taxa_show)
       choices <- names(attr(taxonomy_sg(), "match_labs"))
       selected_new <- intersect(selected, choices)
@@ -43,11 +45,19 @@ function(input, output, session) {
   output$taxonomy_plot <- collapsibleTree::renderCollapsibleTree({
 
     if (is.null(taxonomy_sg())) {
+      logger::log_info("plotting an empty graph")
       return(NULL)
     }
 
     image_size <- debounce(reactive(input$image_size), 500)
     link_length <- debounce(reactive(input$link_length), 500)
+
+    logger::log_info(
+      "plotting graph with root '{names(get_root_node(taxonomy_sg()))}'"
+    )
+    logger::log_info(
+      "plot shows the following taxa: '{paste(input$taxa_show, collapse = '\\', \\'')}'"
+    )
 
     plot_taxonomy(taxonomy_sg(),
                   show = input$taxa_show,
@@ -79,6 +89,7 @@ function(input, output, session) {
     input$counts_root,
     {
       if (input$counts_root != "") {
+        logger::log_info("update input$counts_by_rank")
         old_by_rank_value <- input$counts_by_rank
         subgraph <- get_subgraph(taxonomy, input$counts_root)
         use_ranks <- c("ohne",
@@ -99,13 +110,14 @@ function(input, output, session) {
     }
   )
 
-  output$rank_counts <- DT::renderDT(
+  output$rank_counts <- DT::renderDT({
+    logger::log_info("compute rank counts for root '{input$counts_root}'")
     simpleTaxonomy:::create_counts_dt(taxonomy,
                                       input$counts_root,
                                       input$counts_by_rank,
                                       input$only_major_ranks,
                                       input$counts_show_all)
-  )
+  })
 
   output$counts_image <- renderUI({
     if (input$counts_root == "") return(NULL)
