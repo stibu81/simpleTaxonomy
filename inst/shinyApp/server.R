@@ -1,12 +1,3 @@
-library(shiny)
-library(dplyr)
-library(stringr)
-library(DT)
-library(igraph)
-library(collapsibleTree)
-library(simpleTaxonomy)
-
-
 function(input, output, session) {
 
   # choices of taxa_show and counts_root must be filled here in order
@@ -24,7 +15,7 @@ function(input, output, session) {
     server = TRUE
   )
 
-  output$taxonomy_plot <- renderCollapsibleTree({
+  output$taxonomy_plot <- collapsibleTree::renderCollapsibleTree({
 
     image_size <- debounce(reactive(input$image_size), 500)
     link_length <- debounce(reactive(input$link_length), 500)
@@ -61,7 +52,8 @@ function(input, output, session) {
       if (input$counts_root != "") {
         old_by_rank_value <- input$counts_by_rank
         subgraph <- get_subgraph(taxonomy, input$counts_root)
-        use_ranks <- c("ohne", intersect(ranks, vertex_attr(subgraph, "rank")))
+        use_ranks <- c("ohne",
+                       intersect(ranks, igraph::vertex_attr(subgraph, "rank")))
         # if the old value is still valid, keep it, otherwise select "ohne"
         new_by_rank_value <- if (old_by_rank_value %in% use_ranks) {
           old_by_rank_value
@@ -78,7 +70,7 @@ function(input, output, session) {
     }
   )
 
-  output$rank_counts <- renderDT(
+  output$rank_counts <- DT::renderDT(
     simpleTaxonomy:::create_counts_dt(taxonomy,
                                       input$counts_root,
                                       input$counts_by_rank,
@@ -88,8 +80,10 @@ function(input, output, session) {
 
   output$counts_image <- renderUI({
     if (input$counts_root == "") return(NULL)
-    taxon_node <- induced_subgraph(taxonomy,
-                                   get_taxon_names(taxonomy, input$counts_root))
+    taxon_node <- igraph::induced_subgraph(
+      taxonomy,
+      get_taxon_names(taxonomy, input$counts_root)
+    )
     tooltip <- simpleTaxonomy:::create_tooltip(taxon_node, TRUE, 220)
     HTML(tooltip)
   })

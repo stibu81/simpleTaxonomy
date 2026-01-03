@@ -1,9 +1,3 @@
-library(shiny)
-library(bslib)
-library(DT)
-library(collapsibleTree)
-library(simpleTaxonomy)
-
 sidebar_tree <- sidebar(
   gap = "15px",
   padding = c("20px", "15px"),
@@ -117,7 +111,7 @@ page_navbar(
     "Baum",
     layout_sidebar(
       sidebar = sidebar_tree,
-      card(collapsibleTreeOutput("taxonomy_plot"))
+      card(collapsibleTree::collapsibleTreeOutput("taxonomy_plot"))
     )
   ),
 
@@ -125,7 +119,7 @@ page_navbar(
     "Tabelle",
     layout_sidebar(
       sidebar = sidebar_counts,
-      card(DTOutput("rank_counts"))
+      card(DT::DTOutput("rank_counts"))
     )
   ),
 
