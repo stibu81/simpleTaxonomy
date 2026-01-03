@@ -56,9 +56,11 @@ run_taxonomy <- function(file = NULL,
     launch_browser <- getOption("shiny.launch.browser", interactive())
   }
 
-  shiny::runApp(app_dir,
-                display.mode = "normal",
-                launch.browser = launch_browser)
+  shiny::shinyAppDir(
+    app_dir,
+    options = list(display.mode = "normal",
+                   launch.browser = launch_browser)
+  )
 }
 
 
