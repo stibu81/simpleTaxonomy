@@ -30,11 +30,6 @@ ranks <- available_ranks() %>%
   filter(level > 1) %>%
   pull("de")
 
-# warn if there are duplicates
-if (anyDuplicated(names(taxa)) > 0) {
-  warning("There are duplicate taxa.")
-}
-
 # we need the common and scientific names of taxa that are not leaves,
 # i.e. that have children
 no_leaf_taxa <- attr(taxonomy, "match_labs")[
