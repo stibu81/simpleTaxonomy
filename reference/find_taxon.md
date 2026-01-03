@@ -26,9 +26,16 @@ find_taxon(graph, pattern, target = c("all", "name", "scientific"))
   character giving the column to search in ("name" or "scientific"). The
   default is "all" which searches in all columns.
 
+  For more efficient exact matching, use
+  [`get_taxon_names()`](https://stibu81.github.io/simpleTaxonomy/reference/get_taxon_names.md).
+
 ## Value
 
 a character vector giving the taxon names that match the pattern
+
+## See also
+
+get_taxon_names
 
 ## Examples
 

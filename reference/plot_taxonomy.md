@@ -28,8 +28,8 @@ plot_taxonomy(
 
 - show:
 
-  character giving the names of taxa that should be visible. The tree
-  will be shown uncollapsed up to those taxa.
+  character giving the common or scientific names of taxa that should be
+  visible. The tree will be shown uncollapsed up to those taxa.
 
 - expand_rank:
 
@@ -37,11 +37,11 @@ plot_taxonomy(
 
 - full_expand:
 
-  character giving the names of taxa that should be fully expanded,
-  i.e., all taxa below the given taxon should be visible. Note that this
-  does not expand the graph above the given taxon, such that the
-  expanded part may be invisible. Use `show` to expand the graph up to a
-  given taxon.
+  character giving the common or scientific names of taxa that should be
+  fully expanded, i.e., all taxa below the given taxon should be
+  visible. Note that this does not expand the graph above the given
+  taxa, such that the expanded part may be invisible. Use `show` to
+  expand the graph up to a given taxon.
 
 - focus:
 
@@ -53,7 +53,8 @@ plot_taxonomy(
 
 - highlight:
 
-  character giving the names of taxa that should be highlighted.
+  character giving the common or scientific names of taxa that should be
+  highlighted.
 
 - show_images:
 

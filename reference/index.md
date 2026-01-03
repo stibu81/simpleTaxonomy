@@ -17,6 +17,8 @@
   : Get the Root Node and the Leaves of a Taxonomy Graph
 - [`get_subgraph()`](https://stibu81.github.io/simpleTaxonomy/reference/get_subgraph.md)
   : Extract a Subgraph from a Taxonomy Graph
+- [`get_taxon_names()`](https://stibu81.github.io/simpleTaxonomy/reference/get_taxon_names.md)
+  : Get Taxon Labels by Common or Scientific Name
 - [`get_tree_depth()`](https://stibu81.github.io/simpleTaxonomy/reference/get_tree_depth.md)
   : Get Depth of a Taxonomy Tree Graph
 - [`get_wikipedia_image_urls()`](https://stibu81.github.io/simpleTaxonomy/reference/get_wikipedia_image_urls.md)
