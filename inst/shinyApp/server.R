@@ -1,13 +1,38 @@
 function(input, output, session) {
 
+  taxonomy_sg <- reactive({
+    if (input$tree_root != "") {
+      get_subgraph(taxonomy, input$tree_root)
+    }
+  })
+
   # choices of taxa_show and counts_root must be filled here in order
   # to use server side processing
   updateSelectizeInput(
     session,
-    "taxa_show",
-    choices = names(attr(taxonomy, "match_labs")),
+    "tree_root",
+    choices = no_leaf_taxa,
+    selected = names(get_root_node(taxonomy)),
     server = TRUE
   )
+  # this input mut only contain taxa that are present in the taxonomy_graph
+  # from the previously selected values, only those are kept that are still
+  # valid
+  observe({
+    # only do the update, if we are working with a valid taxonomy_graph
+    if (!is.null(taxonomy_sg())) {
+      selected <- isolate(input$taxa_show)
+      choices <- names(attr(taxonomy_sg(), "match_labs"))
+      selected_new <- intersect(selected, choices)
+      updateSelectizeInput(
+        session,
+        "taxa_show",
+        choices = choices,
+        selected = selected_new,
+        server = TRUE
+      )
+    }
+  })
   updateSelectizeInput(
     session,
     "counts_root",
@@ -17,10 +42,14 @@ function(input, output, session) {
 
   output$taxonomy_plot <- collapsibleTree::renderCollapsibleTree({
 
+    if (is.null(taxonomy_sg())) {
+      return(NULL)
+    }
+
     image_size <- debounce(reactive(input$image_size), 500)
     link_length <- debounce(reactive(input$link_length), 500)
 
-    plot_taxonomy(taxonomy,
+    plot_taxonomy(taxonomy_sg(),
                   show = input$taxa_show,
                   full_expand = if (input$full_expand) input$taxa_show,
                   highlight = if (input$highlight) input$taxa_show,

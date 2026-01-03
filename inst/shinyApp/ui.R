@@ -5,6 +5,12 @@ sidebar_tree <- sidebar(
   # choices will be filled in the server in order to use server side
   # processing
   selectizeInput(
+    "tree_root",
+    "Wurzel-Taxon:",
+    choices = NULL,
+    multiple = FALSE
+  ),
+  selectizeInput(
     "taxa_show",
     "Taxa anzeigen:",
     choices = NULL,
