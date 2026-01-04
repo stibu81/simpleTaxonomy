@@ -26,6 +26,7 @@ function(input, output, session) {
       selected <- isolate(input$taxa_show)
       choices <- names(attr(taxonomy_sg(), "match_labs"))
       selected_new <- intersect(selected, choices)
+      freezeReactiveValue(input, "taxa_show")
       updateSelectizeInput(
         session,
         "taxa_show",
@@ -55,9 +56,13 @@ function(input, output, session) {
     logger::log_info(
       "plotting graph with root '{names(get_root_node(taxonomy_sg()))}'"
     )
-    logger::log_info(
-      "plot shows the following taxa: '{paste(input$taxa_show, collapse = '\\', \\'')}'"
+    # in some situations, calling input$taxa_show fails with an error that
+    # I don't understand. To be safe, I use a tryCatch block to evaluate it.
+    str_taxa_show <- tryCatch(
+      paste(input$taxa_show, collapse = '\', \''),
+      error = function(e) ""
     )
+    logger::log_info("plot shows the following taxa: '{str_taxa_show}'")
 
     plot_taxonomy(taxonomy_sg(),
                   show = input$taxa_show,
@@ -100,6 +105,7 @@ function(input, output, session) {
           } else {
             "ohne"
           }
+        freezeReactiveValue(input, "counts_by_rank")
         updateSelectizeInput(
           session,
           "counts_by_rank",
