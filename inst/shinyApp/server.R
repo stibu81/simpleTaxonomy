@@ -75,10 +75,14 @@ function(input, output, session) {
   })
 
   output$wikipedia_link <- renderUI({
+    # if no root taxon is currently selected, fall back to the root of the
+    # unfiltered graph.
+    clicked_taxon <- if (is.null(taxonomy_sg())) {
+      names(get_root_node(taxonomy))
     # at the start, input$select_taxon is NULL. When the root is clicked,
     # it is an empty list. => In both cases, show the link for the root taxon.
-    clicked_taxon <- if (length(input$selected_taxon) == 0) {
-      names(get_root_node(taxonomy))
+    } else if (length(input$selected_taxon) == 0) {
+      names(get_root_node(taxonomy_sg()))
     # if any other node is clicked, input$select_taxon is a list containing
     # the labels of oll the nodes from the root to the clicked node.
     # => take the last taxon in the list.
