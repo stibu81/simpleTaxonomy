@@ -27,7 +27,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Get the Root Node and the Leaves of a Taxonomy Graph</h1>
-      <small class="dont-index">Source: <a href="https://github.com/stibu81/simpleTaxonomy/blob/main/R/igraph.R" class="external-link"><code>R/igraph.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/stibu81/simpleTaxonomy/blob/v0.1.0/R/igraph.R" class="external-link"><code>R/igraph.R</code></a></small>
       <div class="d-none name"><code>get_root_node.Rd</code></div>
     </div>
 
@@ -62,10 +62,10 @@ of the graph.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_example_taxonomy_file.html">get_example_taxonomy_file</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">taxonomy</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_taxonomy.html">read_taxonomy</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">get_root_node</span><span class="op">(</span><span class="va">taxonomy</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + 1/96 vertex, named, from a33234c:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + 1/96 vertex, named, from bebd80a:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] Raubtiere</span>
 <span class="r-in"><span><span class="fu">get_leaf_nodes</span><span class="op">(</span><span class="va">taxonomy</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> + 63/96 vertices, named, from a33234c:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> + 63/96 vertices, named, from bebd80a:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] Polarfuchs                Rotfuchs                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3] Wüstenfuchs               Marderhund               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] Afrikanischer Wildhund    Wolf                     </span>
