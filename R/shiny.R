@@ -7,6 +7,10 @@
 #'
 #' @param file Path to a file containing a `taxonomy_graph`. If omitted, the
 #' data from <https://github.com/stibu81/taxonomyData> is used.
+#' @param root character giving the common or scientific name of the taxon to
+#' select as root. If omitted, the actual root of the taxonomy graph is used.
+#' If the selected root does not exist in the graph, the app also falls
+#' back on the actual root of the graph.
 #' @param expand_ranks a list of ranks that should always be expanded. This
 #' can be changed interactively in the app.
 #' @param image_size numeric giving the default image width in pixels used in
@@ -22,6 +26,7 @@
 #' @export
 
 run_taxonomy <- function(file = NULL,
+                         root = NULL,
                          expand_ranks = c("Gattung", "Art", "Unterart"),
                          image_size = 150,
                          link_length = 200,
@@ -47,6 +52,7 @@ run_taxonomy <- function(file = NULL,
   # pass settings as options to the app
   options(
     simpleTaxonomy_file = file,
+    simpleTaxonomy_root = root,
     simpleTaxonomy_expand_ranks = expand_ranks,
     simpleTaxonomy_image_size = image_size,
     simpleTaxonomy_link_length = link_length

@@ -6,6 +6,7 @@
 \usage{
 run_taxonomy(
   file = NULL,
+  root = NULL,
   expand_ranks = c("Gattung", "Art", "Unterart"),
   image_size = 150,
   link_length = 200,
@@ -15,6 +16,11 @@ run_taxonomy(
 \arguments{
 \item{file}{Path to a file containing a \code{taxonomy_graph}. If omitted, the
 data from \url{https://github.com/stibu81/taxonomyData} is used.}
+
+\item{root}{character giving the common or scientific name of the taxon to
+select as root. If omitted, the actual root of the taxonomy graph is used.
+If the selected root does not exist in the graph, the app also falls
+back on the actual root of the graph.}
 
 \item{expand_ranks}{a list of ranks that should always be expanded. This
 can be changed interactively in the app.}

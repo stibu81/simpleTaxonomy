@@ -13,7 +13,7 @@ function(input, output, session) {
     session,
     "tree_root",
     choices = no_leaf_taxa,
-    selected = names(get_root_node(taxonomy)),
+    selected = initial_root,
     server = TRUE
   )
   # this input mut only contain taxa that are present in the taxonomy_graph
