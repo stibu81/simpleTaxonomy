@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/stibu81/simpleTaxonomy/blob/v0.1.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/stibu81/simpleTaxonomy/blob/main/DESCRIPTION)
 
 Lanz S (2026). *simpleTaxonomy: Create Interactive Visualisation of
 Taxonomic Hierarchy*. R package version 0.1.0,

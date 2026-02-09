@@ -10,6 +10,7 @@ loads the data from <https://github.com/stibu81/taxonomyData>.
 ``` r
 run_taxonomy(
   file = NULL,
+  root = NULL,
   expand_ranks = c("Gattung", "Art", "Unterart"),
   image_size = 150,
   link_length = 200,
@@ -23,6 +24,13 @@ run_taxonomy(
 
   Path to a file containing a `taxonomy_graph`. If omitted, the data
   from <https://github.com/stibu81/taxonomyData> is used.
+
+- root:
+
+  character giving the common or scientific name of the taxon to select
+  as root. If omitted, the actual root of the taxonomy graph is used. If
+  the selected root does not exist in the graph, the app also falls back
+  on the actual root of the graph.
 
 - expand_ranks:
 
