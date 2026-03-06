@@ -28,11 +28,11 @@
 run_taxonomy <- function(file = NULL,
                          root = NULL,
                          expand_ranks = c("Gattung", "Art", "Unterart"),
-                         image_size = 150,
+                         image_size = c("200", "60", "120", "250", "330", "500"),
                          link_length = 200,
                          launch_browser = NULL) {
 
-  rlang::check_installed(c("shiny", "bslib", "DT", "logger"),
+  rlang::check_installed(c("shiny", "shinyWidgets", "bslib", "DT", "logger"),
                          "in order to run the app.")
 
   app_dir <- system.file("shinyApp", package = "simpleTaxonomy")
@@ -41,6 +41,11 @@ run_taxonomy <- function(file = NULL,
       "Could not find the shiny app. Try re-installing \"simpleTaxonomy\"."
     )
   }
+
+  # the available sizes are taken from here:
+  # https://www.mediawiki.org/wiki/Common_thumbnail_sizes
+  # I added 200 which also seems to work.
+  image_size <- match.arg(image_size)
 
   # prepare the file path: since the app will run in its own working directory,
   # relative paths do not work. => If file is not missing or an URL,

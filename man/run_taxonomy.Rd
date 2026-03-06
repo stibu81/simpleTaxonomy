@@ -8,7 +8,7 @@ run_taxonomy(
   file = NULL,
   root = NULL,
   expand_ranks = c("Gattung", "Art", "Unterart"),
-  image_size = 150,
+  image_size = c("200", "60", "120", "250", "330", "500"),
   link_length = 200,
   launch_browser = NULL
 )

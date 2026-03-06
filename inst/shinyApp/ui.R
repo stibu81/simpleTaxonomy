@@ -44,12 +44,12 @@ sidebar_tree <- sidebar(
         label = "Bilder anzeigen",
         value = TRUE
       ),
-      sliderInput(
+      sliderTextInput(
         "image_size",
         label = "Bildgrösse:",
-        min = 100, max = 400,
-        step = 50,
-        value = image_size_default
+        choices = c("60", "120", "200", "250", "330", "500"),
+        selected = image_size_default,
+        grid = TRUE
       ),
       sliderInput(
         "link_length",

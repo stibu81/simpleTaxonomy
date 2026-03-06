@@ -135,7 +135,7 @@ function(input, output, session) {
       taxonomy,
       get_taxon_names(taxonomy, input$counts_root)
     )
-    tooltip <- simpleTaxonomy:::create_tooltip(taxon_node, TRUE, 220)
+    tooltip <- simpleTaxonomy:::create_tooltip(taxon_node, TRUE, "200")
     HTML(tooltip)
   })
 

@@ -75,21 +75,20 @@ plot_taxonomy <- function(graph,
                           focus = c(),
                           highlight = c(),
                           show_images = FALSE,
-                          image_size = 150,
+                          image_size = c("200", "60", "120", "250", "330", "500"),
                           link_length = 150,
                           font_size = 12) {
 
+  # the available sizes are taken from here:
+  # https://www.mediawiki.org/wiki/Common_thumbnail_sizes
+  # I added 200 which also seems to work.
+  image_size <- match.arg(image_size)
+  
   # this only works for taxonomy_graph objects
   if (!inherits(graph, "taxonomy_graph")) {
     cli::cli_abort(
       "{deparse(substitute(graph))} is not a taxonomy_graph object."
     )
-  }
-
-  # make sure that image_size is a positive integer
-  int_size <- suppressWarnings(as.integer(image_size))
-  if (is.na(int_size) || image_size <= 0) {
-    cli::cli_abort("{size} is not a positive integer.")
   }
 
   # process argument focus: put the taxa in there into both, show and
@@ -98,7 +97,7 @@ plot_taxonomy <- function(graph,
   if (length(focus) > 0) {
     if (length(c(show, full_expand)) > 0) {
       cli::cli_alert_warning(
-        paste("focus has been used togehter with show and/or full_expand.",
+        paste("focus has been used together with show and/or full_expand.",
               "show and full_expand will be ignored.")
       )
     }
@@ -106,7 +105,7 @@ plot_taxonomy <- function(graph,
   }
 
   graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
-    add_tooltip(show_images = show_images, image_size = int_size) %>%
+    add_tooltip(show_images = show_images, image_size = image_size) %>%
     set_highlight(highlight = highlight)
 
   widget_input <- list(

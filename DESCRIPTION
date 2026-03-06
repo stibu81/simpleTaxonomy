@@ -1,6 +1,6 @@
 Package: simpleTaxonomy
 Title: Create Interactive Visualisation of Taxonomic Hierarchy
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: 
     person("Stefan", "Lanz", , "slanz1137@gmail.com", role = c("aut", "cre"))
 Description: Create interactive visualisations of a taxonomy hierarchy that is
@@ -31,6 +31,7 @@ Imports:
 Suggests: 
     shiny,
     bslib,
+    shinyWidgets,
     DT,
     logger,
     roxygen2,
