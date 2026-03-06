@@ -125,7 +125,10 @@ create_counts_dt <- function(taxonomy,
     }
 }
 
-create_wiki_button <- function(taxonomy, taxon) {
+# create a button with a wikipedia link for a taxon
+# use id to use different shiny ids if multiple buttons are
+# created in the same app.
+create_wiki_button <- function(taxonomy, taxon, id = 1) {
   if (taxon == "") return(NULL)
 
   taxon <- get_taxon_names(taxonomy, taxon)
@@ -136,7 +139,7 @@ create_wiki_button <- function(taxonomy, taxon) {
     stringr::str_replace_all(if (is.na(sci)) taxon else sci, " +", "_")
   )
   shiny::actionButton(
-    inputId = "wiki_button",
+    inputId = paste0("wiki_button", id),
     class = "btn-primary btn-rounded",
     label = taxon,
     icon = shiny::icon("wikipedia-w"),
