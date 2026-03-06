@@ -39,3 +39,11 @@
   left: 10px !important;
   top: 10px !important;
 }
+
+/* collapsibleTree sets opacity in JS to show or hide the tooltip.
+   When the tooltip is shown, opacity is set to 0.9. Override this to 1.
+   This does not override opacity when it is 0 and thus still allows
+   hiding the tooltip. */
+.tooltip[style*="opacity: 0.9"] {
+  opacity: 1 !important;
+}
