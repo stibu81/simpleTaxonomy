@@ -18,8 +18,8 @@
   color: white;
 }
 
-/* Add custom CSS for background colour of accordeon panel and
-   collapsed accordeon header: same colour as sidebar background */
+/* Add custom CSS for background colour of accordion panel and
+   collapsed accordion header: same colour as sidebar background */
 .accordion-body {
   background-color: #f2f2f2;
 }

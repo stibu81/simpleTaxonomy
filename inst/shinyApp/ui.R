@@ -104,7 +104,7 @@ page_navbar(
                  style = "position:absolute; right:20px; top:5px",
                  height = 42)),
 
-  # use the colour from the logo as primary colour, sligthly darkened for better
+  # use the colour from the logo as primary colour, slightly darkened for better
   # contrast with colorspace::darken("turquoise3", amount = 0.07)
   theme = bs_theme(preset = "yeti", primary = "#06b6bd"),
 
