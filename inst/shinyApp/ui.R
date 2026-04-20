@@ -1,6 +1,7 @@
 sidebar_tree <- sidebar(
-  gap = "15px",
-  padding = c("20px", "15px"),
+  width = 270,
+  gap = 15,
+  padding = c(15, 10),
   bg = "#F2F2F2",
   # choices will be filled in the server in order to use server side
   # processing
@@ -47,7 +48,7 @@ sidebar_tree <- sidebar(
       sliderTextInput(
         "image_size",
         label = "Bildgrösse:",
-        choices = c("60", "120", "200", "250", "330", "500"),
+        choices = c("60", "120", "250", "330", "500"),
         selected = image_size_default,
         grid = TRUE
       ),
@@ -64,8 +65,9 @@ sidebar_tree <- sidebar(
 )
 
 sidebar_counts <- sidebar(
-  gap = "15px",
-  padding = c("20px", "15px"),
+  width = 270,
+  gap = 15,
+  padding = c(15, 10),
   bg = "#F2F2F2",
   # choices will be filled in the server in order to use server side
   # processing

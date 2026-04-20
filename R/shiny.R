@@ -28,7 +28,7 @@
 run_taxonomy <- function(file = NULL,
                          root = NULL,
                          expand_ranks = c("Gattung", "Art", "Unterart"),
-                         image_size = c("200", "60", "120", "250", "330", "500"),
+                         image_size = c("250", "60", "120", "330", "500"),
                          link_length = 200,
                          launch_browser = NULL) {
 
@@ -44,7 +44,6 @@ run_taxonomy <- function(file = NULL,
 
   # the available sizes are taken from here:
   # https://www.mediawiki.org/wiki/Common_thumbnail_sizes
-  # I added 200 which also seems to work.
   image_size <- match.arg(image_size)
 
   # prepare the file path: since the app will run in its own working directory,

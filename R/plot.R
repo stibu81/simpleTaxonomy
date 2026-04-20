@@ -75,13 +75,12 @@ plot_taxonomy <- function(graph,
                           focus = c(),
                           highlight = c(),
                           show_images = FALSE,
-                          image_size = c("200", "60", "120", "250", "330", "500"),
+                          image_size = c("250", "60", "120", "330", "500"),
                           link_length = 150,
                           font_size = 12) {
 
   # the available sizes are taken from here:
   # https://www.mediawiki.org/wiki/Common_thumbnail_sizes
-  # I added 200 which also seems to work.
   image_size <- match.arg(image_size)
   
   # this only works for taxonomy_graph objects

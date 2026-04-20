@@ -12,7 +12,7 @@ plot_taxonomy(
   focus = c(),
   highlight = c(),
   show_images = FALSE,
-  image_size = c("200", "60", "120", "250", "330", "500"),
+  image_size = c("250", "60", "120", "330", "500"),
   link_length = 150,
   font_size = 12
 )

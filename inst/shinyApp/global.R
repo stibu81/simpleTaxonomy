@@ -14,7 +14,7 @@ taxonomy_file <- getOption(
 root <- getOption("simpleTaxonomy_root", "")
 expand_ranks_default <- getOption("simpleTaxonomy_expand_ranks",
                                   c("Gattung", "Art", "Unterart"))
-image_size_default <- getOption("simpleTaxonomy_image_size", "200")
+image_size_default <- getOption("simpleTaxonomy_image_size", "250")
 link_length_default <- getOption("simpleTaxonomy_link_length", 200)
 
 logger::log_info("start simpleTaxonomy shiny app with the following settings:")
