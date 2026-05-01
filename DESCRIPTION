@@ -24,10 +24,11 @@ Imports:
     purrr,
     tidyr,
     cli,
+    glue,
     igraph,
     htmlwidgets,
     htmltools,
-    jsonlite
+    httr2
 Suggests: 
     shiny,
     bslib,

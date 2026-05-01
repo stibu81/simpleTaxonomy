@@ -145,3 +145,39 @@ insert_missing_image_urls <- function(taxa, image_url, lang, progress, label) {
   )
   image_url
 }
+
+
+# helper function to generate a user agent string according to the policy at
+# https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy
+get_user_agent_string <- function(contact = NULL,
+                                  bot_name = "simpleTaxonomyBot") {
+  if (is.character(contact) && stringr::str_detect(contact, "@")) {
+    contact_str = contact
+  } else if (is.list(contact) && all(c("lang", "user") %in% names(contact))) {
+    contact_str = glue::glue("wikipedia:{contact$lang}; User:{contact$user}")
+  # if no id is given, issue a warning and proceed without contact information
+  } else {
+    cli::cli_warn(
+      c(
+        "!" = "No contact information was given for the user agent.",
+        "i" = paste("This will likely severely limit the number of requests", 
+                    "that are accepted by Wikipedia.")
+      )
+    )
+    contact_str = ""
+  }
+
+  # check: bot_name must contain the string "bot"
+  if (!stringr::str_detect(bot_name, stringr::regex("bot", ignore_case = TRUE))) {
+    cli::cli_abort(
+      paste(
+      "`bot_name` must contain the string 'bot' in any combination of", 
+      "lowercase or uppercase letters."
+      )
+    )
+  }
+
+  version <- packageVersion("simpleTaxonomy")
+
+  glue::glue("User-Agent: {bot_name}/{version} ({contact_str})")
+}
