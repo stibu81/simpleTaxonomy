@@ -97,8 +97,13 @@ get_wikipedia_image_url <- function(taxon, user_agent, size, lang,
     utils::URLencode(taxon),
     "&prop=pageimages&format=json&pithumbsize=", size, "&redirects="
   )
+  # query the api, retry if status 429 (too many request)
+
   resp <- resp <- httr2::request(url) %>%
-      httr2::req_user_agent(user_agent) %>% 
+      httr2::req_user_agent(user_agent) %>%
+      # retry if status if 429 (too many request) or 503 (service unavailable)
+      # the wait time is extracted from the response (Retry-After)
+      httr2::req_retry(max_tries = 2) %>% 
       httr2::req_perform()
   parsed <- httr2::resp_body_json(resp)$query$pages[[1]]
   if ("thumbnail" %in% names(parsed)) {
