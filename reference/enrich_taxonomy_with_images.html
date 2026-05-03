@@ -9,7 +9,7 @@ By default, existing URLs are kept and only missing URLs are filled in."><meta p
 
     <a class="navbar-brand me-2" href="../index.html">simpleTaxonomy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,7 @@ By default, existing URLs are kept and only missing URLs are filled in.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">enrich_taxonomy_with_images</span><span class="op">(</span></span>
 <span>  <span class="va">file</span>,</span>
 <span>  delim <span class="op">=</span> <span class="st">","</span>,</span>
+<span>  contact <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  retry <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -59,6 +60,19 @@ By default, existing URLs are kept and only missing URLs are filled in.</p>
 
 <dt id="arg-delim">delim<a class="anchor" aria-label="anchor" href="#arg-delim"></a></dt>
 <dd><p>the delimiter used in the file</p></dd>
+
+
+<dt id="arg-contact">contact<a class="anchor" aria-label="anchor" href="#arg-contact"></a></dt>
+<dd><p>contact data to pass on in the user agent of the API call to
+Wikipedia. Starting in 2026, there is a strict rate limit on API calls per
+minute for calls without contact data. There are two possible ways to pass
+contact data:</p><ul><li><p>a string containing an email address.</p></li>
+<li><p>a list that specifies an existing Wikipedia account. You need to specify two
+named elements: "lang" giving the language code of the Wikipedia where the
+account is registered and "user" giving the user name.
+Example: <code>list(lang = "de", user = "James Bond")</code>.</p></li>
+</ul><p>See the <a href="https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy" class="external-link">User Agent Policy</a>
+for more information.</p></dd>
 
 
 <dt id="arg-retry">retry<a class="anchor" aria-label="anchor" href="#arg-retry"></a></dt>

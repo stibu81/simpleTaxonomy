@@ -9,6 +9,7 @@ By default, existing URLs are kept and only missing URLs are filled in.
 enrich_taxonomy_with_images(
   file,
   delim = ",",
+  contact = NULL,
   retry = FALSE,
   progress = TRUE,
   quiet = FALSE
@@ -24,6 +25,24 @@ enrich_taxonomy_with_images(
 - delim:
 
   the delimiter used in the file
+
+- contact:
+
+  contact data to pass on in the user agent of the API call to
+  Wikipedia. Starting in 2026, there is a strict rate limit on API calls
+  per minute for calls without contact data. There are two possible ways
+  to pass contact data:
+
+  - a string containing an email address.
+
+  - a list that specifies an existing Wikipedia account. You need to
+    specify two named elements: "lang" giving the language code of the
+    Wikipedia where the account is registered and "user" giving the user
+    name. Example: `list(lang = "de", user = "James Bond")`.
+
+  See the [User Agent
+  Policy](https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy)
+  for more information.
 
 - retry:
 

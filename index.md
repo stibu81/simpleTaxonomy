@@ -13,6 +13,7 @@ You can install the development version of simpleTaxonomy from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("stibu81/simpleTaxonomy")
 ```
@@ -24,6 +25,7 @@ The package includes an example file with some taxa from the order
 German. It can be read and visualised as follows:
 
 ``` r
+
 library(simpleTaxonomy)
 
 taxonomy_file <- get_example_taxonomy_file()
@@ -44,6 +46,7 @@ You can get the path to the example file that is included in the package
 with
 
 ``` r
+
 get_example_taxonomy_file()
 #> [1] ".../library/simpleTaxonomy/example/carnivora.csv"
 ```
@@ -84,6 +87,7 @@ Currently, only German ranks are supported. You can obtain the list of
 supported ranks as follows:
 
 ``` r
+
 available_ranks()
 #> # A tibble: 28 × 2
 #>    level de         
@@ -120,6 +124,7 @@ The following snippet reads the example file from the package, but you
 can read your own file in the same way.
 
 ``` r
+
 taxonomy_file <- get_example_taxonomy_file()
 taxonomy <- read_taxonomy(taxonomy_file)
 ```
@@ -128,6 +133,7 @@ The resulting object is a `taxonomy_graph` which is basically an
 [igraph](https://r.igraph.org/) object.
 
 ``` r
+
 class(taxonomy)
 #> [1] "taxonomy_graph" "igraph"
 ```
@@ -135,6 +141,7 @@ class(taxonomy)
 Printing the object shows a summary of its properties:
 
 ``` r
+
 taxonomy
 #> taxonomy_graph with 96 nodes.
 #> root node: Raubtiere 
@@ -167,6 +174,7 @@ images could be found and it returns the `taxonomy_graph` with the image
 URLs.
 
 ``` r
+
 taxonomy <- enrich_taxonomy_with_images(taxonomy_file)
 #> try to get images for 23 taxa.
 #> found:  21
@@ -189,6 +197,7 @@ case, “Hunde” is visible because of the expansion up to “Grosser Panda”.
 The argument `highlight` is used to highlight some taxa in red.
 
 ``` r
+
 plot_taxonomy(taxonomy,
               show = c("Grosser Panda", "Löwe"),
               full_expand = "Hunde",
@@ -204,6 +213,7 @@ A growing taxonomic hierarchy in German can be found on
 directly from GitHub as follows:
 
 ``` r
+
 url <- paste0("https://raw.githubusercontent.com/",
               "stibu81/taxonomyData/refs/heads/main/taxonomy.csv")
 taxonomy <- read_taxonomy(url)
@@ -218,6 +228,7 @@ simpleTaxonomy comes with a Shiny app that allows to interact with a
 taxonomic hierarchy. It can be run by
 
 ``` r
+
 run_taxonomy()
 ```
 
@@ -227,5 +238,6 @@ other file by passing the path to the file as the first argument. This
 will run the app with the example data contained in the package:
 
 ``` r
+
 run_taxonomy(get_example_taxonomy_file())
 ```
