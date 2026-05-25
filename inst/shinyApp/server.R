@@ -1,20 +1,62 @@
 function(input, output, session) {
 
+  taxonomy <- eventReactive(
+    input$reload,
+    {
+      logger::log_info("reading the file and preparing data ...")
+      read_taxonomy(taxonomy_file)
+    },
+    ignoreNULL = FALSE
+  )
+
+  # determine the initial root taxon
+  initial_root <- reactive({
+    initial_root <- get_taxon_names(taxonomy(), getOption("simpleTaxonomy_root"))
+    if (length(initial_root) != 1 || is.na(initial_root)) {
+      initial_root <- names(get_root_node(taxonomy()))
+    }
+    logger::log_info("selected root: '{initial_root}'")
+    initial_root
+  })
+
+  ranks <- reactive({
+    # only get the nodes here, which is much faster than as_tibble(taxonomy)
+    vertices <- as_tibble(igraph::vertex_attr(taxonomy()))
+    # create a vector of ranks that appear in the data. In order to have them
+    # sorted correctly, take them from available_ranks()
+    available_ranks() %>%
+      dplyr::filter(.data$de %in% vertices$rank) %>%
+      # don't list the first rank and ranks that have no defined level in the
+      # hierarchy (e.g., "ohne Rang")
+      dplyr::filter(.data$level > 1) %>%
+      dplyr::pull("de")
+  })
+
+  no_leaf_taxa <- reactive({
+    # we need the common and scientific names of taxa that are not leaves,
+    # i.e. that have children
+    attr(taxonomy(), "match_labs")[
+      !attr(taxonomy(), "match_labs") %in% names(get_leaf_nodes(taxonomy()))
+    ] %>% names()
+  })
+
   taxonomy_sg <- reactive({
     if (input$tree_root != "") {
       logger::log_info("filter the graph to the root '{input$tree_root}'")
-      get_subgraph(taxonomy, input$tree_root)
+      get_subgraph(taxonomy(), input$tree_root)
     }
   })
 
   # choices of taxa_show and counts_root must be filled here in order
   # to use server side processing
-  updateSelectizeInput(
-    session,
-    "tree_root",
-    choices = no_leaf_taxa,
-    selected = initial_root,
-    server = TRUE
+  observe(
+    updateSelectizeInput(
+      session,
+      "tree_root",
+      choices = no_leaf_taxa(),
+      selected = initial_root(),
+      server = TRUE
+    )
   )
   # this input mut only contain taxa that are present in the taxonomy_graph
   # from the previously selected values, only those are kept that are still
@@ -36,11 +78,13 @@ function(input, output, session) {
       )
     }
   })
-  updateSelectizeInput(
-    session,
-    "counts_root",
-    choices = no_leaf_taxa,
-    server = TRUE
+  observe(
+    updateSelectizeInput(
+      session,
+      "counts_root",
+      choices = no_leaf_taxa(),
+      server = TRUE
+    )
   )
 
   output$taxonomy_plot <- collapsibleTree::renderCollapsibleTree({
@@ -78,7 +122,7 @@ function(input, output, session) {
     # if no root taxon is currently selected, fall back to the root of the
     # unfiltered graph.
     clicked_taxon <- if (is.null(taxonomy_sg())) {
-      names(get_root_node(taxonomy))
+      names(get_root_node(taxonomy()))
     # at the start, input$select_taxon is NULL. When the root is clicked,
     # it is an empty list. => In both cases, show the link for the root taxon.
     } else if (length(input$selected_taxon) == 0) {
@@ -89,7 +133,7 @@ function(input, output, session) {
     } else {
       unlist(tail(input$selected_taxon, n = 1))
     }
-    simpleTaxonomy:::create_wiki_button(taxonomy, clicked_taxon)
+    simpleTaxonomy:::create_wiki_button(taxonomy(), clicked_taxon)
   })
 
   # fill the selection of orders to group by according to the selection
@@ -100,9 +144,9 @@ function(input, output, session) {
       if (input$counts_root != "") {
         logger::log_info("update input$counts_by_rank")
         old_by_rank_value <- input$counts_by_rank
-        subgraph <- get_subgraph(taxonomy, input$counts_root)
+        subgraph <- get_subgraph(taxonomy(), input$counts_root)
         use_ranks <- c("ohne",
-                       intersect(ranks, igraph::vertex_attr(subgraph, "rank")))
+                       intersect(ranks(), igraph::vertex_attr(subgraph, "rank")))
         # if the old value is still valid, keep it, otherwise select "ohne"
         new_by_rank_value <- if (old_by_rank_value %in% use_ranks) {
           old_by_rank_value
@@ -122,7 +166,7 @@ function(input, output, session) {
 
   output$rank_counts <- DT::renderDT({
     logger::log_info("compute rank counts for root '{input$counts_root}'")
-    simpleTaxonomy:::create_counts_dt(taxonomy,
+    simpleTaxonomy:::create_counts_dt(taxonomy(),
                                       input$counts_root,
                                       input$counts_by_rank,
                                       input$only_major_ranks,
@@ -132,15 +176,15 @@ function(input, output, session) {
   output$counts_image <- renderUI({
     if (input$counts_root == "") return(NULL)
     taxon_node <- igraph::induced_subgraph(
-      taxonomy,
-      get_taxon_names(taxonomy, input$counts_root)
+      taxonomy(),
+      get_taxon_names(taxonomy(), input$counts_root)
     )
     tooltip <- simpleTaxonomy:::create_tooltip(taxon_node, TRUE, "250")
     HTML(tooltip)
   })
 
   output$counts_wikipedia_link <- renderUI(
-    simpleTaxonomy:::create_wiki_button(taxonomy, input$counts_root, 2)
+    simpleTaxonomy:::create_wiki_button(taxonomy(), input$counts_root, 2)
   )
 
 }

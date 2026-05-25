@@ -24,32 +24,3 @@ logger::log_info("expand_ranks: '{paste(expand_ranks_default, collapse = '\\', \
 logger::log_info("image_size: {image_size_default}")
 logger::log_info("link_length: {link_length_default}")
 
-# read the taxonomy
-logger::log_info("reading the file and preparing data ...")
-taxonomy <- read_taxonomy(taxonomy_file)
-# only get the nodes here, which is much faster than as_tibble(taxonomy)
-vertices <- as_tibble(igraph::vertex_attr(taxonomy))
-
-# determine the initial root taxon
-initial_root <- get_taxon_names(taxonomy, getOption("simpleTaxonomy_root"))
-if (length(initial_root) != 1 || is.na(initial_root)) {
-  initial_root <- names(get_root_node(taxonomy))
-}
-logger::log_info("selected root: '{initial_root}'")
-
-# create a vector of ranks that appear in the data. In order to have them
-# sorted correctly, take them from available_ranks()
-ranks <- available_ranks() %>%
-  dplyr::filter(.data$de %in% vertices$rank) %>%
-  # don't list the first rank and ranks that have no defined level in the
-  # hierarchy (e.g., "ohne Rang")
-  dplyr::filter(.data$level > 1) %>%
-  dplyr::pull("de")
-
-# we need the common and scientific names of taxa that are not leaves,
-# i.e. that have children
-no_leaf_taxa <- attr(taxonomy, "match_labs")[
-  !attr(taxonomy, "match_labs") %in% names(get_leaf_nodes(taxonomy))
-] %>% names()
-
-logger::log_info("preparation completed")

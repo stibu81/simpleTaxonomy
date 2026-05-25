@@ -32,7 +32,7 @@ sidebar_tree <- sidebar(
   selectizeInput(
     "expand_ranks",
     label = "Stufen immer öffnen:",
-    choices = ranks,
+    choices = available_ranks()[["de"]],
     selected = expand_ranks_default,
     multiple = TRUE
   ),
@@ -113,6 +113,16 @@ page_navbar(
   header = tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "simpleTaxonomy.css"),
     tags$link(rel="icon", href="favicon-16x16.png"),
+  ),
+
+  nav_item(
+    actionButton(
+      "reload",
+      label = NULL,
+      icon = icon("rotate-right"),
+      class = "nav-link",
+      title = "Neu laden"
+    )
   ),
 
   nav_panel(
