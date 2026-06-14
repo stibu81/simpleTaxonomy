@@ -257,6 +257,8 @@ get_rank_colours <- function() {
     "Ordnung",            "#33FF33",
     "Unterordnung",       "#9EFB18",
     "Teilordnung",        "#B3FA13",
+    "Sektion",            "#C0348A",
+    "Untersektion",       "#EC4CAE",
     "\u00dcberfamilie",   "#D9E511",
     "Epifamilie",         "#EBF805",
     "Familie",            "#FFF700",
