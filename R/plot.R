@@ -30,6 +30,8 @@
 #' @param link_length length of the horizontal links that connect nodes
 #' in pixels.
 #' @param font_size font size of the labels in pixels.
+#' @param highlight_missing_images logical, should nodes with missing 
+#'  image link by highlighted?
 #'
 #' @details
 #' The function makes use of the html widget defined in the package
@@ -77,7 +79,8 @@ plot_taxonomy <- function(graph,
                           show_images = FALSE,
                           image_size = c("250", "60", "120", "330", "500"),
                           link_length = 150,
-                          font_size = 12) {
+                          font_size = 12,
+                          highlight_missing_images = FALSE) {
 
   # the available sizes are taken from here:
   # https://www.mediawiki.org/wiki/Common_thumbnail_sizes
@@ -105,7 +108,7 @@ plot_taxonomy <- function(graph,
 
   graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
     add_tooltip(show_images = show_images, image_size = image_size) %>%
-    set_highlight(highlight = highlight)
+    set_highlight(highlight = highlight, highlight_missing_images)
 
   widget_input <- list(
     data = graph_as_nested_list(graph),
@@ -261,15 +264,27 @@ create_tooltip <- function(graph, show_images, image_size) {
 }
 
 
-set_highlight <- function(graph, highlight, colour = "#FF0000") {
+set_highlight <- function(graph, highlight,
+                          highlight_missing_images = FALSE,
+                          colour = "#FF0000") {
 
   # check that all the taxa in show and full_expand actually exist in the data.
   # Remove those that don't.
   highlight <- rm_invalid_taxa(highlight, graph)
-  if (length(highlight) == 0) return(graph)
+  v_highlight <- which(igraph::vertex_attr(graph, "name") %in% highlight)
+
+  # add all nodes without image link to highlight if requested
+  if (highlight_missing_images) {
+    has_image_url <- graph %>% 
+      igraph::vertex_attr("image_url") %>% 
+      stringr::str_detect("^https://")
+    v_highlight <- unique(c(v_highlight, which(!has_image_url)))
+  }
+
+  if (length(v_highlight) == 0) return(graph)
 
   colours <- igraph::vertex_attr(graph, "colour")
-  colours[igraph::vertex_attr(graph, "name") %in% highlight] <- colour
+  colours[v_highlight] <- colour
   igraph::vertex_attr(graph, "colour") <- colours
 
   graph
