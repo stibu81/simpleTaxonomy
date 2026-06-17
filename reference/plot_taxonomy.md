@@ -15,7 +15,8 @@ plot_taxonomy(
   show_images = FALSE,
   image_size = c("250", "60", "120", "330", "500"),
   link_length = 150,
-  font_size = 12
+  font_size = 12,
+  highlight_missing_images = FALSE
 )
 ```
 
@@ -74,6 +75,10 @@ plot_taxonomy(
 - font_size:
 
   font size of the labels in pixels.
+
+- highlight_missing_images:
+
+  logical, should nodes with missing image link by highlighted?
 
 ## Value
 

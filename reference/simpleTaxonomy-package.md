@@ -15,3 +15,7 @@ Useful links:
 ## Author
 
 **Maintainer**: Stefan Lanz <slanz1137@gmail.com>
+
+Authors:
+
+- Stefan Lanz <slanz1137@gmail.com>
