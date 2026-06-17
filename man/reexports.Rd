@@ -11,6 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr:reexports]{as_tibble}}}
+  \item{dplyr}{\code{\link[dplyr:as_tibble]{as_tibble}}}
 }}
 
