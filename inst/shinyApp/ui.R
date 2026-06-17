@@ -45,6 +45,11 @@ sidebar_tree <- sidebar(
         label = "Bilder anzeigen",
         value = TRUE
       ),
+      input_switch(
+        "highlight_missing_images",
+        label = "Fehlende Bilder hervorheben",
+        value = FALSE
+      ),
       sliderTextInput(
         "image_size",
         label = "Bildgrösse:",

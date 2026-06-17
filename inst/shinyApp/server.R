@@ -115,7 +115,8 @@ function(input, output, session) {
                   expand_rank = input$expand_ranks,
                   show_images = input$show_images,
                   link_length = link_length(),
-                  image_size = image_size())
+                  image_size = image_size(),
+                  highlight_missing_images = input$highlight_missing_images)
   })
 
   output$wikipedia_link <- renderUI({
