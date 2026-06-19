@@ -74,3 +74,44 @@ find_taxon <- function(graph,
 get_taxon_names <- function(graph, char) {
   attr(graph, "match_labs")[char]
 }
+
+
+#' Get the Parent Taxon of a Taxon
+#' 
+#' @param graph a `taxonomy_graph` object, typically created with
+#' [`read_taxonomy()`].
+#' @param taxon character of length 1 giving the exact common or scientific name
+#'  of a taxon.
+#' 
+#' @returns
+#' a character vector of length 1 giving the label of the parent taxon of
+#' `taxon`, except when `taxon` is the root, in which case an empty character
+#' vector is returned.
+#' 
+#' @export
+
+get_parent_taxon <- function(graph, taxon) {
+
+  # this only works for taxonomy_graph objects
+  if (!inherits(graph, "taxonomy_graph")) {
+    cli::cli_abort(
+      "{deparse(substitute(graph))} is not a taxonomy_graph object."
+    )
+  }
+
+  # check taxon: there must be only one and it must be valid
+  if (length(taxon) != 1) {
+    cli::cli_abort("taxon must have length 1.")
+  }
+  use_taxon <- get_taxon_names(graph, taxon)
+  if (is.na(use_taxon)) {
+    cli::cli_abort("taxon \"{taxon}\" does not exist in the graph.")
+  }
+
+  # get the parent vertex
+  parent <- igraph::neighborhood(
+      graph, nodes = use_taxon, mode = "in", mindist = 1
+    )[[1]]
+  
+  names(parent)
+}
