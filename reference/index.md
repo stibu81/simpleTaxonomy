@@ -12,6 +12,8 @@
   : Find Taxa By Pattern
 - [`get_example_taxonomy_file()`](https://stibu81.github.io/simpleTaxonomy/reference/get_example_taxonomy_file.md)
   : Get Example Taxonomy File
+- [`get_parent_taxon()`](https://stibu81.github.io/simpleTaxonomy/reference/get_parent_taxon.md)
+  : Get the Parent Taxon of a Taxon
 - [`get_root_node()`](https://stibu81.github.io/simpleTaxonomy/reference/get_root_node.md)
   [`get_leaf_nodes()`](https://stibu81.github.io/simpleTaxonomy/reference/get_root_node.md)
   : Get the Root Node and the Leaves of a Taxonomy Graph
