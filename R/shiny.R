@@ -145,3 +145,19 @@ create_wiki_button <- function(taxonomy, taxon, id = 1) {
     onclick = paste0("window.open(\"", link, "\", \"_blank\")")
   )
 }
+
+
+# Put multiple UI elements on a row.
+# I haven't found a more "shiny-native" way to do this, but using
+# a div with class "d-flex" does the job well.
+flex_row <- function(..., gap = 2) {
+  if (!is.numeric(gap)) {
+    cli::cli_abort("gap must be a numeric value.")
+  }
+  gap <- as.integer(gap)
+
+  shiny::div(
+    class = glue::glue("d-flex align-items-start gap-{gap}"),
+    ...
+  )
+}

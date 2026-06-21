@@ -3,13 +3,28 @@ sidebar_tree <- sidebar(
   gap = 15,
   padding = c(15, 10),
   bg = "#F2F2F2",
-  # choices will be filled in the server in order to use server side
-  # processing
-  selectizeInput(
-    "tree_root",
-    "Wurzel-Taxon:",
-    choices = NULL,
-    multiple = FALSE
+  # place drop-down for selection of root and button for going to parent next
+  # to each other.
+  # the label for the selectizeInput() must be defined independently to ensure
+  # proper vertical alignment of the selectize and the button
+  tags$label(`for` = "tree_root", "Wurzel-Taxon:"),
+  simpleTaxonomy:::flex_row(
+    # choices will be filled in the server in order to use server side
+    # processing
+    selectizeInput(
+      "tree_root",
+      label = NULL,
+      choices = NULL,
+      multiple = FALSE
+    ),
+    actionButton(
+      "tree_to_parent",
+      label = NULL,
+      icon = icon("up-long"),
+      title = "Zum Elterntaxon",
+      class = "btn-primary btn-rounded",
+      width = 38
+    )
   ),
   selectizeInput(
     "taxa_show",
@@ -74,13 +89,28 @@ sidebar_counts <- sidebar(
   gap = 15,
   padding = c(15, 10),
   bg = "#F2F2F2",
-  # choices will be filled in the server in order to use server side
-  # processing
-  selectizeInput(
-    "counts_root",
-    "Zähle Taxa in:",
-    choices = NULL,
-    multiple = FALSE
+  # place drop-down for selection of root and button for going to parent next
+  # to each other.
+  # the label for the selectizeInput() must be defined independently to ensure
+  # proper vertical alignment of the selectize and the button
+  tags$label(`for` = "counts_root", "Zähle Taxa in:"),
+  simpleTaxonomy:::flex_row(
+    # choices will be filled in the server in order to use server side
+    # processing
+    selectizeInput(
+      "counts_root",
+      label = NULL,
+      choices = NULL,
+      multiple = FALSE
+    ),
+    actionButton(
+      "counts_to_parent",
+      label = NULL,
+      icon = icon("up-long"),
+      title = "Zum Elterntaxon",
+      class = "btn-primary btn-rounded",
+      width = 38
+    )
   ),
   input_switch(
     "only_major_ranks",

@@ -58,7 +58,26 @@ function(input, output, session) {
       server = TRUE
     )
   )
-  # this input mut only contain taxa that are present in the taxonomy_graph
+
+  # handle "to parent" button
+  observeEvent(
+    input$tree_to_parent,
+    {
+      parent <- get_parent_taxon(taxonomy(), input$tree_root)
+      if (length(parent) > 0) {
+        logger::log_info("tree-tab: set root taxon to '{parent}'")
+        updateSelectizeInput(
+          session,
+          "tree_root",
+          choices = no_leaf_taxa(),
+          selected = parent,
+          server = TRUE
+        )
+      }
+    }
+  )
+
+  # this input must only contain taxa that are present in the taxonomy_graph
   # from the previously selected values, only those are kept that are still
   # valid
   observe({
@@ -85,6 +104,24 @@ function(input, output, session) {
       choices = no_leaf_taxa(),
       server = TRUE
     )
+  )
+
+    # handle "to parent" button
+  observeEvent(
+    input$counts_to_parent,
+    {
+      parent <- get_parent_taxon(taxonomy(), input$counts_root)
+      if (length(parent) > 0) {
+        logger::log_info("counts-tab: set root taxon to '{parent}'")
+        updateSelectizeInput(
+          session,
+          "counts_root",
+          choices = no_leaf_taxa(),
+          selected = parent,
+          server = TRUE
+        )
+      }
+    }
   )
 
   output$taxonomy_plot <- collapsibleTree::renderCollapsibleTree({
