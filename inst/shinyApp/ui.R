@@ -136,10 +136,7 @@ sidebar_counts <- sidebar(
 
 page_navbar(
 
-  title = h4("simpleTaxonomy",
-             img(src = "simpleTaxonomy_logo.png",
-                 style = "position:absolute; right:20px; top:5px",
-                 height = 42)),
+  title = h4("simpleTaxonomy"),
 
   # use the colour from the logo as primary colour, slightly darkened for better
   # contrast with colorspace::darken("turquoise3", amount = 0.07)
@@ -156,7 +153,8 @@ page_navbar(
       label = NULL,
       icon = icon("rotate-right"),
       class = "nav-link",
-      title = "Neu laden"
+      title = "Neu laden",
+      `aria-label` = "Neu laden"
     )
   ),
 
@@ -173,6 +171,27 @@ page_navbar(
     layout_sidebar(
       sidebar = sidebar_counts,
       card(DT::DTOutput("rank_counts"))
+    )
+  ),
+
+  nav_spacer(),
+
+  nav_item(
+    a(
+      title = "GitHub",
+      href = "https://github.com/stibu81/simpleTaxonomy",
+      target = "_blank",
+      rel = "noopener noreferrer",
+      class = "nav-link me-2",
+      `aria-label` = "GitHub",
+      icon("github", style = "font-size: 32px; line-height: 32px;")
+    )
+  ),
+
+  nav_item(
+    img(
+      src = "simpleTaxonomy_logo.png",
+      height = 42
     )
   ),
 

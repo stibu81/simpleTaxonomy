@@ -1,43 +1,55 @@
-/* style the navbar: limit the height and vertically center the title,
-   change font colour to white. The bg colour is set with navbar_options()
-   in ui.R */
+/* Navbar styling: compact height, white text. Background color is set in ui.R via navbar_options(). */
+.navbar {
+  --bs-navbar-padding-y: 0.3rem;
+}
+
 .navbar-brand {
   display: flex;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-block: 0;
 }
-.navbar-brand,
-.navbar-brand:hover,
-.navbar-brand:focus {
-  color: white;
-}
-.navbar-nav .nav-link,
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link:focus {
-  color: white;
-  background: transparent;
-}
-.navbar-nav .nav-link.active {
+
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus,
+.navbar .navbar-nav .nav-link,
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus,
+.navbar .navbar-nav .nav-link.active {
   color: white;
 }
 
-/* Add custom CSS for background colour of accordion panel and
-   collapsed accordion header: same colour as sidebar background */
-.accordion-body {
-  background-color: #f2f2f2;
+.navbar .navbar-nav .nav-link {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  line-height: 1.1;
+  font-size: 1.1rem;
 }
+
+.navbar .navbar-brand h4 {
+  margin: 0;
+  line-height: 1.1;
+}
+
+@media (min-width: 992px) {
+  .navbar .navbar-nav {
+    align-items: center;
+  }
+}
+
+/* Accordion background matches sidebar background. */
+.accordion-body,
 .accordion-button.collapsed {
   background-color: #f2f2f2;
 }
 
-/* rounded button style */
+/* Rounded button style. */
 .btn-rounded {
   border-radius: 4px;
-  margin-top: 0px
 }
 
 /* Positioning tooltip at the node does not work in Firefox.
-   => Fix the tooltip to the top left corner. */
+   => Fix the tooltip to the top-left corner. */
 .tooltip {
   left: 10px !important;
   top: 10px !important;
