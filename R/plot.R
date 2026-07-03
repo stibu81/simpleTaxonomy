@@ -277,7 +277,8 @@ set_highlight <- function(graph, highlight,
   if (highlight_missing_images) {
     has_image_url <- graph %>% 
       igraph::vertex_attr("image_url") %>% 
-      stringr::str_detect("^https://")
+      stringr::str_detect("^https://") %>% 
+      tidyr::replace_na(FALSE)
     v_highlight <- unique(c(v_highlight, which(!has_image_url)))
   }
 
