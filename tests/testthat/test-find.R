@@ -1,32 +1,44 @@
-test_that("find_taxon searches common and scientific names", {
-  graph <- read_taxonomy(get_example_taxonomy_file())
+taxonomy <- read_taxonomy(get_example_taxonomy_file())
 
-  hits <- find_taxon(graph, "katze")
-  expect_true(all(c("Katzen", "Hauskatze") %in% hits))
-
-  expect_equal(find_taxon(graph, "Felis catus", target = "scientific"), "Hauskatze")
-  expect_false("Hauskatze" %in% find_taxon(graph, "Felis", target = "name"))
-})
-
-
-test_that("get_taxon_names performs exact label lookup", {
-  graph <- read_taxonomy(get_example_taxonomy_file())
+test_that("find_taxon() searches common and scientific names", {
+  hits <- find_taxon(taxonomy, "katze")
+  expect_all_true(c("Katzen", "Hauskatze") %in% hits)
 
   expect_equal(
-    unname(get_taxon_names(graph, c("Carnivora", "Hauskatze", "Felis catus"))),
-    c("Raubtiere", "Hauskatze", "Hauskatze")
+    find_taxon(taxonomy, "felis"),
+    c("Echte Katzen", "Europäische Wildkatze", "Hauskatze", "Nebelparder")
   )
-  expect_true(is.na(get_taxon_names(graph, "does-not-exist")))
 })
 
 
-test_that("get_parent_taxon returns parent labels and validates input", {
-  graph <- read_taxonomy(get_example_taxonomy_file())
+test_that("find_taxon() can be restricted to common or scientific names", {
+  expect_equal(find_taxon(taxonomy, "fossa"), c("Fossa", "Fanaloka"))
+  expect_equal(find_taxon(taxonomy, "fossa", target = "name"), "Fossa")
+  expect_equal(find_taxon(taxonomy, "fossa", target = "scientific"), "Fanaloka")
+})
 
-  expect_equal(get_parent_taxon(graph, "Katzen"), "Katzenartige")
-  expect_identical(get_parent_taxon(graph, "Raubtiere"), character())
 
-  expect_error(get_parent_taxon(list(), "Katzen"), "not a taxonomy_graph")
-  expect_error(get_parent_taxon(graph, c("Katzen", "Hunde")), "length 1")
-  expect_error(get_parent_taxon(graph, "does-not-exist"), "does not exist")
+test_that("get_taxon_names() performs exact label lookup", {
+  expect_equal(
+    get_taxon_names(taxonomy, c("Carnivora", "Hauskatze", "Felis catus")),
+    setNames(
+      c("Raubtiere", "Hauskatze", "Hauskatze"),
+      c("Carnivora", "Hauskatze", "Felis catus")
+    )
+  )
+  expect_equal(get_taxon_names(taxonomy, "Sphinx"), setNames(NA_character_, "Sphinx"))
+})
+
+
+test_that("get_parent_taxon() returns parent labels", {
+  expect_equal(get_parent_taxon(taxonomy, "Katzen"), "Katzenartige")
+  expect_equal(get_parent_taxon(taxonomy, "Felidae"), "Katzenartige")
+  expect_identical(get_parent_taxon(taxonomy, "Raubtiere"), character())
+})
+
+
+test_that("get_parent_taxon() abort when inputs are invalid", {
+  expect_error(get_parent_taxon(list(), "Katzen"), "not a taxonomy_graph object")
+  expect_error(get_parent_taxon(taxonomy, c("Katzen", "Hunde")), "must have length 1")
+  expect_error(get_parent_taxon(taxonomy, "Sphinx"), "\"Sphinx\" does not exist")
 })

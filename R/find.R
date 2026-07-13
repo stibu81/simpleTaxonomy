@@ -72,7 +72,8 @@ find_taxon <- function(graph,
 #' @export
 
 get_taxon_names <- function(graph, char) {
-  attr(graph, "match_labs")[char]
+  # using set names ensures that also failed matches have names
+  setNames(attr(graph, "match_labs")[char], char)
 }
 
 
