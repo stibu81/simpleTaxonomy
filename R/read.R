@@ -199,7 +199,7 @@ prepare_taxonomy_df <- function(data) {
   invalid_ranks <- unique(data$rank[is.na(data$colour)])
   if (length(invalid_ranks) > 0) {
     cli::cli_alert_warning(
-      paste("There are invalid ranks: ",
+      paste("There are invalid ranks:",
             "\"{paste(invalid_ranks, collapse = '\", \"')}\".",
             "The corresponding nodes will not be coloured.")
     )
