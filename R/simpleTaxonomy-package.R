@@ -6,6 +6,7 @@
 ## usethis namespace: end
 NULL
 
+# nocov start
 
 # collapsibleTree is imported because we need the htmlwidget defined therein.
 # But since we do not use any of its functions, this leads to the following
@@ -25,3 +26,5 @@ NULL
   options(simpleTaxonomy_has_igraph_bug = has_igraph_bug())
 
 }
+
+# nocov end
