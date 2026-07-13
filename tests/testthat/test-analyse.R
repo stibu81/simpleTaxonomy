@@ -1,41 +1,99 @@
-test_that("count_ranks summarises the full example taxonomy", {
-  counts <- count_ranks(read_taxonomy(get_example_taxonomy_file()))
+library(dplyr, warn.conflicts = FALSE)
+
+taxonomy <- read_taxonomy(get_example_taxonomy_file())
+
+test_that("count_ranks() summarises the example taxonomy", {
+  counts <- count_ranks(taxonomy)
+
+  expect_s3_class(counts, "tbl_df")
+  # check that rank is an ordered factor and that the columns is ordered, then convert
+  # to character for the comparison to avoid test failure when new ranks are added.
+  expect_s3_class(counts$rank, "ordered")
+  expect_equal(counts$rank, sort(counts$rank, decreasing = TRUE))
+  counts$rank <- as.character(counts$rank)
+
+  expect_equal(
+    counts,
+    tibble(
+      rank = c("Ordnung", "Unterordnung", "Überfamilie", "Familie", "Unterfamilie", 
+               "Tribus", "Gattung", "Art", "Unterart", "ohne Rang"),
+      n = c(1L, 2L, 1L, 14L, 2L, 2L, 13L, 57L, 3L, 1L)
+    )
+  )
+})
+
+
+test_that("count_ranks() summarises the example taxonomy with only major ranks", {
+  counts <- count_ranks(taxonomy, only_major_ranks = TRUE)
+
+  expect_s3_class(counts, "tbl_df")
+  # check that rank is an ordered factor and that the columns is ordered, then convert
+  # to character for the comparison to avoid test failure when new ranks are added.
+  expect_s3_class(counts$rank, "ordered")
+  expect_equal(counts$rank, sort(counts$rank, decreasing = TRUE))
+  counts$rank <- as.character(counts$rank)
+
+  expect_equal(
+    counts,
+    tibble(
+      rank = c("Ordnung", "Familie", "Gattung", "Art"),
+      n = c(1L, 14L, 13L, 57L)
+    )
+  )
+})
+
+
+test_that("count_ranks() summarises a subgraph of the example taxonomy", {
+  counts <- count_ranks(taxonomy, subgraph = "Katzen")
+
+  expect_s3_class(counts, "tbl_df")
+  # check that rank is an ordered factor and that the columns is ordered, then convert
+  # to character for the comparison to avoid test failure when new ranks are added.
+  expect_s3_class(counts$rank, "ordered")
+  expect_equal(counts$rank, sort(counts$rank, decreasing = TRUE))
+  counts$rank <- as.character(counts$rank)
+
+  expect_equal(
+    counts,
+    tibble(
+      rank = c("Familie", "Unterfamilie", "Gattung", "Art"),
+      n = c(1L, 2L, 3L, 12L)
+    )
+  )
+})
+
+
+test_that("count_ranks() summarises the example taxonomy by rank", {
+  counts <- count_ranks(taxonomy, subgraph = "Marderverwandte", by_rank = "Familie")
 
   expect_s3_class(counts, "tbl_df")
   expect_equal(
-    as.character(counts$rank),
-    c(
-      "Ordnung", "Unterordnung", "Überfamilie", "Familie", "Unterfamilie",
-      "Tribus", "Gattung", "Art", "Unterart", "ohne Rang"
+    counts,
+    tibble(
+      Familie = c("Marder", "Skunks", "Ailuridae", "Kleinbären"),
+      Gattung = c(3L, 0L, 1L, 1L),
+      Art = c(10L, 1L, 0L, 1L)
     )
   )
-  expect_equal(counts$n, c(1, 2, 1, 14, 2, 2, 13, 57, 3, 1))
 })
 
 
-test_that("count_ranks supports subgraphs, grouping, and major ranks", {
-  graph <- read_taxonomy(get_example_taxonomy_file())
-
-  cats <- count_ranks(graph, subgraph = "Katzen")
-  expect_equal(as.character(cats$rank), c("Familie", "Unterfamilie", "Gattung", "Art"))
-  expect_equal(cats$n, c(1, 2, 3, 12))
-
-  by_family <- suppressWarnings(count_ranks(graph, "Hundeartige", by_rank = "Familie"))
-  expect_equal(names(by_family), c("Familie", "Tribus", "Gattung", "Art", "Unterart"))
-  expect_equal(by_family$Familie[[1]], "Hunde")
-  expect_equal(by_family$Art[by_family$Familie == "Bären"], 8)
-
-  major <- count_ranks(graph, only_major_ranks = TRUE)
-  expect_equal(as.character(major$rank), c("Ordnung", "Familie", "Gattung", "Art"))
-  expect_equal(major$n, c(1, 14, 13, 57))
-})
-
-
-test_that("count_ranks validates its inputs", {
-  graph <- read_taxonomy(get_example_taxonomy_file())
-
-  expect_error(count_ranks(list()), "not a taxonomy_graph")
-  expect_error(count_ranks(graph, by_rank = c("Familie", "Art")), "length one")
-  expect_error(count_ranks(graph, by_rank = "invalid"), "not a valid rank")
-  expect_error(count_ranks(graph, by_rank = "ohne Rang"), "cannot be used")
+test_that("count_ranks() aborts on invalid inputs", {
+  expect_error(count_ranks(list()), "not a taxonomy_graph object")
+  expect_error(
+    count_ranks(taxonomy, by_rank = c("Familie", "Art")),
+    "by_rank must have length one"
+  )
+  expect_error(
+    count_ranks(taxonomy, by_rank = "Gattng"),
+    "\"Gattng\" is not a valid rank"
+  )
+  expect_error(
+    count_ranks(taxonomy, by_rank = "ohne Rang"), 
+    "\"ohne Rang\" cannot be used for by_rank"
+  )
+  expect_error(
+    count_ranks(taxonomy, by_rank = "Klasse"),
+    "\"Klasse\" is a valid rank, but it does not appear in the taxonomy graph"
+  )
 })
