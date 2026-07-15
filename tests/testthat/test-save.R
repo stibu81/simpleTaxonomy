@@ -1,12 +1,23 @@
-test_that("save_taxonomy writes an html file for a taxonomy widget", {
-  widget <- plot_taxonomy(read_taxonomy(get_example_taxonomy_file()), focus = "Katzen")
-  out_file <- tempfile(fileext = ".html")
+library(withr)
 
-  save_taxonomy(widget, out_file, title = "TestTitle")
+test_that("save_taxonomy() writes an html file containing a widget", {
+  taxonomy <- read_taxonomy(get_example_taxonomy_file())
+  widget <- plot_taxonomy(taxonomy)
 
-  expect_true(file.exists(out_file))
+  local_file("taxonomy_widget.html")
+  save_taxonomy(widget, "taxonomy_widget.html", title = "TestTitle", background = "green")
+  expect_true(file.exists("taxonomy_widget.html"))
 
-  html <- paste(readLines(out_file, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
+  # test a few expected properties of the widget
+  html <- paste(readLines("taxonomy_widget.html", warn = FALSE, encoding = "UTF-8"), collapse = "\n")
+  # check background colour
+  expect_match(html, "<body style=\"background-color: green;\">", fixed = TRUE)
+  # check that title is set
   expect_match(html, "<title>TestTitle</title>", fixed = TRUE)
-  expect_match(html, "selected_taxon", fixed = TRUE)
+  # check that the custom css has been included
+  expect_match(html, ".btn-rounded {", fixed = TRUE)
+  # check that the node for "Tiger" exists and is set correctly
+  expect_match(html, "<strong>Tiger<\\/strong><\\/br>", fixed = TRUE)
+  # check scientific name for Tiger
+  expect_match(html, "(Panthera tigris)", fixed = TRUE)
 })
