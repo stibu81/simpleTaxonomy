@@ -23,7 +23,7 @@ Imports:
     tidyr,
     cli,
     glue,
-    igraph,
+    igraph (>= 2.1.2),
     htmlwidgets,
     htmltools,
     httr2

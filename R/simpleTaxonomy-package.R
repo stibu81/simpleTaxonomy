@@ -20,11 +20,4 @@ NULL
   NULL
 }
 
-
-.onLoad <- function(lib, pkg) {
-
-  options(simpleTaxonomy_has_igraph_bug = has_igraph_bug())
-
-}
-
 # nocov end
