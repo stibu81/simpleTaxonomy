@@ -1,17 +1,24 @@
-test_that("print.taxonomy_graph shows a readable summary", {
-  out <- paste(capture.output(print(read_taxonomy(get_example_taxonomy_file()), n_ranks = 2)), collapse = "\n")
+library(igraph)
 
-  expect_match(out, "taxonomy_graph with 96 nodes.", fixed = TRUE)
-  expect_match(out, "root node: Raubtiere", fixed = TRUE)
-  expect_match(out, "tree depth: 6", fixed = TRUE)
-  expect_match(out, "most common ranks:", fixed = TRUE)
-  expect_match(out, "Art", fixed = TRUE)
+taxonomy <- read_taxonomy(get_example_taxonomy_file())
+
+test_that("print.taxonomy_graph() works with default values", {
+  # note: this shows more than 5 ranks, because of draws.
+  expect_snapshot(print(taxonomy))
 })
 
 
-test_that("print.taxonomy_graph returns the graph invisibly", {
-  graph <- read_taxonomy(get_example_taxonomy_file())
+test_that("print.taxonomy_graph() works with less ranks", {
+  expect_snapshot(print(taxonomy, n_ranks = 3))
+})
 
-  invisible(capture.output(result <- print(graph, n_ranks = 0)))
-  expect_identical(result, graph)
+
+test_that("print.taxonomy_graph() works without rank summary", {
+  expect_snapshot(print(taxonomy, n_ranks = 0))
+})
+
+
+test_that("print.taxonomy_graph() works if there are no image urls", {
+  taxonomy_no_images <- set_vertex_attr(taxonomy, "image_url", value = NA_character_)
+  expect_snapshot(print(taxonomy_no_images))
 })
