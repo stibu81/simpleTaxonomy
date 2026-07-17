@@ -106,7 +106,9 @@ count_ranks <- function(graph, subgraph = NULL, by_rank = NULL,
       dplyr::relocate(dplyr::all_of(by_rank), .before = 1) %>%
       # replace the taxon names by labels. The columns with taxon names is the
       # only character column in the tibble.
-      dplyr::mutate(dplyr::across(is.character, get_taxon_labels))
+      dplyr::mutate(
+        dplyr::across(dplyr::where(is.character), get_taxon_labels)
+      )
   } else {
     counts <- do_count_ranks(graph, ranks_ordered, only_major_ranks)
   }
