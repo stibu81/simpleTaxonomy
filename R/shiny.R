@@ -37,9 +37,11 @@ run_taxonomy <- function(file = NULL,
 
   app_dir <- system.file("shinyApp", package = "simpleTaxonomy")
   if (app_dir == "") {
+    # nocov start
     cli::cli_abort(
       "Could not find the shiny app. Try re-installing \"simpleTaxonomy\"."
     )
+    # nocov end
   }
 
   # the available sizes are taken from here:
