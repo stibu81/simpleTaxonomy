@@ -99,7 +99,7 @@ get_wikipedia_image_url <- function(taxon, user_agent, size, lang,
   )
   # query the api, retry if status 429 (too many request)
 
-  resp <- resp <- httr2::request(url) %>%
+  resp <- httr2::request(url) %>%
       httr2::req_user_agent(user_agent) %>%
       # retry if status if 429 (too many request) or 503 (service unavailable)
       # the wait time is extracted from the response (Retry-After)
@@ -181,8 +181,12 @@ enrich_taxonomy_with_images <- function(file,
 
   # print a summary
   if (!quiet) {
-    cat("found: ", sum(new_urls != "not_found"),
-        "\nfailed: ", sum(new_urls == "not_found"), "\n")
+    cli::cli_inform(
+      c(
+        "v" = "found : {sum(new_urls != 'not_found')}",
+        "x" = "failed: {sum(new_urls == 'not_found')}"
+      )
+    )
   }
 
   taxonomy
