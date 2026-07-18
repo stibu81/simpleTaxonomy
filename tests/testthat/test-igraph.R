@@ -1,5 +1,5 @@
 library(dplyr, warn.conflicts = FALSE)
-library(readr)
+library(readr, warn.conflicts = FALSE)
 library(igraph)
 
 taxonomy <- read_taxonomy(get_example_taxonomy_file())
