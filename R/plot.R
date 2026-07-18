@@ -188,13 +188,12 @@ rm_invalid_taxa <- function(x, graph) {
   is_bad_name <- is.na(use_x)
   if (sum(is_bad_name) > 0) {
     cli::cli_alert_danger(
-      paste("The following taxa in \"{deparse(substitute(x))}\" do not exist",
-            "and will be ignored:",
+      paste("The following taxa do not exist and will be ignored:",
             "\"{paste(x[is_bad_name], collapse = '\", \"')}\"")
     )
   }
 
-  use_x[!is_bad_name]
+  unname(use_x[!is_bad_name])
 }
 
 
