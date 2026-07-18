@@ -31,7 +31,10 @@ test_that("run_taxonomy prepares the shiny app without launching it", {
 
   expect_s3_class(app, "shiny.appobj")
   expect_equal(getOption("simpleTaxonomy_root"), "Katzen")
-  expect_equal(getOption("simpleTaxonomy_file"), get_example_taxonomy_file())
+  expect_equal(
+    getOption("simpleTaxonomy_file"),
+    normalizePath(get_example_taxonomy_file())
+  )
   expect_equal(getOption("simpleTaxonomy_expand_ranks"), c("Gattung", "Art"))
   expect_equal(getOption("simpleTaxonomy_image_size"), "120")
   expect_equal(getOption("simpleTaxonomy_link_length"), 250)
