@@ -115,7 +115,7 @@
 <p>Currently, only German ranks are supported. You can obtain the list of supported ranks as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/available_ranks.html">available_ranks</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 28 × 2</span></span>
+<span><span class="co">#&gt; # A tibble: 30 × 2</span></span>
 <span><span class="co">#&gt;    level de         </span></span>
 <span><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;      </span></span>
 <span><span class="co">#&gt;  1     1 Lebewesen  </span></span>
@@ -128,7 +128,7 @@
 <span><span class="co">#&gt;  8     8 Klasse     </span></span>
 <span><span class="co">#&gt;  9     9 Unterklasse</span></span>
 <span><span class="co">#&gt; 10    10 Teilklasse </span></span>
-<span><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 20 more rows</span></span></code></pre></div>
 <p>Ranks not contained in this list may be used, but they will not be coloured in the visualisation.</p>
 <p>Sometimes, several taxa have the same common name. An example are the family Equidae and the genus Equus, which in German are both called “Pferde” (horses). These taxa can be distinguished by adding an identifier in parenthesis. So, we could name the family and the genus “Pferde (F)” and “Pferde”, respectively, to make them unique. The identifier will be used to distinguish the two taxa when building the structure of the tree, but it will not be shown in the visualisation.</p>
 </div>
@@ -240,6 +240,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/stibu81/simpleTaxonomy/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/stibu81/simpleTaxonomy/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/stibu81/simpleTaxonomy" class="external-link"><img src="https://codecov.io/gh/stibu81/simpleTaxonomy/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
@@ -252,7 +253,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

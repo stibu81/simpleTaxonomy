@@ -89,7 +89,7 @@ supported ranks as follows:
 ``` r
 
 available_ranks()
-#> # A tibble: 28 × 2
+#> # A tibble: 30 × 2
 #>    level de         
 #>    <int> <chr>      
 #>  1     1 Lebewesen  
@@ -102,7 +102,7 @@ available_ranks()
 #>  8     8 Klasse     
 #>  9     9 Unterklasse
 #> 10    10 Teilklasse 
-#> # ℹ 18 more rows
+#> # ℹ 20 more rows
 ```
 
 Ranks not contained in this list may be used, but they will not be
