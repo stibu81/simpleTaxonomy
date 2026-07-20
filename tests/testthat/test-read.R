@@ -1,5 +1,6 @@
 library(igraph)
 library(dplyr, warn.conflicts = FALSE)
+library(purrr, warn.conflicts = FALSE)
 
 test_that("the example file exists", {
   expect_true(file.exists(get_example_taxonomy_file()))
@@ -13,7 +14,12 @@ test_that("read_taxonomy() can process the example file", {
   expect_equal(vcount(taxonomy), 98)
   expect_equal(
     names(vertex.attributes(taxonomy)),
-    c("name", "scientific", "rank", "image_url", "label", "colour", "collapsed")
+    c("name", "scientific", "rank", "extinct", "local", "observed",
+      "image_url", "label", "colour", "collapsed")
+  )
+  expect_equal(
+    unname(map_chr(vertex.attributes(taxonomy), class)),
+    c(rep("character", 3), rep("logical", 3), rep("character", 3), "logical")
   )
   expect_equal(edge.attributes(taxonomy), setNames(list(), character(0)))
   expect_equal(names(get_root_node(taxonomy)), "Raubtiere")
@@ -211,6 +217,49 @@ test_that("prepare_taxonomy_df() warns when there are invalid ranks", {
     "There are invalid ranks: \"Gattng\""
   )
   expect_equal(prepared$colour, NA_character_)
+})
+
+
+test_that("prepare_optional_logical_column() converts a column to logical", {
+  data <- tibble(
+    x = 1:8,
+    l = c("true", "false", NA, "TRUE", "False", NA, "tRuE", "falSE")
+  )
+  expect_equal(
+    prepare_optional_logical_column(data, "l")$l,
+    c(TRUE, FALSE, NA, TRUE, FALSE, NA, TRUE, FALSE)
+  )
+})
+
+
+test_that(
+  "prepare_optional_logical_column() does nothing if the column does not exist",
+  {
+  data <- tibble(
+    x = 1:8,
+    y = letters[1:8]
+  )
+  expect_equal(
+    prepare_optional_logical_column(data, "l"),
+    data
+  )
+})
+
+
+test_that("prepare_optional_logical_column() aborts if there are invalid entries", {
+  # An empty cell in the csv file is converted to NA in the tibble.
+  # => an empty string is not allowed.
+  data <- tibble(x = 1:3, l = c("true", "false", ""))
+  expect_error(
+    prepare_optional_logical_column(data, "l"),
+    "The column 'l' can only be"
+  )
+
+  data <- tibble(x = 1:3, l = c("true", "false", "other"))
+  expect_error(
+    prepare_optional_logical_column(data, "l"),
+    "The column 'l' can only be"
+  )
 })
 
 
