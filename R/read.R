@@ -111,8 +111,14 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
       dplyr::mutate(image_url = NA_character_)
   }
 
+  # select only the relevant columns including some that are optional
+  optional_columns <- c("extinct", "local", "observed")
   data <- data %>%
-    dplyr::select(dplyr::all_of(expected_names), "image_url")
+    dplyr::select(
+      dplyr::all_of(expected_names),
+      dplyr::any_of(optional_columns),
+      "image_url"
+    )
 
   # check unique root taxon
   root <- data$name[is.na(data$parent)]
@@ -180,9 +186,15 @@ check_taxonomy_df <- function(data, error_call = rlang::caller_env()) {
 }
 
 
-# Prepare taxonomy df with additional columns that are needed for
-# the visualisation
+# Prepare taxonomy df: process optional columns, add computed columns that
+# are needed for the visualisation
 prepare_taxonomy_df <- function(data) {
+
+  # process the three optional logical columns, if they are present
+  data <- data %>% 
+    prepare_optional_logical_column("extinct") %>%
+    prepare_optional_logical_column("local") %>%
+    prepare_optional_logical_column("observed")
 
   # the names may contain additional identifiers in parenthesis to distinguish
   # taxa that have otherwise indistinguishable common names. Remove these
@@ -210,6 +222,32 @@ prepare_taxonomy_df <- function(data) {
 
   data
 
+}
+
+
+# Helper function to prepare an optional logical column. The column is converted
+# from character to logical if it is present.
+
+prepare_optional_logical_column <- function(data, column) {
+  if (!column %in% names(data)) {
+    return(data)
+  }
+  
+  # convert all data in the column to upper case for standardisation and
+  # simple conversion to logical with as.logical()
+  data[[column]] <- toupper(data[[column]])
+
+  # check: now, only "TRUE", "FALSE" and NA are allowed.
+  if (!all(data[[column]] %in% c("TRUE", "FALSE", NA))) {
+    cli::cli_abort(
+      "The column '{column}' can only be TRUE, FALSE (in any capitalisation) or empty."
+    )
+  }
+
+  # now, conversion with as.logical() is safe
+  data[[column]] <- as.logical(data[[column]])
+
+  data
 }
 
 
