@@ -3,9 +3,9 @@ library(igraph)
 taxonomy <- read_taxonomy(get_example_taxonomy_file())
 
 test_that("print.taxonomy_graph() works with default values", {
-  # note: this shows more than 5 ranks, because of draws.
   expect_snapshot(print(taxonomy))
 })
+
 
 
 test_that("print.taxonomy_graph() works with less ranks", {

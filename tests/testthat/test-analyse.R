@@ -17,7 +17,7 @@ test_that("count_ranks() summarises the example taxonomy", {
     tibble(
       rank = c("Ordnung", "Unterordnung", "Überfamilie", "Familie", "Unterfamilie", 
                "Tribus", "Gattung", "Art", "Unterart", "ohne Rang"),
-      n = c(1L, 2L, 1L, 14L, 2L, 2L, 13L, 57L, 3L, 1L)
+      n = c(1L, 2L, 1L, 14L, 3L, 2L, 14L, 57L, 3L, 1L)
     )
   )
 })
@@ -37,7 +37,7 @@ test_that("count_ranks() summarises the example taxonomy with only major ranks",
     counts,
     tibble(
       rank = c("Ordnung", "Familie", "Gattung", "Art"),
-      n = c(1L, 14L, 13L, 57L)
+      n = c(1L, 14L, 14L, 57L)
     )
   )
 })
@@ -57,7 +57,7 @@ test_that("count_ranks() summarises a subgraph of the example taxonomy", {
     counts,
     tibble(
       rank = c("Familie", "Unterfamilie", "Gattung", "Art"),
-      n = c(1L, 2L, 3L, 12L)
+      n = c(1L, 3L, 4L, 12L)
     )
   )
 })

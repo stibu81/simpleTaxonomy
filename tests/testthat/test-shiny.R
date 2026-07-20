@@ -82,7 +82,7 @@ test_that("create_counts_dt() builds a datatable with a rank summary", {
     counts_dt$x$data %>% mutate(Rangstufe = as.character(Rangstufe)),
     data.frame(
       Rangstufe = c("Familie", "Unterfamilie", "Gattung", "Art"),
-      Anzahl = c(1, 2, 3, 12)
+      Anzahl = c(1, 3, 4, 12)
     )
   )
 })
@@ -104,7 +104,7 @@ test_that("create_counts_dt() can output only major ranks", {
     counts_dt$x$data %>% mutate(Rangstufe = as.character(Rangstufe)),
     data.frame(
       Rangstufe = c("Familie", "Gattung", "Art"),
-      Anzahl = c(1, 3, 12)
+      Anzahl = c(1, 4, 12)
     )
   )
 })
@@ -125,9 +125,9 @@ test_that("create_counts_dt() can group by rank", {
   expect_equal(
     counts_dt$x$data,
     data.frame(
-      Unterfamilie = c("Kleinkatzen", "Grosskatzen"),
-      Gattung = c(2, 1),
-      Art = c(6, 6)
+      Unterfamilie = c("Kleinkatzen", "Grosskatzen", "Säbelzahnkatzen"),
+      Gattung = c(2, 1, 1),
+      Art = c(6, 6, 0)
     )
   )
 })
@@ -149,7 +149,7 @@ test_that("create_counts_dt() does not group if by_rank = 'ohne'", {
     counts_dt$x$data %>% mutate(Rangstufe = as.character(Rangstufe)),
     data.frame(
       Rangstufe = c("Familie", "Unterfamilie", "Gattung", "Art"),
-      Anzahl = c(1, 2, 3, 12)
+      Anzahl = c(1, 3, 4, 12)
     )
   )
 })

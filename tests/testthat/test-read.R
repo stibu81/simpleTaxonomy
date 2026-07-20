@@ -10,7 +10,7 @@ test_that("read_taxonomy() can process the example file", {
   taxonomy <- read_taxonomy(get_example_taxonomy_file())
 
   expect_s3_class(taxonomy, "taxonomy_graph")
-  expect_equal(vcount(taxonomy), 96)
+  expect_equal(vcount(taxonomy), 98)
   expect_equal(
     names(vertex.attributes(taxonomy)),
     c("name", "scientific", "rank", "image_url", "label", "colour", "collapsed")

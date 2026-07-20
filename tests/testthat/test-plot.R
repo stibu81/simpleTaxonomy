@@ -114,7 +114,7 @@ test_that("get_expanded() can expand all nodes of a given rank", {
   )
   expect_setequal(
     names(V(taxonomy))[expanded_rank], 
-    c("Kleinkatzen", "Grosskatzen")
+    c("Kleinkatzen", "Grosskatzen", "Säbelzahnkatzen")
   )
 })
 
