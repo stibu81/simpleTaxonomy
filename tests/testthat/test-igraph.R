@@ -102,7 +102,9 @@ test_that("create_taxonomy_graph() aborts if the graph is not a tree", {
 test_that("as_tibble() recreates the original data table", {
   expect_equal(
     as_tibble(taxonomy),
-    read_taxonomy_file(get_example_taxonomy_file(), ",")
+    # read_taxonomy_file() reads all columns as character => convert to logical here
+    read_taxonomy_file(get_example_taxonomy_file(), ",") %>%
+      mutate(across(extinct:observed, \(x) as.logical(toupper(x))))
   )
 })
 

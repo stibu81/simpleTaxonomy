@@ -71,7 +71,7 @@ read_taxonomy_file <- function(file, delim, error_call = rlang::caller_env()) {
     cli::cli_abort("file \"{file}\" does not exist.", call = error_call)
   }
 
-  readr::read_delim(file, delim = delim, col_types = "c")
+  readr::read_delim(file, delim = delim, col_types = readr::cols(.default = "c"))
 }
 
 # Perform a few cleaning steps on the taxonomy data
