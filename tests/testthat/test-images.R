@@ -56,7 +56,7 @@ test_that("enrich_taxonomy_with_images() works on a file without urls", {
     scientific = c("Felidae", "Panthera tigris"),
     rank = c("Familie", "Art")
   )
-  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv")))
+  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv", na = "")))
 
   expect_message(
       taxonomy <- enrich_taxonomy_with_images(
@@ -84,7 +84,7 @@ test_that("enrich_taxonomy_with_images() detects no urls need to be fetched", {
     rank = c("Familie", "Art"),
     image_url = c("https://someimage.jpg", "not_found")
   )
-  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv")))
+  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv", na = "")))
 
   expect_message(
       taxonomy <- enrich_taxonomy_with_images("taxonomy.csv"),
@@ -105,7 +105,7 @@ test_that("enrich_taxonomy_with_images() can retry", {
     rank = c("Familie", "Art"),
     image_url = c("https://someimage.jpg", "not_found")
   )
-  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv")))
+  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv", na = "")))
 
   expect_message(
       taxonomy <- enrich_taxonomy_with_images(
@@ -126,6 +126,53 @@ test_that("enrich_taxonomy_with_images() can retry", {
     vertex_attr(read_taxonomy("taxonomy.csv"), "image_url"),
     c("https://someimage.jpg", ref_url)
   )
+})
+
+
+test_that("enrich_taxonomy_with_images() writes missing values as empty strings", {
+  data <- tibble(
+    parent = c(NA_character_, "Katzen"),
+    name = c("Katzen", "Tiger"),
+    scientific = c("Felidae", "Panthera tigris"),
+    rank = c("Familie", "Art"),
+    image_url = c("https://someimage.jpg", "not_found"),
+    extinct = "",
+    local = "",
+    observed = ""
+  )
+  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv", na = "")))
+
+  suppressMessages(
+    enrich_taxonomy_with_images("taxonomy.csv")
+  )
+  # read the taxonomy from file without any conversion to NA
+  taxonomy_from_file <- read_csv(
+    "taxonomy.csv",
+    col_types = cols(.default = "c"),
+    na = character()
+  )
+  expect_equal(taxonomy_from_file$parent, c("", "Katzen"))
+  expect_equal(taxonomy_from_file$extinct, c("", ""))
+  expect_equal(taxonomy_from_file$local, c("", ""))
+  expect_equal(taxonomy_from_file$observed, c("", ""))
+})
+
+
+test_that(
+  "enrich_taxonomy_with_images() does not create optional columns if they don't exist",
+  {
+  data <- tibble(
+    parent = c(NA_character_, "Katzen"),
+    name = c("Katzen", "Tiger"),
+    scientific = c("Felidae", "Panthera tigris"),
+    rank = c("Familie", "Art"),
+    image_url = c("https://someimage.jpg", "not_found")
+  )
+  local_file(list("taxonomy.csv" = write_csv(data, "taxonomy.csv", na = "")))
+
+  suppressMessages(enrich_taxonomy_with_images("taxonomy.csv"))
+  taxonomy_from_file <- read_csv("taxonomy.csv", col_types = cols(.default = "c"))
+  expect_disjoint(names(taxonomy_from_file), c("extinct", "local", "observed"))
 })
 
 
