@@ -17,7 +17,7 @@ test_that("save_taxonomy() writes an html file containing a widget", {
   # check that the custom css has been included
   expect_match(html, ".btn-rounded {", fixed = TRUE)
   # check that the node for "Tiger" exists and is set correctly
-  expect_match(html, "<strong>Tiger<\\/strong><\\/br>", fixed = TRUE)
+  expect_match(html, "<strong>Tiger<\\/strong> <\\/br>", fixed = TRUE)
   # check scientific name for Tiger
   expect_match(html, "(Panthera tigris)", fixed = TRUE)
 })

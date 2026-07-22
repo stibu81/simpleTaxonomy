@@ -1,6 +1,6 @@
 library(dplyr, warn.conflicts = FALSE)
 library(readr, warn.conflicts = FALSE)
-library(igraph)
+library(igraph, warn.conflicts = FALSE)
 
 taxonomy <- read_taxonomy(get_example_taxonomy_file())
 

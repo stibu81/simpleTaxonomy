@@ -1,5 +1,6 @@
-library(dplyr, warn.conflict = TRUE)
-library(igraph)
+library(dplyr, warn.conflict = FALSE)
+library(igraph, warn.conflict = FALSE)
+library(shiny)
 
 taxonomy <- read_taxonomy(get_example_taxonomy_file())
 
@@ -168,7 +169,7 @@ test_that("add_tooltip() adds tooltips to the taxonomy graph", {
   expect_contains(names(vertex_attr(taxonomy_tt)), "tooltip")
   expect_match(
     vertex_attr(taxonomy_tt, "tooltip"),
-    "^[[:alpha:] ]+</br><strong>[-[:alpha:] ]+</strong></br>\\([[:alpha:] ]+\\)"
+    "^[[:alpha:] ]+</br><strong>[-[:alpha:] ]+</strong>.*</br>\\([[:alpha:] ]+\\)"
   )
 })
 
@@ -180,7 +181,7 @@ test_that("create_tooltip() works with images", {
   # (remove "Eigentliche Bären" because it has no image)
   expect_match(
     tooltips[names(V(taxonomy)) != "Eigentliche Bären"],
-    paste0("^[[:alpha:] ]+</br><strong>[-[:alpha:] ]+</strong></br>",
+    paste0("^[[:alpha:] ]+</br><strong>[-[:alpha:] ]+</strong>.*</br>",
            "\\([[:alpha:] ]+\\)</br><img src=.*>$")
   )
   
@@ -188,12 +189,12 @@ test_that("create_tooltip() works with images", {
   tooltip_carnivora <- tooltips[names(V(taxonomy)) == "Raubtiere"]
   expect_match(
     tooltip_carnivora,
-    "^Ordnung</br><strong>Raubtiere</strong></br>\\(Carnivora\\)</br><img src=.*>$"
+    "^Ordnung</br><strong>Raubtiere</strong> </br>\\(Carnivora\\)</br><img src=.*>$"
   )
   tooltip_lion <- tooltips[names(V(taxonomy)) == "Löwe"]
   expect_match(
     tooltip_lion,
-    "^Art</br><strong>Löwe</strong></br>\\(Panthera leo\\)</br><img src=.*>$"
+    "^Art</br><strong>Löwe</strong> </br>\\(Panthera leo\\)</br><img src=.*>$"
   )
 })
 
@@ -203,19 +204,32 @@ test_that("create_tooltip() works without images", {
 
   expect_match(
     tooltips[names(V(taxonomy)) != "Eigentliche Bären"],
-    "^[[:alpha:] ]+</br><strong>[-[:alpha:] ]+</strong></br>\\([[:alpha:] ]+\\)"
+    "^[[:alpha:] ]+</br><strong>[-[:alpha:] ]+</strong>.*</br>\\([[:alpha:] ]+\\)"
   )
   
   # check some examples in more detail
   tooltip_carnivora <- tooltips[names(V(taxonomy)) == "Raubtiere"]
   expect_match(
     tooltip_carnivora,
-    "^Ordnung</br><strong>Raubtiere</strong></br>\\(Carnivora\\)$"
+    "^Ordnung</br><strong>Raubtiere</strong> </br>\\(Carnivora\\)$"
   )
   tooltip_lion <- tooltips[names(V(taxonomy)) == "Löwe"]
   expect_match(
     tooltip_lion,
-    "^Art</br><strong>Löwe</strong></br>\\(Panthera leo\\)$"
+    "^Art</br><strong>Löwe</strong> </br>\\(Panthera leo\\)$"
+  )
+  tooltip_smilodon <- tooltips[names(V(taxonomy)) == "Smilodon"]
+  expect_match(
+    tooltip_smilodon,
+    "^Gattung</br><strong>Smilodon</strong> <strong>\u2020</strong></br>\\(Smilodon\\)$"
+  )
+  tooltip_fox <- tooltips[names(V(taxonomy)) == "Rotfuchs"]
+  expect_match(
+    tooltip_fox,
+    paste0("^Art</br><strong>Rotfuchs</strong> ",
+           "<i class=\"fas fa-location-dot\"[^>]+></i> ",
+           "<i class=\"far fa-eye\"[^>]+></i>",
+           "</br>\\(Vulpes vulpes\\)$")
   )
 })
 
@@ -258,3 +272,86 @@ test_that("set_highlight() can set highlight colour", {
   expect_setequal(vertex_attr(taxonomy_highlight, "colour", "Rotfuchs"), "#D428AF")
 })
 
+
+test_that("compute_symbols() works when all columns are present", {
+  data <- tibble(
+    name = letters[1:5],
+    extinct = c(TRUE, FALSE, NA, NA, NA),
+    local = c(FALSE, FALSE, TRUE, FALSE, TRUE),
+    observed = c(NA, FALSE, FALSE, TRUE, TRUE)
+  )
+  symbols <- compute_symbols(data)
+  expect_type(symbols, "character")
+  expect_length(symbols, nrow(data))
+
+  # test each entry separately
+  expect_equal(symbols[1], "<strong>\u2020</strong>")
+  expect_equal(symbols[2], "")
+  expect_equal(symbols[3], as.character(icon("location-dot")))
+  expect_equal(symbols[4], as.character(icon("eye")))
+  expect_equal(symbols[5], paste(icon("location-dot"), icon("eye")))
+})
+
+
+test_that("compute_symbols() works when column local is missing", {
+  data <- tibble(
+    name = letters[1:4],
+    extinct = c(TRUE, FALSE, NA, TRUE),
+    observed = c(NA, FALSE, TRUE, TRUE)
+  )
+  symbols <- compute_symbols(data)
+  expect_type(symbols, "character")
+  expect_length(symbols, nrow(data))
+
+  # test each entry separately
+  expect_equal(symbols[1], "<strong>\u2020</strong>")
+  expect_equal(symbols[2], "")
+  expect_equal(symbols[3], as.character(icon("eye")))
+  expect_equal(symbols[4], paste("<strong>\u2020</strong>", icon("eye")))
+})
+
+
+test_that("compute_symbols() works when column extinct is missing", {
+  data <- tibble(
+    name = letters[1:4],
+    local = c(TRUE, FALSE, NA, TRUE),
+    observed = c(NA, FALSE, TRUE, TRUE)
+  )
+  symbols <- compute_symbols(data)
+  expect_type(symbols, "character")
+  expect_length(symbols, nrow(data))
+
+  # test each entry separately
+  expect_equal(symbols[1], as.character(icon("location-dot")))
+  expect_equal(symbols[2], "")
+  expect_equal(symbols[3], as.character(icon("eye")))
+  expect_equal(symbols[4], paste(icon("location-dot"), icon("eye")))
+})
+
+
+
+test_that("compute_symbols() works when column observed is missing", {
+  data <- tibble(
+    name = letters[1:4],
+    extinct = c(TRUE, FALSE, NA, TRUE),
+    local = c(NA, FALSE, TRUE, TRUE)
+  )
+  symbols <- compute_symbols(data)
+  expect_type(symbols, "character")
+  expect_length(symbols, nrow(data))
+
+  # test each entry separately
+  expect_equal(symbols[1], "<strong>\u2020</strong>")
+  expect_equal(symbols[2], "")
+  expect_equal(symbols[3], as.character(icon("location-dot")))
+  expect_equal(symbols[4], paste("<strong>\u2020</strong>", icon("location-dot")))
+})
+
+
+test_that("compute_symbols() works when all columns are missing", {
+  data <- tibble(
+    name = letters[1:4]
+  )
+  symbols <- compute_symbols(data)
+  expect_equal(symbols, rep("", nrow(data)))
+})
