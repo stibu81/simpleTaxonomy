@@ -238,7 +238,8 @@ create_tooltip <- function(graph, show_images, image_size) {
 
   tooltip <- paste0(
     vertices$rank, "</br>",
-    "<strong>", vertices$label, "</strong></br>",
+    "<strong>", vertices$label, "</strong> ",
+    compute_symbols(vertices), "</br>",
     dplyr::if_else(is.na(vertices$scientific),
                    "",
                    paste0("(", vertices$scientific, ")"))
@@ -288,4 +289,26 @@ set_highlight <- function(graph, highlight,
   igraph::vertex_attr(graph, "colour") <- colours
 
   graph
+}
+
+
+# compute the symbols for extinct, local, observed
+compute_symbols <- function(va) {
+  # prepare the vectors
+  get_col <- \(d, c) if (c %in% names(d)) d[[c]] else logical(nrow(d))
+  extinct <- get_col(va, "extinct")
+  local <- get_col(va, "local")
+  observed <- get_col(va, "observed")
+
+  # create the symbols
+  dagger <- "<strong>\u2020</strong>"
+  location <- as.character(shiny::icon("location-dot"))
+  eye <- as.character(shiny::icon("eye"))
+  paste(
+      dplyr::if_else(extinct, dagger, "", missing = ""),
+      dplyr::if_else(local, location, "", missing = ""),
+      dplyr::if_else(observed, eye, "", missing = "")
+    ) %>% 
+    # remove repeated spaces that can occur if some symbols are not present
+    stringr::str_squish()
 }
