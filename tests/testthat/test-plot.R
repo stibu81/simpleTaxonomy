@@ -273,8 +273,8 @@ test_that("set_highlight() can set highlight colour", {
 })
 
 
-test_that("compute_symbols() works when all columns are present", {
-  data <- tibble(
+test_that("compute_symbols() works when all fields are present", {
+  data <- list(
     name = letters[1:5],
     extinct = c(TRUE, FALSE, NA, NA, NA),
     local = c(FALSE, FALSE, TRUE, FALSE, TRUE),
@@ -282,7 +282,7 @@ test_that("compute_symbols() works when all columns are present", {
   )
   symbols <- compute_symbols(data)
   expect_type(symbols, "character")
-  expect_length(symbols, nrow(data))
+  expect_length(symbols, length(data[[1]]))
 
   # test each entry separately
   expect_equal(symbols[1], "<strong>\u2020</strong>")
@@ -293,15 +293,15 @@ test_that("compute_symbols() works when all columns are present", {
 })
 
 
-test_that("compute_symbols() works when column local is missing", {
-  data <- tibble(
+test_that("compute_symbols() works when local is missing", {
+  data <- list(
     name = letters[1:4],
     extinct = c(TRUE, FALSE, NA, TRUE),
     observed = c(NA, FALSE, TRUE, TRUE)
   )
   symbols <- compute_symbols(data)
   expect_type(symbols, "character")
-  expect_length(symbols, nrow(data))
+  expect_length(symbols, length(data[[1]]))
 
   # test each entry separately
   expect_equal(symbols[1], "<strong>\u2020</strong>")
@@ -311,15 +311,15 @@ test_that("compute_symbols() works when column local is missing", {
 })
 
 
-test_that("compute_symbols() works when column extinct is missing", {
-  data <- tibble(
+test_that("compute_symbols() works when extinct is missing", {
+  data <- list(
     name = letters[1:4],
     local = c(TRUE, FALSE, NA, TRUE),
     observed = c(NA, FALSE, TRUE, TRUE)
   )
   symbols <- compute_symbols(data)
   expect_type(symbols, "character")
-  expect_length(symbols, nrow(data))
+  expect_length(symbols, length(data[[1]]))
 
   # test each entry separately
   expect_equal(symbols[1], as.character(icon("location-dot")))
@@ -330,15 +330,15 @@ test_that("compute_symbols() works when column extinct is missing", {
 
 
 
-test_that("compute_symbols() works when column observed is missing", {
-  data <- tibble(
+test_that("compute_symbols() works when observed is missing", {
+  data <- list(
     name = letters[1:4],
     extinct = c(TRUE, FALSE, NA, TRUE),
     local = c(NA, FALSE, TRUE, TRUE)
   )
   symbols <- compute_symbols(data)
   expect_type(symbols, "character")
-  expect_length(symbols, nrow(data))
+  expect_length(symbols, length(data[[1]]))
 
   # test each entry separately
   expect_equal(symbols[1], "<strong>\u2020</strong>")
@@ -348,10 +348,10 @@ test_that("compute_symbols() works when column observed is missing", {
 })
 
 
-test_that("compute_symbols() works when all columns are missing", {
-  data <- tibble(
+test_that("compute_symbols() works when all optional fields are missing", {
+  data <- list(
     name = letters[1:4]
   )
   symbols <- compute_symbols(data)
-  expect_equal(symbols, rep("", nrow(data)))
+  expect_equal(symbols, rep("", length(data[[1]])))
 })

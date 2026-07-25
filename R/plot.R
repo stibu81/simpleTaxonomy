@@ -295,7 +295,7 @@ set_highlight <- function(graph, highlight,
 # compute the symbols for extinct, local, observed
 compute_symbols <- function(va) {
   # prepare the vectors
-  get_col <- \(d, c) if (c %in% names(d)) d[[c]] else logical(nrow(d))
+  get_col <- \(d, c) if (c %in% names(d)) d[[c]] else logical(length(d[[1]]))
   extinct <- get_col(va, "extinct")
   local <- get_col(va, "local")
   observed <- get_col(va, "observed")
