@@ -32,6 +32,11 @@
 #' @param font_size font size of the labels in pixels.
 #' @param highlight_missing_images logical, should nodes with missing 
 #'  image link by highlighted?
+#' @param local_country country code for the "local country". If the taxonomy
+#'  has taxa that are marked as local, the flag of this country will be
+#'  shown in the tooltip. If the columns "local" does not exist in the
+#'  data, this argument has no effect. If no country code is given, a
+#'  generic location marker will be used instead.
 #'
 #' @details
 #' The function makes use of the html widget defined in the package
@@ -80,7 +85,9 @@ plot_taxonomy <- function(graph,
                           image_size = c("250", "60", "120", "330", "500"),
                           link_length = 150,
                           font_size = 12,
-                          highlight_missing_images = FALSE) {
+                          highlight_missing_images = FALSE,
+                          local_country = NULL
+                        ) {
 
   # the available sizes are taken from here:
   # https://www.mediawiki.org/wiki/Common_thumbnail_sizes
@@ -107,7 +114,11 @@ plot_taxonomy <- function(graph,
   }
 
   graph <- set_collapsed(graph, show, expand_rank, full_expand) %>%
-    add_tooltip(show_images = show_images, image_size = image_size) %>%
+    add_tooltip(
+      show_images = show_images, 
+      image_size = image_size,
+      local_country = local_country
+    ) %>%
     set_highlight(highlight = highlight, highlight_missing_images)
 
   widget_input <- list(
@@ -223,23 +234,23 @@ get_widget_options <- function(graph, link_length, font_size) {
 }
 
 
-add_tooltip <- function(graph, show_images, image_size) {
+add_tooltip <- function(graph, show_images, image_size, local_country) {
 
-  tooltip <- create_tooltip(graph, show_images, image_size)
+  tooltip <- create_tooltip(graph, show_images, image_size, local_country)
   igraph::vertex_attr(graph, "tooltip") <- tooltip
 
   graph
 }
 
 
-create_tooltip <- function(graph, show_images, image_size) {
+create_tooltip <- function(graph, show_images, image_size, local_country) {
 
   vertices <- igraph::vertex_attr(graph)
 
   tooltip <- paste0(
     vertices$rank, "</br>",
     "<strong>", vertices$label, "</strong> ",
-    compute_symbols(vertices), "</br>",
+    compute_symbols(vertices, local_country = local_country), "</br>",
     dplyr::if_else(is.na(vertices$scientific),
                    "",
                    paste0("(", vertices$scientific, ")"))
@@ -293,7 +304,7 @@ set_highlight <- function(graph, highlight,
 
 
 # compute the symbols for extinct, local, observed
-compute_symbols <- function(va) {
+compute_symbols <- function(va, local_country = NULL) {
   # prepare the vectors
   get_col <- \(d, c) if (c %in% names(d)) d[[c]] else logical(length(d[[1]]))
   extinct <- get_col(va, "extinct")
@@ -302,7 +313,11 @@ compute_symbols <- function(va) {
 
   # create the symbols
   dagger <- "<strong>\u2020</strong>"
-  location <- as.character(shiny::icon("location-dot"))
+  location <- if (is.null(local_country)) {
+      as.character(shiny::icon("location-dot"))
+    } else {
+      as.character(flag_icon(local_country))
+    }
   eye <- as.character(shiny::icon("eye"))
   paste(
       dplyr::if_else(extinct, dagger, "", missing = ""),
@@ -312,3 +327,4 @@ compute_symbols <- function(va) {
     # remove repeated spaces that can occur if some symbols are not present
     stringr::str_squish()
 }
+
