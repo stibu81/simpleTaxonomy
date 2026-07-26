@@ -18,6 +18,8 @@ test_that("plot_taxonomy() with default settings works", {
     plot$x$options,
     get_widget_options(taxonomy, link_length = 150, font_size = 12)
   )
+  # check that the custom css has been prepended
+  expect_match(as.character(plot$prepend), ".btn-rounded {", fixed = TRUE)
 })
 
 
