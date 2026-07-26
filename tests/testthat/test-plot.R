@@ -11,7 +11,7 @@ test_that("plot_taxonomy() with default settings works", {
   expect_equal(
     plot$x$data,
     taxonomy %>% 
-      add_tooltip(show_images = FALSE) %>%
+      add_tooltip(show_images = FALSE, local_country = NULL) %>%
       graph_as_nested_list()
   )
   expect_equal(
@@ -165,7 +165,8 @@ test_that("get_widget_options() works", {
 
 test_that("add_tooltip() adds tooltips to the taxonomy graph", {
   # note: the tooltips are created by create_tooltips() which is tested below.
-  taxonomy_tt <- add_tooltip(taxonomy, show_images = TRUE, image_size = 200)
+  taxonomy_tt <- taxonomy %>% 
+    add_tooltip(show_images = TRUE, image_size = 200, local_country = NULL)
   expect_contains(names(vertex_attr(taxonomy_tt)), "tooltip")
   expect_match(
     vertex_attr(taxonomy_tt, "tooltip"),
@@ -175,7 +176,8 @@ test_that("add_tooltip() adds tooltips to the taxonomy graph", {
 
 
 test_that("create_tooltip() works with images", {
-  tooltips <- create_tooltip(taxonomy, show_images = TRUE, image_size = 300)
+  tooltips <- taxonomy %>% 
+    create_tooltip(show_images = TRUE, image_size = 300, local_country = NULL)
 
   # check that all tooltips match the expected format
   # (remove "Eigentliche Bären" because it has no image)
@@ -200,7 +202,8 @@ test_that("create_tooltip() works with images", {
 
 
 test_that("create_tooltip() works without images", {
-  tooltips <- create_tooltip(taxonomy, show_images = FALSE, image_size = 300)
+  tooltips <- taxonomy %>% 
+    create_tooltip(show_images = FALSE, image_size = 300, local_country = NULL)
 
   expect_match(
     tooltips[names(V(taxonomy)) != "Eigentliche Bären"],
@@ -237,10 +240,12 @@ test_that("create_tooltip() works without images", {
 test_that("create_tooltip() can set the image size", {
   # pick feliformia because all taxons have images
   feliformia <- get_subgraph(taxonomy, "Katzenartige")
-  tooltips <- create_tooltip(feliformia, show_images = TRUE, image_size = 300)
+  tooltips <- feliformia %>% 
+  create_tooltip(show_images = TRUE, image_size = 300, local_country = NULL)
   expect_match(tooltips, "<img src=.*/300px-.*>$")
   
-  tooltips <- create_tooltip(feliformia, show_images = TRUE, image_size = 500)
+  tooltips <- feliformia %>% 
+    create_tooltip(show_images = TRUE, image_size = 500, local_country = NULL)
   expect_match(tooltips, "<img src=.*/500px-.*>$")
 })
 

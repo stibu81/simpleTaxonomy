@@ -195,3 +195,4 @@ test_that("flex_row() combines multiple tags into a row", {
 test_that("flex_row() aborts if gap is not numeric", {
   expect_error(flex_row(gap = "wide"), "gap must be a numeric value")
 })
+

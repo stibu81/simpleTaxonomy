@@ -15,7 +15,8 @@ plot_taxonomy(
   image_size = c("250", "60", "120", "330", "500"),
   link_length = 150,
   font_size = 12,
-  highlight_missing_images = FALSE
+  highlight_missing_images = FALSE,
+  local_country = NULL
 )
 }
 \arguments{
@@ -59,6 +60,12 @@ in pixels.}
 
 \item{highlight_missing_images}{logical, should nodes with missing
 image link by highlighted?}
+
+\item{local_country}{country code for the "local country". If the taxonomy
+has taxa that are marked as local, the flag of this country will be
+shown in the tooltip. If the columns "local" does not exist in the
+data, this argument has no effect. If no country code is given, a
+generic location marker will be used instead.}
 }
 \value{
 a \code{collapsibleTree} htmlwidget with the interactive tree visualisation.

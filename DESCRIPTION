@@ -32,6 +32,7 @@ Suggests:
     bslib,
     shinyWidgets,
     DT,
+    base64enc,
     logger,
     roxygen2,
     spelling,
