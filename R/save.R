@@ -14,14 +14,6 @@
 save_taxonomy <- function(widget, file,
                           background = "white",
                           title = "simpleTaxonomy") {
-
-  # prepare the css
-  css_file <- system.file("shinyApp", "www", "simpleTaxonomy.css",
-                          package = "simpleTaxonomy")
-  css <- readr::read_lines(css_file) %>%
-    paste(collapse = "\n")
-
   widget %>%
-    htmlwidgets::prependContent(htmltools::tags$style(css)) %>%
     htmlwidgets::saveWidget(file, background = background, title = title)
 }
