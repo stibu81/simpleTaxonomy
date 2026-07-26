@@ -17,6 +17,11 @@
 #' the app. The user can change this interactively in the app.
 #' @param link_length numeric giving the default length of links in pixels
 #' used in the app. The user can change this interactively in the app.
+#' @param local_country country code for the "local country". If the taxonomy
+#' has taxa that are marked as local, the flag of this country will be
+#' shown in the tooltip. If the columns "local" does not exist in the
+#' data, this argument has no effect. If no country code is given, a
+#' generic location marker will be used instead.
 #' @param launch_browser logical, if \code{TRUE}, the application
 #' is opened in the system's default browser, if \code{FALSE},
 #' no browser is started. If the argument is omitted, the value
@@ -30,6 +35,7 @@ run_taxonomy <- function(file = NULL,
                          expand_ranks = c("Gattung", "Art", "Unterart"),
                          image_size = c("250", "60", "120", "330", "500"),
                          link_length = 200,
+                         local_country = NULL,
                          launch_browser = NULL) {
 
   rlang::check_installed(c("shiny", "shinyWidgets", "bslib", "DT", "logger"),
@@ -61,7 +67,8 @@ run_taxonomy <- function(file = NULL,
     simpleTaxonomy_root = root,
     simpleTaxonomy_expand_ranks = expand_ranks,
     simpleTaxonomy_image_size = image_size,
-    simpleTaxonomy_link_length = link_length
+    simpleTaxonomy_link_length = link_length,
+    simpleTaxonomy_local_country = local_country
   )
 
   if (is.null(launch_browser)) {
