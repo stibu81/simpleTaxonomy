@@ -10,6 +10,7 @@ run_taxonomy(
   expand_ranks = c("Gattung", "Art", "Unterart"),
   image_size = c("250", "60", "120", "330", "500"),
   link_length = 200,
+  local_country = NULL,
   launch_browser = NULL
 )
 }
@@ -30,6 +31,12 @@ the app. The user can change this interactively in the app.}
 
 \item{link_length}{numeric giving the default length of links in pixels
 used in the app. The user can change this interactively in the app.}
+
+\item{local_country}{country code for the "local country". If the taxonomy
+has taxa that are marked as local, the flag of this country will be
+shown in the tooltip. If the columns "local" does not exist in the
+data, this argument has no effect. If no country code is given, a
+generic location marker will be used instead.}
 
 \item{launch_browser}{logical, if \code{TRUE}, the application
 is opened in the system's default browser, if \code{FALSE},

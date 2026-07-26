@@ -153,6 +153,7 @@ function(input, output, session) {
                   show_images = input$show_images,
                   link_length = link_length(),
                   image_size = image_size(),
+                  local_country = local_country,
                   highlight_missing_images = input$highlight_missing_images)
   })
 
@@ -217,7 +218,9 @@ function(input, output, session) {
       taxonomy(),
       get_taxon_names(taxonomy(), input$counts_root)
     )
-    tooltip <- simpleTaxonomy:::create_tooltip(taxon_node, TRUE, "250")
+    tooltip <- simpleTaxonomy:::create_tooltip(
+      taxon_node, TRUE, "250", local_country
+    )
     HTML(tooltip)
   })
 
