@@ -52,6 +52,10 @@ if (available_version > installed_version) {
   svg_source <- file.path(tempdir(), "flag-icons-main", "flags", "4x3")
   file.copy(list.files(svg_source, "\\.svg$", full.names = TRUE), svg_target)
 
+  # special case: overwrite the swiss flag with the square variant
+  ch_source <- file.path(tempdir(), "flag-icons-main", "flags", "1x1", "ch.svg")
+  file.copy(ch_source, svg_target, overwrite = TRUE)
+
   # write the file with country info
   file.path(tempdir(), "flag-icons-main", "country.json") %>% 
     fromJSON() %>% 
