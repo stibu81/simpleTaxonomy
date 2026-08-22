@@ -362,3 +362,17 @@ test_that("compute_symbols() works when all optional fields are missing", {
   symbols <- compute_symbols(data)
   expect_equal(symbols, rep("", length(data[[1]])))
 })
+
+
+test_that("compute_symbols() works with a flag icon", {
+  data <- list(
+    name = letters[1:2],
+    local = c(FALSE, TRUE)
+  )
+  
+  symbols <- compute_symbols(data,  local_country = "ch")
+  expect_equal(symbols, c("", as.character(flag_icon("ch"))))
+
+  symbols <- compute_symbols(data,  local_country = "se")
+  expect_equal(symbols, c("", as.character(flag_icon("se"))))
+})
