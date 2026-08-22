@@ -5,7 +5,8 @@
 #' downloaded from <https://github.com/lipis/flag-icons>.
 #'
 #' @param code character with the flag code, e.g., `"ch"` or `"de"`.
-#'
+#'  To find available flag codes, use [`get_flag_info()`].
+#' 
 #' @export
 
 flag_icon <- function(code) {
@@ -24,7 +25,15 @@ flag_icon <- function(code) {
     package = "simpleTaxonomy"
   )
   if (flag_file == "") {
-    cli::cli_abort("Flag with code {.val {code}} was not found in package assets.")
+    cli::cli_abort(
+      c(
+        "!" = "Flag with code {.val {code}} was not found.",
+        "i" = paste(
+          "Use {.run [get_flag_info()](simpleTaxonomy::get_flag_info())}",
+          "to find available flag codes."
+        )
+      )
+    )
   }
 
   rlang::check_installed("base64enc")
@@ -32,4 +41,37 @@ flag_icon <- function(code) {
     src = base64enc::dataURI(file = flag_file, mime = "image/svg+xml"),
     class = glue::glue("flag flag-{code}")
   )
+}
+
+
+#' Get Information About the Available Flag Codes
+#' 
+#' Return a table that for all available flags returns the country name,
+#' the continent, the flag code and the capital. The flag code must be used
+#' as input in functions like [`flag_icon()`] and [`run_taxonomy()`].
+#' 
+#' @param filter a regex pattern that is used to search in the country names.
+#'  Search is case-insensitive.
+#' 
+#' @returns
+#' a tibble with character columns `name`, `continent`, `code`, and `capital`.
+#' 
+#' @export
+
+get_flag_info <- function(filter = NULL) {
+  country_data <- system.file(
+      "flags", "country.json",
+      package = "simpleTaxonomy"
+    ) %>% 
+    jsonlite::fromJSON() %>% 
+    dplyr::as_tibble()
+
+  # apply filter
+  if (!is.null(filter)) {
+    pattern <- stringr::regex(filter, ignore_case = TRUE)
+    country_data <- country_data %>% 
+      dplyr::filter(stringr::str_detect(.data$name, pattern))
+  }
+
+  country_data
 }

@@ -7,7 +7,8 @@
 flag_icon(code)
 }
 \arguments{
-\item{code}{character with the flag code, e.g., \code{"ch"} or \code{"de"}.}
+\item{code}{character with the flag code, e.g., \code{"ch"} or \code{"de"}.
+To find available flag codes, use \code{\link[=get_flag_info]{get_flag_info()}}.}
 }
 \description{
 Create an html \verb{<img>} tag for a country flag svg file that is shipped with
