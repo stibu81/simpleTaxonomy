@@ -39,9 +39,6 @@ run_taxonomy <- function(file = NULL,
                          local_country = NULL,
                          launch_browser = NULL) {
 
-  rlang::check_installed(c("shiny", "shinyWidgets", "bslib", "DT", "logger"),
-                         "in order to run the app.")
-
   app_dir <- system.file("shinyApp", package = "simpleTaxonomy")
   if (app_dir == "") {
     # nocov start
@@ -62,6 +59,22 @@ run_taxonomy <- function(file = NULL,
     file <- normalizePath(file)
   }
 
+  # to avoid an error during runtime, check validity of the flag code here
+  if (!is.null(local_country)) {
+    available_flags <- get_flag_info()$code
+    if (!local_country %in% available_flags) {
+      cli::cli_abort(
+        c(
+          "!" = "Flag with code {.val {local_country}} was not found.",
+          "i" = paste(
+            "Use {.run [get_flag_info()](simpleTaxonomy::get_flag_info())}",
+            "to find available flag codes."
+          )
+        )
+      )
+    }
+  }
+
   # pass settings as options to the app
   options(
     simpleTaxonomy_file = file,
@@ -75,6 +88,11 @@ run_taxonomy <- function(file = NULL,
   if (is.null(launch_browser)) {
     launch_browser <- getOption("shiny.launch.browser", interactive())
   }
+
+  rlang::check_installed(
+    c("shiny", "shinyWidgets", "bslib", "DT", "logger"),
+    "in order to run the app."
+  )
 
   shiny::shinyAppDir(
     app_dir,
