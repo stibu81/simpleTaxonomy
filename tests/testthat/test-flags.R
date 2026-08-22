@@ -1,3 +1,4 @@
+library(dplyr, warn.conflicts = FALSE)
 library(stringr)
 
 test_that("flag_icon() returns an img tag with embedded svg data uri", {
@@ -52,5 +53,22 @@ test_that("flag_icon() errors for empty code", {
 
 
 test_that("flag_icon() errors if svg file does not exist", {
-  expect_error(flag_icon("xy"), "was not found in package assets")
+  expect_error(flag_icon("xy"), "was not found")
+})
+
+
+test_that("get_flag_info() returns a tibble with the right columns", {
+  flag_info <- get_flag_info()
+  expect_s3_class(flag_info, "tbl_df")
+  expect_named(flag_info, c("name", "continent", "code", "capital"))
+})
+
+
+test_that("get_flag_info() can filter by name", {
+  expect_equal(
+    get_flag_info("swi"),
+    tibble(
+      name = "Switzerland", continent = "Europe", code = "ch", capital = "Bern"
+    )
+  )
 })
