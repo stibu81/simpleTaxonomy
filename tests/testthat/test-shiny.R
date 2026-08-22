@@ -41,6 +41,11 @@ test_that("run_taxonomy prepares the shiny app without launching it", {
 })
 
 
+test_that("run_taxonomy() catches invalid country code", {
+  expect_error(run_taxonomy(local_country = "xy"), "was not found")
+})
+
+
 test_that("create_counts_dt() returns NULL when it should", {
   skip_if_not_installed("DT")
 
