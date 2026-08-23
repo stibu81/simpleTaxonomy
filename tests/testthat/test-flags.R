@@ -12,6 +12,8 @@ test_that("flag_icon() returns an img tag with embedded svg data uri", {
   expect_equal(tag$attribs$class, "flag flag-ch")
 
   # check that the decoded tag contains the swiss flag
+  # this does not work on windows due to different line endings
+  skip_on_os("windows")
   swiss_svg <- readLines(
       system.file("flags", "svg", "ch.svg", package = "simpleTaxonomy")
     )
