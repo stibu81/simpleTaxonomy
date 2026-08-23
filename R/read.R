@@ -287,6 +287,7 @@ get_rank_colours <- function() {
     "Klasse",             "#008000",
     "Unterklasse",        "#0FA601",
     "Teilklasse",         "#16B701",
+    "\u00dcberkohorte",   "#5F0281", 
     "Kohorte",            "#9900CC",
     "Unterkohorte",       "#CC00CC",
     "Division",           "#FF00FF",
