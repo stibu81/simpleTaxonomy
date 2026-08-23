@@ -28,10 +28,10 @@ graph.
 file <- get_example_taxonomy_file()
 taxonomy <- read_taxonomy(file)
 get_root_node(taxonomy)
-#> + 1/98 vertex, named, from 7bba2e6:
+#> + 1/98 vertex, named, from 562006f:
 #> [1] Raubtiere
 get_leaf_nodes(taxonomy)
-#> + 64/98 vertices, named, from 7bba2e6:
+#> + 64/98 vertices, named, from 562006f:
 #>  [1] Polarfuchs                Rotfuchs                 
 #>  [3] Wüstenfuchs               Marderhund               
 #>  [5] Afrikanischer Wildhund    Wolf                     
