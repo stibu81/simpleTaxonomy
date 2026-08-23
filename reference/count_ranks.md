@@ -58,9 +58,9 @@ count_ranks(taxonomy)
 #>  2 Unterordnung     2
 #>  3 Überfamilie      1
 #>  4 Familie         14
-#>  5 Unterfamilie     2
+#>  5 Unterfamilie     3
 #>  6 Tribus           2
-#>  7 Gattung         13
+#>  7 Gattung         14
 #>  8 Art             57
 #>  9 Unterart         3
 #> 10 ohne Rang        1
@@ -71,8 +71,8 @@ count_ranks(taxonomy, subgraph = "Katzen")
 #>   rank             n
 #>   <ord>        <int>
 #> 1 Familie          1
-#> 2 Unterfamilie     2
-#> 3 Gattung          3
+#> 2 Unterfamilie     3
+#> 3 Gattung          4
 #> 4 Art             12
 
 # count caniformia by family

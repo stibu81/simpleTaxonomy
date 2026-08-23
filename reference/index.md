@@ -10,8 +10,12 @@
   : Enrich a Taxonomy File with URLs to Wikipedia-Images
 - [`find_taxon()`](https://stibu81.github.io/simpleTaxonomy/reference/find_taxon.md)
   : Find Taxa By Pattern
+- [`flag_icon()`](https://stibu81.github.io/simpleTaxonomy/reference/flag_icon.md)
+  : Create an svg Flag Icon Tag
 - [`get_example_taxonomy_file()`](https://stibu81.github.io/simpleTaxonomy/reference/get_example_taxonomy_file.md)
   : Get Example Taxonomy File
+- [`get_flag_info()`](https://stibu81.github.io/simpleTaxonomy/reference/get_flag_info.md)
+  : List Information About the Available Flags
 - [`get_parent_taxon()`](https://stibu81.github.io/simpleTaxonomy/reference/get_parent_taxon.md)
   : Get the Parent Taxon of a Taxon
 - [`get_root_node()`](https://stibu81.github.io/simpleTaxonomy/reference/get_root_node.md)

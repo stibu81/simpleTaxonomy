@@ -47,8 +47,9 @@ find_taxon(taxonomy, "katze")
 #>  [3] "Kleinkatzen"             "Echte Katzen"           
 #>  [5] "Europäische Wildkatze"   "Hauskatze"              
 #>  [7] "Pardelkatzen"            "Grosskatzen"            
-#>  [9] "Eigentliche Grosskatzen" "Schleichkatzen"         
-#> [11] "Afrikanische Zibetkatze" "Ginsterkatzen"          
+#>  [9] "Eigentliche Grosskatzen" "Säbelzahnkatzen"        
+#> [11] "Schleichkatzen"          "Afrikanische Zibetkatze"
+#> [13] "Ginsterkatzen"          
 find_taxon(taxonomy, "felis")
 #> [1] "Echte Katzen"          "Europäische Wildkatze" "Hauskatze"            
 #> [4] "Nebelparder"          

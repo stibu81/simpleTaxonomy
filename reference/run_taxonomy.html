@@ -52,6 +52,7 @@ app loads the data from <a href="https://github.com/stibu81/taxonomyData" class=
 <span>  expand_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gattung"</span>, <span class="st">"Art"</span>, <span class="st">"Unterart"</span><span class="op">)</span>,</span>
 <span>  image_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"250"</span>, <span class="st">"60"</span>, <span class="st">"120"</span>, <span class="st">"330"</span>, <span class="st">"500"</span><span class="op">)</span>,</span>
 <span>  link_length <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  local_country <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  launch_browser <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -85,6 +86,15 @@ the app. The user can change this interactively in the app.</p></dd>
 <dt id="arg-link-length">link_length<a class="anchor" aria-label="anchor" href="#arg-link-length"></a></dt>
 <dd><p>numeric giving the default length of links in pixels
 used in the app. The user can change this interactively in the app.</p></dd>
+
+
+<dt id="arg-local-country">local_country<a class="anchor" aria-label="anchor" href="#arg-local-country"></a></dt>
+<dd><p>country code for the "local country". If the taxonomy
+has taxa that are marked as local, the flag of this country will be
+shown in the tooltip. If the columns "local" does not exist in the
+data, this argument has no effect. If no country code is given, a
+generic location marker will be used instead. To find available flag codes,
+use <code><a href="get_flag_info.html">get_flag_info()</a></code>.</p></dd>
 
 
 <dt id="arg-launch-browser">launch_browser<a class="anchor" aria-label="anchor" href="#arg-launch-browser"></a></dt>
