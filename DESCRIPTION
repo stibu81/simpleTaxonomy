@@ -26,7 +26,8 @@ Imports:
     igraph (>= 2.1.2),
     htmlwidgets,
     htmltools,
-    httr2
+    httr2,
+    jsonlite
 Suggests: 
     shiny,
     bslib,
