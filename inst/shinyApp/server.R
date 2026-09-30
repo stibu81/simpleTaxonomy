@@ -42,6 +42,9 @@ function(input, output, session) {
 
   taxonomy_sg <- reactive({
     if (input$tree_root != "") {
+      # update the option simpleTaxonomy_root to ensure that the root is preserved
+      # on reload
+      options(simpleTaxonomy_root = input$tree_root)
       logger::log_info("filter the graph to the root '{input$tree_root}'")
       get_subgraph(taxonomy(), input$tree_root)
     }
