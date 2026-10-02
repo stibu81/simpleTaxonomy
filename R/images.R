@@ -176,8 +176,7 @@ enrich_taxonomy_with_images <- function(file,
   image_url[url_missing] <- new_urls
   igraph::vertex_attr(taxonomy, "image_url") <- image_url
 
-  # write the file
-  readr::write_delim(as_tibble(taxonomy), file, delim = delim, na = "")
+  write_taxonomy_csv(taxonomy, file, delim)
 
   # print a summary
   if (!quiet) {

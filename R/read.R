@@ -337,3 +337,9 @@ get_taxon_labels <- function(taxa) {
   stringr::str_remove(taxa, "\\(.*\\)") %>%
     stringr::str_trim()
 }
+
+
+# write taxonomy to csv file. This is only for internal use.
+write_taxonomy_csv <- function(taxonomy, file, delim) {
+  readr::write_delim(as_tibble(taxonomy), file, delim = delim, na = "")
+}
