@@ -19,6 +19,13 @@
 #' \item{rank}{The rank of the taxon, e.g., "Familie", "Art", or similar (only
 #' German ranks are supported so far).
 #' These will be used to colour the nodes.}
+#' \item{extinct (optional)}{Is the taxon extinct. Use `TRUE` to mark a taxon as
+#' extinct. Both, a missing value and `FALSE` mark the taxon as extant.}
+#' \item{local (optional)}{Is the taxon local. Use `TRUE` to mark a taxon as
+#' local. Both, a missing value and `FALSE` mark the taxon as non-local.}
+#' \item{observed (optional)}{Has the taxon been observed. Use `TRUE` to mark 
+#' a taxon as observe. Both, a missing value and `FALSE` mark the taxon as
+#' unobserved.}
 #' }
 #'
 #' The function checks that the file satisfies the following conditions:
@@ -39,6 +46,11 @@
 #' in parenthesis to make the names unique, e.g., "Pferde (F)" and "Pferde" for
 #' the family and the genus, respectively. The identifier "(F)" will be removed
 #' and not be shown in the visualisation.
+#' 
+#' The columns "local", "observed" and "extinct" will cause appropriate markings
+#' in the tooltips in the visualisation. Optionally, local taxa can be marked
+#' by a country flag that the user can choose by passing the appropriate country
+#' code to [plot_taxonomy()] or [run_taxonomy()].
 #'
 #' @return
 #' a `taxonomy_graph` object which inherits from `igraph`
