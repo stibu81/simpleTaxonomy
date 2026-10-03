@@ -2,7 +2,7 @@
 % Please edit documentation in R/flags.R
 \name{get_flag_info}
 \alias{get_flag_info}
-\title{List Information About the Available Flags}
+\title{Get Information About the Available Flag Codes}
 \usage{
 get_flag_info(filter = NULL)
 }
