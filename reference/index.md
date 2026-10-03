@@ -15,7 +15,7 @@
 - [`get_example_taxonomy_file()`](https://stibu81.github.io/simpleTaxonomy/reference/get_example_taxonomy_file.md)
   : Get Example Taxonomy File
 - [`get_flag_info()`](https://stibu81.github.io/simpleTaxonomy/reference/get_flag_info.md)
-  : List Information About the Available Flags
+  : Get Information About the Available Flag Codes
 - [`get_parent_taxon()`](https://stibu81.github.io/simpleTaxonomy/reference/get_parent_taxon.md)
   : Get the Parent Taxon of a Taxon
 - [`get_root_node()`](https://stibu81.github.io/simpleTaxonomy/reference/get_root_node.md)
@@ -29,6 +29,9 @@
   : Get Depth of a Taxonomy Tree Graph
 - [`get_wikipedia_image_urls()`](https://stibu81.github.io/simpleTaxonomy/reference/get_wikipedia_image_urls.md)
   : Download URL for Wikipedia Images
+- [`inherit_meta_data()`](https://stibu81.github.io/simpleTaxonomy/reference/inherit_meta_data.md)
+  : Inherit Meta Data for Extinct, Local, and Observed in a Taxonomy
+  File
 - [`plot_taxonomy()`](https://stibu81.github.io/simpleTaxonomy/reference/plot_taxonomy.md)
   : Plot a Taxonomic Hierarchy
 - [`read_taxonomy()`](https://stibu81.github.io/simpleTaxonomy/reference/read_taxonomy.md)

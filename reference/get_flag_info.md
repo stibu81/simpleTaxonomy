@@ -1,4 +1,4 @@
-# List Information About the Available Flags
+# Get Information About the Available Flag Codes
 
 Return a table that for all available flags returns the country name,
 the continent, the flag code and the capital. The flag code must be used

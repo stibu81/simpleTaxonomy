@@ -9,7 +9,7 @@ hierarchy and return it as a graph."><meta property="og:image" content="https://
 
     <a class="navbar-brand me-2" href="../index.html">simpleTaxonomy</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,6 +79,19 @@ e.g., the common name. These names must be unique.</p></dd>
 German ranks are supported so far).
 These will be used to colour the nodes.</p></dd>
 
+<dt>extinct (optional)</dt>
+<dd><p>Is the taxon extinct. Use <code>TRUE</code> to mark a taxon as
+extinct. Both, a missing value and <code>FALSE</code> mark the taxon as extant.</p></dd>
+
+<dt>local (optional)</dt>
+<dd><p>Is the taxon local. Use <code>TRUE</code> to mark a taxon as
+local. Both, a missing value and <code>FALSE</code> mark the taxon as non-local.</p></dd>
+
+<dt>observed (optional)</dt>
+<dd><p>Has the taxon been observed. Use <code>TRUE</code> to mark
+a taxon as observe. Both, a missing value and <code>FALSE</code> mark the taxon as
+unobserved.</p></dd>
+
 
 </dl><p>The function checks that the file satisfies the following conditions:</p><ul><li><p>The required columns are all present.</p></li>
 <li><p>There is exactly one root taxon, which is a taxon without parent.</p></li>
@@ -95,6 +108,10 @@ common names, e.g. the family Equidae and the genus Equus are both called
 in parenthesis to make the names unique, e.g., "Pferde (F)" and "Pferde" for
 the family and the genus, respectively. The identifier "(F)" will be removed
 and not be shown in the visualisation.</p>
+<p>The columns "local", "observed" and "extinct" will cause appropriate markings
+in the tooltips in the visualisation. Optionally, local taxa can be marked
+by a country flag that the user can choose by passing the appropriate country
+code to <code><a href="plot_taxonomy.html">plot_taxonomy()</a></code> or <code><a href="run_taxonomy.html">run_taxonomy()</a></code>.</p>
     </div>
 
     <div class="section level2">
