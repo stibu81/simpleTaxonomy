@@ -142,6 +142,11 @@ plot_taxonomy(taxonomy)
   line-height: 1.1;
 }
 
+/* make the lines in the sandwich menu white and thinner */
+.navbar .navbar-toggle > .icon-bar:last-child {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
 @media (min-width: 992px) {
   .navbar .navbar-nav {
     align-items: center;
@@ -217,6 +222,11 @@ plot_taxonomy(taxonomy, show = "Grizzlybär")
 .navbar .navbar-brand h4 {
   margin: 0;
   line-height: 1.1;
+}
+
+/* make the lines in the sandwich menu white and thinner */
+.navbar .navbar-toggle > .icon-bar:last-child {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
 @media (min-width: 992px) {
@@ -297,6 +307,11 @@ plot_taxonomy(taxonomy, full_expand = "Katzen")
   line-height: 1.1;
 }
 
+/* make the lines in the sandwich menu white and thinner */
+.navbar .navbar-toggle > .icon-bar:last-child {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
 @media (min-width: 992px) {
   .navbar .navbar-nav {
     align-items: center;
@@ -372,6 +387,11 @@ plot_taxonomy(taxonomy, focus = "Katzen")
 .navbar .navbar-brand h4 {
   margin: 0;
   line-height: 1.1;
+}
+
+/* make the lines in the sandwich menu white and thinner */
+.navbar .navbar-toggle > .icon-bar:last-child {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
 @media (min-width: 992px) {
@@ -451,6 +471,11 @@ plot_taxonomy(taxonomy, focus = "Bären", show_images = TRUE)
   line-height: 1.1;
 }
 
+/* make the lines in the sandwich menu white and thinner */
+.navbar .navbar-toggle > .icon-bar:last-child {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
 @media (min-width: 992px) {
   .navbar .navbar-nav {
     align-items: center;
@@ -528,6 +553,11 @@ plot_taxonomy(taxonomy,
 .navbar .navbar-brand h4 {
   margin: 0;
   line-height: 1.1;
+}
+
+/* make the lines in the sandwich menu white and thinner */
+.navbar .navbar-toggle > .icon-bar:last-child {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='1.5' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
 @media (min-width: 992px) {
