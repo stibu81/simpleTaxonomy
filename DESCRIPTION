@@ -35,10 +35,11 @@ Suggests:
     DT,
     base64enc,
     logger,
+    inatpick,
     roxygen2,
     spelling,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1
 Config/roxygen2/markdown: TRUE
