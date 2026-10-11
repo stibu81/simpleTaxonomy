@@ -64,7 +64,7 @@ test_that("enrich_taxonomy_with_images() works on a file without urls", {
         contact = "example@email.com",
         progress = FALSE
       ),
-      "try to get images for 2 taxa" 
+      "trying to get images for 2 taxa" 
     ) %>% 
     expect_message("found : 2.*failed: 0")
   # check returned object and the file
@@ -114,7 +114,7 @@ test_that("enrich_taxonomy_with_images() can retry", {
         retry = TRUE,
         progress = FALSE
       ),
-      "try to get images for 1 taxa" 
+      "trying to get image for 1 taxon" 
     ) %>% 
     expect_message("found : 1.*failed: 0")
   # check returned object and the file

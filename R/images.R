@@ -147,15 +147,24 @@ enrich_taxonomy_with_images <- function(file,
   image_url <- vertices$image_url
   if (retry) image_url[image_url == "not_found"] <- NA_character_
 
-  url_missing <- is.na(image_url)
-  n_missing <- sum(url_missing)
+  url_missing <- which(is.na(image_url))
+  n_missing <- length(url_missing)
   if (n_missing == 0) {
     cli::cli_alert_info("No missing images urls.")
     return(taxonomy)
   }
 
-  if (!quiet) {
-    cli::cli_alert_info("try to get images for {sum(url_missing)} taxa.")
+  # to avoid extremely long runtimes, limit the number of downloads
+  n_max <- 1000
+  if (n_missing > n_max) {
+    if (!quiet) {
+      cli::cli_alert_info(
+        c("there are {n_missing} missing image urls, ",
+          "trying to get images for {n_max} of them."))
+    }
+    url_missing <- url_missing[1:n_max]
+  } else if (!quiet) {
+    cli::cli_alert_info("trying to get image{?s} for {n_missing} tax{?on/a}.")
   }
 
   user_agent <- get_user_agent_string(contact)
