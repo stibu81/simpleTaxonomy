@@ -32,3 +32,20 @@ test_that("is_taxon_local() handles bad input", {
     "Taxon 'Canis lupus' is not unique"
   )
 })
+
+
+
+test_that("is_taxon_observed() works", {
+  skip_on_cran()
+  expect_true(is_taxon_observed("Apis mellifera", user = "Stibu"))
+  expect_false(is_taxon_observed("Raphus cucullatus", user = "Stibu"))
+})
+
+
+test_that("is_taxon_observed() handles bad input", {
+  skip_on_cran()
+  expect_message(
+    expect_equal(is_taxon_observed("bad species", user = "stibu"), NA),
+    "Taxon 'bad species' not found"
+  )
+})
