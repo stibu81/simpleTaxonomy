@@ -21,7 +21,6 @@ is_taxon_local <- function(
   country,
   n_min = 2
 ) {
-
   rlang::check_installed("inatpick")
 
   taxon <- stringr::str_squish(taxon)
@@ -31,12 +30,41 @@ is_taxon_local <- function(
   country_id <- get_country_id(country)
   if (is.na(country_id)) return(NA)
 
-  observations <- get_observations(taxon_id, country_id, n_min)
+  observations <- get_observations(taxon_id, country_id = country_id, n_min = n_min)
 
   # more observations than the threshold?
   nrow(observations) >= n_min
 }
 
+
+#' Check if a Taxon Has Been Observed By a User
+#' 
+#' @param taxon character giving the scientific name of the taxon.
+#' @param user character giving the user name.
+#' @param research_grade_only logical indicating whether only research
+#'  grade observations should be considered.
+#' 
+#' @returns
+#' a logical value indicating whether the taxon has been observed by the given
+#' user or not. If the function encounters any issues, it returns `NA`.
+#' 
+#' @export
+
+is_taxon_observed <- function(taxon, user, research_grade_only = TRUE) {
+  rlang::check_installed("inatpick")
+
+  taxon <- stringr::str_squish(taxon)
+  taxon_id <- get_taxon_id(taxon)
+  if (is.na(taxon_id)) return(NA)
+
+  observations <- get_observations(
+    taxon_id, 
+    user = user, 
+    research_grade_only = research_grade_only
+  )
+
+  nrow(observations) >= 1
+}
 
 
 get_taxon_id <- function(taxon) {
@@ -100,19 +128,27 @@ get_country_id <- function(country) {
 }
 
 
-get_observations <- function(taxon_id, country_id, n_min) {
+get_observations <- function(
+  taxon_id,
+  country_id = NULL,
+  user = NULL,
+  research_grade_only = TRUE,
+  n_min = 1
+) {
+  quality_grade = if (research_grade_only) "research" else "any"
   # because downloading the observations can be very slow for common taxa, 
   # we start by just downloading data for one year. Only if there is not 
   # enough data, a full download is performed.
   observations <- suppressMessages(
     inatpick::inat_fetch(taxon_id, country_id,
                          year = as.integer(format(Sys.Date(), "%Y")) - 1,
-                         quality_grade = "research", verbose = FALSE)
+                         user_login = user,
+                         quality_grade = quality_grade, verbose = FALSE)
   )
   if (nrow(observations) < n_min) {
     observations <- suppressMessages(
-      inatpick::inat_fetch(taxon_id, country_id,
-                           quality_grade = "research", verbose = FALSE)
+      inatpick::inat_fetch(taxon_id, country_id, user_login = user,
+                           quality_grade = quality_grade, verbose = FALSE)
     )
   }
 
