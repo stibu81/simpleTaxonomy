@@ -35,7 +35,6 @@ Suggests:
     DT,
     base64enc,
     logger,
-    inatpick,
     roxygen2,
     spelling,
     testthat (>= 3.0.0),

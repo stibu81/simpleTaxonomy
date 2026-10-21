@@ -1,3 +1,5 @@
+base_url <- "https://api.inaturalist.org/v2/"
+
 #' Check if a Taxon is Local to a Country
 #' 
 #' @param taxon character giving the scientific name of the taxon.
@@ -21,8 +23,6 @@ is_taxon_local <- function(
   country,
   n_min = 2
 ) {
-  rlang::check_installed("inatpick")
-
   taxon <- stringr::str_squish(taxon)
   taxon_id <- get_taxon_id(taxon)
   if (is.na(taxon_id)) return(NA)
@@ -30,10 +30,10 @@ is_taxon_local <- function(
   country_id <- get_country_id(country)
   if (is.na(country_id)) return(NA)
 
-  observations <- get_observations(taxon_id, country_id = country_id, n_min = n_min)
+  obs_count <- count_observations(taxon_id, country_id = country_id)
 
   # more observations than the threshold?
-  nrow(observations) >= n_min
+  obs_count >= n_min
 }
 
 
@@ -51,30 +51,36 @@ is_taxon_local <- function(
 #' @export
 
 is_taxon_observed <- function(taxon, user, research_grade_only = TRUE) {
-  rlang::check_installed("inatpick")
-
   taxon <- stringr::str_squish(taxon)
   taxon_id <- get_taxon_id(taxon)
   if (is.na(taxon_id)) return(NA)
 
-  observations <- get_observations(
+  obs_count <- count_observations(
     taxon_id, 
     user = user, 
     research_grade_only = research_grade_only
   )
 
-  nrow(observations) >= 1
+  obs_count >= 1
 }
 
 
 get_taxon_id <- function(taxon) {
-  taxon_results <- suppressMessages(
-    inatpick::inat_search_taxon(taxon, n = 100)
+  # often, the function get_taxon_id() will be called with the same taxon
+  # multiple times time. => implement a very simple caching mechanism.
+  cache <- getOption(
+    "simpleTaxonomy_taxon_cache",
+    default = list(taxon = "", id = NA_integer_)
   )
-  # filter for results that match the exact name. This can only be done after
-  # checking for the existence of the column "name" because inat_search_taxon()
-  # returns a data frame without columns if nothing is found.
-  if ("name" %in% names(taxon_results)) {
+  if (taxon == cache$taxon) return(cache$id)
+
+  url <- glue::glue(
+    "{base_url}taxa?q={utils::URLencode(taxon)}&per_page=100&fields=id%2Cname"
+  )
+  data <- jsonlite::fromJSON(url)
+
+  taxon_results <- dplyr::as_tibble(data$results)
+  if (data$total_results > 0) {
     taxon_results <- taxon_results %>% dplyr::filter(.data$name == taxon)
   }
   n_taxa <- nrow(taxon_results)
@@ -86,6 +92,10 @@ get_taxon_id <- function(taxon) {
     cli::cli_alert_danger("Taxon '{taxon}' is not unique on iNaturalist.")
     return(NA)
   }
+
+  options(
+    simpleTaxonomy_taxon_cache = list(taxon = taxon, id = taxon_results$id)
+  )
 
   taxon_results$id
 }
@@ -100,15 +110,16 @@ get_country_id <- function(country) {
   )
   if (country == cache$country) return(cache$id)
 
-  country_results <- suppressMessages(
-    inatpick::inat_search_place(country, n = 100)
+  url <- glue::glue(
+    "{base_url}places?q={utils::URLencode(country)}&order_by=area&",
+    "per_page=100&fields=id%2Cdisplay_name%2Cplace_type%2Carea"
   )
-  # filter for countries (place_type = 12). This can only be done after
-  # checking for the existence of the column "place_type" because
-  # inat_search_place() returns a data frame without columns if nothing is
-  # found.
-  if ("place_type" %in% names(country_results)) {
-    country_results <- country_results %>% dplyr::filter(.data$place_type == 12)
+  data <- jsonlite::fromJSON(url)
+
+  country_results <- dplyr::as_tibble(data$results)
+  if (data$total_results > 0) {
+      country_results <- country_results %>% 
+        dplyr::filter(.data$place_type == 12)
   }
   n_countries <- nrow(country_results)
   if (n_countries == 0) {
@@ -128,29 +139,26 @@ get_country_id <- function(country) {
 }
 
 
-get_observations <- function(
+count_observations <- function(
   taxon_id,
   country_id = NULL,
   user = NULL,
-  research_grade_only = TRUE,
-  n_min = 1
+  research_grade_only = TRUE
 ) {
-  quality_grade = if (research_grade_only) "research" else "any"
-  # because downloading the observations can be very slow for common taxa, 
-  # we start by just downloading data for one year. Only if there is not 
-  # enough data, a full download is performed.
-  observations <- suppressMessages(
-    inatpick::inat_fetch(taxon_id, country_id,
-                         year = as.integer(format(Sys.Date(), "%Y")) - 1,
-                         user_login = user,
-                         quality_grade = quality_grade, verbose = FALSE)
-  )
-  if (nrow(observations) < n_min) {
-    observations <- suppressMessages(
-      inatpick::inat_fetch(taxon_id, country_id, user_login = user,
-                           quality_grade = quality_grade, verbose = FALSE)
-    )
-  }
 
-  observations
+  url <- glue::glue(
+    "{base_url}observations?captive=false&taxon_id={taxon_id}&per_page=1"
+  )
+  if (research_grade_only) {
+    url <- glue::glue(url, "&quality_grade=research")
+  }
+  if (!is.null(country_id)) {
+    url <- glue::glue(url, "&place_id={country_id}")
+  }
+  if (!is.null(user)) {
+    url <- glue::glue(url, "&user_login={user}")
+  }
+  data <- jsonlite::fromJSON(url)
+
+  data$total_results
 }
