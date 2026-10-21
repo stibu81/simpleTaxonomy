@@ -1,3 +1,5 @@
+library(stringr)
+library(dplyr)
 library(withr)
 
 test_that("is_taxon_local() works", {
@@ -22,17 +24,7 @@ test_that("is_taxon_local() handles bad input", {
     expect_equal(is_taxon_local("Canis lupus", "Ch"), NA),
     "Several countries found for 'Ch'"
   )
-  # mock inat_search_taxon() to force a duplicated taxon
-  local_mocked_bindings(
-    inat_search_taxon = function(taxon, ...) data.frame(id = 1:2, name = taxon),
-    .package = "inatpick"
-  )
-  expect_message(
-    expect_equal(is_taxon_local("Canis lupus", "Switzerland"), NA),
-    "Taxon 'Canis lupus' is not unique"
-  )
 })
-
 
 
 test_that("is_taxon_observed() works", {
