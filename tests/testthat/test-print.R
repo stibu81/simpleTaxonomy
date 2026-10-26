@@ -22,3 +22,10 @@ test_that("print.taxonomy_graph() works if there are no image urls", {
   taxonomy_no_images <- set_vertex_attr(taxonomy, "image_url", value = NA_character_)
   expect_snapshot(print(taxonomy_no_images))
 })
+
+
+test_that("print.taxonomy_graph() works if observed and local are absent", {
+  taxonomy_no_meta <- delete_vertex_attr(taxonomy, "observed") %>% 
+    delete_vertex_attr("local")
+  expect_snapshot(print(taxonomy_no_meta))
+})

@@ -11,13 +11,34 @@ print.taxonomy_graph <- function(x, n_ranks = 5, ...) {
   if (any(!is.na(image_urls))) {
     cat("graph has image url for",
         sum(!is.na(image_urls) & image_urls != "not_found"),
-        "nodes.")
+        "nodes.\n")
   } else {
-    cat("graph has no image urls.")
+    cat("graph has no image urls.\n")
+  }
+
+  rank <- igraph::vertex_attr(x, "rank")
+  observed <- igraph::vertex_attr(x, "observed")
+  if (!is.null(observed)) {
+    n_obs <- sum(observed, na.rm = TRUE)
+    n_obs2 <- sum(observed[rank %in% c("Art", "Unterart")], na.rm = TRUE)
+    cat(
+      glue::glue("number of observed taxa [(sub-)species]: {n_obs} [{n_obs2}]"),
+      "\n"
+    )
+  }
+
+  local <- igraph::vertex_attr(x, "local")
+  if (!is.null(local)) {
+    n_local <- sum(local, na.rm = TRUE)
+    n_local2 <- sum(local[rank %in% c("Art", "Unterart")], na.rm = TRUE)
+    cat(
+      glue::glue("number of local taxa [(sub-)species]: {n_local} [{n_local2}]\n"),
+      "\n"
+    )
   }
 
   if (n_ranks > 0) {
-    cat("\n\nmost common ranks:\n")
+    cat("\nmost common ranks:\n")
     common_ranks <- count_ranks(x) %>%
       dplyr::slice_max(order_by = .data$n, n = n_ranks)
     # use data frame printing method, which is more appropriate here
