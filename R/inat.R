@@ -127,11 +127,9 @@ fill_meta_data_one <- function(meta_attrs, local_country, user) {
   # add some waiting time to honour the rate limit of 60 requests per minute
   if ("local" %in% names(meta_attrs) && is.na(meta_attrs["local"])) {
     meta_attrs["local"] <- is_taxon_local(meta_attrs$scientific, local_country)
-    Sys.sleep(0.5)
   }
   if ("observed" %in% names(meta_attrs) && is.na(meta_attrs["observed"])) {
     meta_attrs["observed"] <- is_taxon_observed(meta_attrs$scientific, user)
-    Sys.sleep(0.5)
   }
   meta_attrs
 }
@@ -218,7 +216,7 @@ get_taxon_id <- function(taxon) {
     "{base_url}taxa?q={utils::URLencode(taxon_short)}&per_page=200&",
     "fields=id%2Cname%2Crank"
   )
-  data <- jsonlite::fromJSON(url)
+  data <- req_inat(url)
 
   taxon_results <- dplyr::as_tibble(data$results)
   if (data$total_results > 0) {
@@ -259,7 +257,7 @@ get_country_id <- function(country) {
     "{base_url}places?q={utils::URLencode(country)}&order_by=area&",
     "per_page=100&fields=id%2Cdisplay_name%2Cplace_type%2Carea"
   )
-  data <- jsonlite::fromJSON(url)
+  data <- req_inat(url)
 
   country_results <- dplyr::as_tibble(data$results)
   if (data$total_results > 0) {
@@ -303,7 +301,18 @@ count_observations <- function(
   if (!is.null(user)) {
     url <- glue::glue(url, "&user_login={user}")
   }
-  data <- jsonlite::fromJSON(url)
+  data <- req_inat(url)
 
   data$total_results
+}
+
+
+# helper to send a request to iNaturalist
+req_inat <- function(url) {
+  resp <- httr2::request(url) %>%
+      httr2::req_retry(max_tries = 2) %>% 
+      httr2::req_throttle(capacity = 50) %>% 
+      httr2::req_perform()
+
+  httr2::resp_body_json(resp, simplifyVector = TRUE)
 }
