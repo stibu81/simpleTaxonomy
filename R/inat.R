@@ -1,5 +1,142 @@
 base_url <- "https://api.inaturalist.org/v2/"
 
+#' Fill in local and observed with iNaturalist
+#' 
+#' @export
+
+enrich_local_observed <- function(file,
+                                  delim = ",",
+                                  local_country = NULL,
+                                  user = NULL,
+                                  progress = TRUE,
+                                  quiet = FALSE) {
+  
+  if (is.null(local_country) && is.null(user)) {
+    cli::cli_abort("You must specify at least one of `local_country` and `user`.")
+  }
+  
+  taxonomy <- read_taxonomy(file, delim)
+
+  # which columns must be checked
+  meta_cols <- c()
+  if (!is.null(local_country)) {
+    cntry_id <- suppressWarnings(get_country_id(local_country))
+    if (is.na(cntry_id)) {
+      cli::cli_abort("Country '{local_country}' not cound on iNaturalist.")
+    }
+    meta_cols <- c(meta_cols, "local")
+  }
+  if (!is.null(user)) {
+    meta_cols <- c(meta_cols, "observed")
+  }
+
+  leaves <- get_leaf_nodes(taxonomy)
+  leaf_attrs <- igraph::vertex_attr(taxonomy, index = leaves)
+  
+  # if any of the needed metadata columns is missing, abort
+  missing_meta <- !(meta_cols %in% names(leaf_attrs))
+  if (any(missing_meta)) {
+    mc <- meta_cols[missing_meta]
+    cli::cli_abort("Column{?s} {.str {mc}} {?is/are} missing in the taxonomy file.")
+  }
+
+  # extract those leaf nodes where at least one of the metadata columns is empty
+  # only keep ranks genus, species, and subspecies 
+  # we also need the scientific name to run the queries
+  meta_attrs <- dplyr::as_tibble(leaf_attrs[c("scientific", meta_cols)])
+  keep_ranks <- c("Gattung", "Art", "Unterart")
+  i_meta_missing <- which(
+    rowSums(is.na(meta_attrs)) > 0 & leaf_attrs$rank %in% keep_ranks
+  )
+  n_missing <- length(i_meta_missing)
+
+  if (n_missing == 0) {
+    cli::cli_alert_info("No missing meta data.")
+    return(taxonomy)
+  }
+  
+  # to avoid extremely long runtimes, limit the number of downloads
+  n_max <- 200
+  if (n_missing > n_max) {
+    if (!quiet) {
+      cli::cli_alert_info(
+        c("there are {n_missing} taxa with missing metadata, ",
+          "trying to get values for {n_max} of them."))
+    }
+    i_meta_missing <- i_meta_missing[1:n_max]
+  } else if (!quiet) {
+    cli::cli_alert_info(
+      "trying to get values for {n_missing} tax{?on/a} with missing metadata."
+    )
+  }
+
+  leaves_missing <- leaves[i_meta_missing]
+  meta_attrs <- meta_attrs[i_meta_missing, ]
+
+  filled_attrs <- fill_meta_attrs(
+    meta_attrs,
+    local_country = local_country,
+    user = user,
+    progress = progress,
+  )
+
+  for (meta_col in meta_cols) {
+    taxonomy <- taxonomy %>% 
+      igraph::set_vertex_attr(meta_col, leaves_missing, filled_attrs[[meta_col]])
+  }
+  
+  write_taxonomy_csv(taxonomy, file, delim)
+
+  taxonomy
+}
+
+
+fill_meta_attrs <- function(
+  meta_attrs, 
+  local_country, 
+  user, 
+  progress, 
+  error_call = rlang::caller_env()
+) {
+  filled_meta_attrs <- tryCatch(
+    suppressWarnings(
+      purrr::map(
+        1:nrow(meta_attrs),
+        \(i_row) fill_meta_data_one(meta_attrs[i_row, ],
+                                    local_country = local_country,
+                                    user = user),
+        .progress = progress)
+    ),
+    error = function(e) {
+      cli::cli_abort(
+        c(
+          "x" = "Connection to {base_url} failed.",
+          "i" = "Message: {e$parent$message}",
+          "i" = "Check your internet connection."
+        ),
+        call = error_call
+      )
+    }
+  )
+
+  dplyr::bind_rows(filled_meta_attrs)
+}
+
+
+fill_meta_data_one <- function(meta_attrs, local_country, user) {
+  # add some waiting time to honour the rate limit of 60 requests per minute
+  if ("local" %in% names(meta_attrs) && is.na(meta_attrs["local"])) {
+    meta_attrs["local"] <- is_taxon_local(meta_attrs$scientific, local_country)
+    Sys.sleep(0.5)
+  }
+  if ("observed" %in% names(meta_attrs) && is.na(meta_attrs["observed"])) {
+    meta_attrs["observed"] <- is_taxon_observed(meta_attrs$scientific, user)
+    Sys.sleep(0.5)
+  }
+  meta_attrs
+}
+
+
 #' Check if a Taxon is Local to a Country
 #' 
 #' @param taxon character giving the scientific name of the taxon.
@@ -73,15 +210,23 @@ get_taxon_id <- function(taxon) {
     default = list(taxon = "", id = NA_integer_)
   )
   if (taxon == cache$taxon) return(cache$id)
+  
+  # the API seems to fail on search term longer than thirty characters => shorten
+  taxon_short <- stringr::str_sub(taxon, end = 30)
 
   url <- glue::glue(
-    "{base_url}taxa?q={utils::URLencode(taxon)}&per_page=100&fields=id%2Cname"
+    "{base_url}taxa?q={utils::URLencode(taxon_short)}&per_page=200&",
+    "fields=id%2Cname%2Crank"
   )
   data <- jsonlite::fromJSON(url)
 
   taxon_results <- dplyr::as_tibble(data$results)
   if (data$total_results > 0) {
-    taxon_results <- taxon_results %>% dplyr::filter(.data$name == taxon)
+    taxon_results <- taxon_results %>% 
+      dplyr::filter(.data$name == taxon,
+                    # only genus, species, subspecies are relevant. The filter is 
+                    # important because, e.g., a complex has the name of a species.
+                    .data$rank %in% c("genus", "species", "subspecies"))
   }
   n_taxa <- nrow(taxon_results)
   if (n_taxa == 0) {
