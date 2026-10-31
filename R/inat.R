@@ -22,7 +22,7 @@ enrich_local_observed <- function(file,
   if (!is.null(local_country)) {
     cntry_id <- suppressWarnings(get_country_id(local_country))
     if (is.na(cntry_id)) {
-      cli::cli_abort("Country '{local_country}' not cound on iNaturalist.")
+      cli::cli_abort("Country '{local_country}' not found on iNaturalist.")
     }
     meta_cols <- c(meta_cols, "local")
   }
@@ -77,7 +77,7 @@ enrich_local_observed <- function(file,
     meta_attrs,
     local_country = local_country,
     user = user,
-    progress = progress,
+    progress = progress
   )
 
   for (meta_col in meta_cols) {
@@ -255,7 +255,7 @@ get_country_id <- function(country) {
 
   url <- glue::glue(
     "{base_url}places?q={utils::URLencode(country)}&order_by=area&",
-    "per_page=100&fields=id%2Cdisplay_name%2Cplace_type%2Carea"
+    "per_page=100&fields=id%2Cdisplay_name%2Cplace_type"
   )
   data <- req_inat(url)
 
