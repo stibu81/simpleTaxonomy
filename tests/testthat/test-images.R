@@ -176,6 +176,48 @@ test_that(
 })
 
 
+test_that("enrich_taxonomy_with_images() processes at most 1000 taxa", {
+  n_taxa <- 1050L
+  root_url <- "https://example.com/root.jpg"
+  downloaded_url <- "https://example.com/downloaded.jpg"
+
+  data <- tibble(
+    parent = c(NA_character_, rep("Tiere", n_taxa)),
+    name = c("Tiere", paste("Taxon", seq_len(n_taxa))),
+    scientific = c("Animalia", paste("Species", seq_len(n_taxa))),
+    rank = c("Reich", rep("Art", n_taxa)),
+    # Give the root an image so that exactly n_taxa images are missing
+    image_url = c(root_url, rep(NA_character_, n_taxa))
+  )
+  local_file(list(
+    "taxonomy.csv" = write_csv(data, "taxonomy.csv", na = "")
+  ))
+
+  local_mocked_bindings(
+    get_wikipedia_image_urls_ = function(taxa, ...) {
+      # return the image url for all taxa
+      rep(downloaded_url, length(taxa))
+    }
+  )
+
+  expect_message(
+    taxonomy <- enrich_taxonomy_with_images(
+      "taxonomy.csv",
+      contact = "example@email.com",
+      progress = FALSE
+    ),
+    glue("there are {n_taxa} missing image urls.*for 1000 of them")
+  ) %>% 
+    expect_message("found : 1000")
+
+  # check that exactly 1000 image urls have been obtained
+  expect_equal(
+    vertex_attr(taxonomy, "image_url"),
+    c(root_url, rep(downloaded_url, 1000), rep(NA_character_, n_taxa - 1000))
+  )
+})
+
+
 test_that("get_user_agent_string() works with an email address", {
   expect_equal(
     get_user_agent_string("example@email.com"),
