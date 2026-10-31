@@ -2,7 +2,7 @@
 % Please edit documentation in R/inat.R
 \name{enrich_local_observed}
 \alias{enrich_local_observed}
-\title{Fill in local and observed with iNaturalist}
+\title{Enrich a Taxonomy File with iNaturalist Metadata}
 \usage{
 enrich_local_observed(
   file,
@@ -13,6 +13,41 @@ enrich_local_observed(
   quiet = FALSE
 )
 }
+\arguments{
+\item{file}{path to the csv file}
+
+\item{delim}{the delimiter used in the file}
+
+\item{local_country}{character giving the name of the country that is
+considered local. If supplied, the taxonomy file must contain a \code{local}
+column.}
+
+\item{user}{character giving the iNaturalist user name whose observations
+should be considered. If supplied, the taxonomy file must contain an
+\code{observed} column.}
+
+\item{progress}{Whether to show a progress bar.}
+
+\item{quiet}{Whether to suppress informational output while values are
+fetched.}
+}
+\value{
+a \code{taxonomy_graph} with added values in \code{local}, \code{observed}, or both. The
+file given by \code{file} is overwritten as a side effect.
+}
 \description{
-Fill in local and observed with iNaturalist
+Fill missing values in the optional logical columns \code{local} and \code{observed}
+using observation data from iNaturalist. Existing values are retained.
+}
+\details{
+At least one of \code{local_country} and \code{user} must be supplied. If both are
+supplied, both metadata columns are enriched.
+
+Only leaf taxa with rank \code{Gattung}, \code{Art}, or \code{Unterart} are queried. A taxon
+is considered local when iNaturalist contains at least two research-grade
+observations from \code{local_country}. A taxon is considered observed when
+iNaturalist contains at least one research-grade observation by \code{user}.
+
+To limit the number of API requests, at most 200 taxa are processed per
+call.
 }

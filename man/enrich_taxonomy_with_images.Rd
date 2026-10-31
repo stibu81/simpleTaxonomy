@@ -47,3 +47,7 @@ overwritten as a side effect.
 Add URLs to Images from Wikipedia to a file with a taxonomic hierarchy.
 By default, existing URLs are kept and only missing URLs are filled in.
 }
+\details{
+To limit the number of API requests, at most 1000 taxa are processed per
+call.
+}
