@@ -60,3 +60,8 @@ enrich_taxonomy_with_images(
 
 a `taxonomy_graph` with added image URLs. The file given by `file` is
 overwritten as a side effect.
+
+## Details
+
+To limit the number of API requests, at most 1000 taxa are processed per
+call.
