@@ -126,6 +126,10 @@ get_wikipedia_image_url <- function(taxon, user_agent, size, lang,
 #' @param quiet Should all output be suppressed?
 #' @inheritParams get_wikipedia_image_urls
 #'
+#' @details
+#' To limit the number of API requests, at most 1000 taxa are processed per
+#' call.
+#'
 #' @return
 #' a `taxonomy_graph` with added image URLs. The file given by `file` is
 #' overwritten as a side effect.
